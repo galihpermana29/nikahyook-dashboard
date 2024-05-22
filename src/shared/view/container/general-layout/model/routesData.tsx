@@ -8,6 +8,7 @@ import { ItemsDataI } from './types';
 import { AdminRoleManagementContainer } from '@/routes/admin/admin-management/admin-role-management/AdminRoleManagement';
 import VendorDashboardContainer from '@/routes/vendor/dashboard/VendorDashboard';
 import VendorContentEditContainer from '@/routes/admin/vendor-management/vendor-content/view/container/Edit/VendorContentEdit';
+import VendorUserCreateContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 
 export const vendorRoutes: ItemsDataI[] = [
 	{
@@ -115,6 +116,19 @@ export const staffRoutes: ItemsDataI[] = [
 				icon: <img src={adminManagIconGray} alt="icon" />,
 				components: <VendorUserManagementContainer />,
 				show: true,
+			},
+			{
+				label: (
+					<div className="text-caption-1 font-[400] text-ny-gray-300">
+						Vendor Edit
+					</div>
+				),
+				key: '/vendor-user-management/create-user',
+				path: 'vendor-user-management/create-user',
+				children: [],
+				icon: <img src={adminManagIconGray} alt="icon" />,
+				components: <VendorUserCreateContainer />,
+				show: false,
 			},
 			{
 				label: (
