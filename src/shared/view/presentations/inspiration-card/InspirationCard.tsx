@@ -1,6 +1,6 @@
 import defaultInspirationImage from '@/assets/default-inspiration-image.jpeg';
 import threeDots from '@/assets/icon/more-circle.svg';
-import { Button } from 'antd';
+import { Button, Tag } from 'antd';
 
 type TInspirationData = number;
 
@@ -31,7 +31,25 @@ export default function InspirationCard({
           </Button>
         </div>
 
-        <div className="flex items-center gap-1">{inspiration}</div>
+        <div className="flex flex-col w-full gap-2">
+          <div className="flex w-full items-center">
+            {/* TODO: change this to tag from query */}
+            <Tag id={inspiration.toString()} className="capitalize w-max">
+              Modern
+            </Tag>
+            <Tag id={inspiration.toString()} className="capitalize w-max">
+              Fancy
+            </Tag>
+          </div>
+
+          {/* TODO:
+            1. change color text based on active or inactive
+            2. use active status from query
+          */}
+          <Tag className="capitalize w-max" color="green">
+            Active
+          </Tag>
+        </div>
       </div>
     </div>
   );
