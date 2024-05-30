@@ -1,5 +1,5 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { useGenerateColumn } from './usecase/useGenerateColumn';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import { Form, Select } from 'antd';
@@ -41,7 +41,7 @@ export const UserManagementContainer = () => {
   );
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="User Management" />
+      <PageTitle title="User Management" />
       <DashboardTable
         columns={columns}
         data={data?.data}

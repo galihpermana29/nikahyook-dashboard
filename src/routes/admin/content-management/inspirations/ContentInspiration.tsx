@@ -1,4 +1,3 @@
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
 import ContentInspirationHeader from './view/container/ContentInspirationHeader';
 import useQueryAdmins from '../../admin-management/admin-user-management/repositories/useGetAllUser';
 import { Form, Pagination, type PaginationProps } from 'antd';
@@ -9,6 +8,7 @@ import InspirationCard from '@/shared/view/presentations/inspiration-card/Inspir
 import { useState } from 'react';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import type { AxiosError } from 'axios';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 
 const inspirations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -39,7 +39,7 @@ export default function ContentInspiration() {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="Inspiration" />
+      <PageTitle title="Inspiration" />
 
       <ContentInspirationHeader
         clearFilter={clearFilter}

@@ -1,6 +1,6 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { Button, Form, Input, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import useGenerateColumnVendorProduct from './usecase/useGenerateColumn';
@@ -34,7 +34,7 @@ export const VendorProductContainer = () => {
 
   return (
     <ErrorBoundary error={(error || errorTags) as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="Vendor Product" />
+      <PageTitle title="Vendor Product" />
       <DashboardTable<any>
         columns={columns}
         onPaginationChanges={setQueryVendorContent}

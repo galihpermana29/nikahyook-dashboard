@@ -2,7 +2,7 @@ import addIcon from '@/assets/icon/add.png';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { Button, Form, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { AxiosError } from 'axios';
@@ -103,7 +103,7 @@ export const AdminRoleManagementContainer = () => {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="Admin Role Management" />
+      <PageTitle title="Admin Role Management" />
 
       <Modal
         title={<div className="capitalize">{`${modalState?.type} Role`}</div>}

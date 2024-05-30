@@ -1,5 +1,5 @@
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFormEdit from '../../presentations/PageForm/PageFormEdit';
 import { useForm } from 'antd/es/form/Form';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -29,7 +29,7 @@ const VendorProductDetailContainer = () => {
       <ErrorBoundary
         error={(error || errorTags || errorProductTypes) as AxiosError}
         refetch={refetch}>
-        <TableHeaderTitle title="Detail Vendor Product" withArrow={true} />
+        <PageTitle title="Detail Vendor Product" withArrow={true} />
         <div className="p-[20px]">
           <LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
             <PageFormEdit

@@ -21,7 +21,7 @@ import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';
 import { useLoaderData } from 'react-router-dom';
 import { ILoaderData } from '@/routes/root';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 
 const AdminUserManagementContainer = () => {
@@ -170,7 +170,7 @@ const AdminUserManagementContainer = () => {
     <div>
       <ErrorBoundary error={error as AxiosError} refetch={refetch}>
         <>
-          <TableHeaderTitle title="Admin User Management" />
+          <PageTitle title="Admin User Management" />
           <Modal
             title={
               <div className="capitalize">
