@@ -7,57 +7,70 @@ import { useLoaderData } from 'react-router-dom';
 import type { ILoaderData } from '@/routes/root';
 import InspirationCard from '@/shared/view/presentations/inspiration-card/InspirationCard';
 import { useState } from 'react';
+import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
+import type { AxiosError } from 'axios';
 
-const inspirations = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const inspirations = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function ContentInspiration() {
-	const [form] = Form.useForm();
-	const [formModal] = Form.useForm();
-	const { setQueryAdmins, queryAdmins, handleFilter, clearFilter } =
-		useQueryAdmins(form);
+  const [form] = Form.useForm();
+  const [formModal] = Form.useForm();
 
-	const { permissions } = useLoaderData() as ILoaderData;
-	const { create } = permissions;
+  // TODO: change to useQueryInspiration
+  const {
+    setQueryAdmins,
+    queryAdmins,
+    handleFilter,
+    clearFilter,
+    error,
+    refetch,
+  } = useQueryAdmins(form);
 
-	const { openModal } = useModalReducer(formModal);
+  const { permissions } = useLoaderData() as ILoaderData;
+  const { create } = permissions;
 
-	// should change based on query
-	const [current, setCurrent] = useState(3);
+  const { openModal, closeModal, modalState } = useModalReducer(formModal);
 
-	const onChange: PaginationProps['onChange'] = (page) => {
-		setCurrent(page);
-	};
+  // TODO: should change based on query
+  const [current, setCurrent] = useState(3);
+  const onChange: PaginationProps['onChange'] = (page) => {
+    setCurrent(page);
+  };
 
-	return (
-		<div>
-			<TableHeaderTitle title="Inspiration" />
+  return (
+    <ErrorBoundary error={error as AxiosError} refetch={refetch}>
+      <TableHeaderTitle title="Inspiration" />
 
-			<ContentInspirationHeader
-				clearFilter={clearFilter}
-				create={create}
-				form={form}
-				handleFilter={handleFilter}
-				query={queryAdmins}
-				setQuery={setQueryAdmins}
-				openModal={openModal}
-			/>
+      <ContentInspirationHeader
+        clearFilter={clearFilter}
+        create={create}
+        form={form}
+        handleFilter={handleFilter}
+        query={queryAdmins}
+        setQuery={setQueryAdmins}
+        openModal={openModal}
+        closeModal={closeModal}
+        modalState={modalState}
+      />
 
-			<div className="grid grid-cols-3 gap-x-5 gap-y-4">
-				{inspirations.map((inspiration) => (
-					<InspirationCard key={inspiration} inspiration={inspiration} />
-				))}
-			</div>
+      <div className="grid grid-cols-3 gap-x-5 gap-y-4">
+        {inspirations.map((inspiration) => (
+          <InspirationCard key={inspiration} inspiration={inspiration} />
+        ))}
+      </div>
 
-			<div className="flex justify-between items-center mt-7">
-				<p>Showing x to x of x entries</p>
+      <div className="flex justify-between items-center mt-7">
+        {/* TODO: change this based on query */}
+        <p>Showing x to x of x entries</p>
 
-				<Pagination
-					className="my-0"
-					current={current}
-					onChange={onChange}
-					total={50}
-				/>
-			</div>
-		</div>
-	);
+        <Pagination
+          className="my-0"
+          // TODO: change this to query result
+          current={current}
+          onChange={onChange}
+          total={50}
+        />
+      </div>
+    </ErrorBoundary>
+  );
 }
