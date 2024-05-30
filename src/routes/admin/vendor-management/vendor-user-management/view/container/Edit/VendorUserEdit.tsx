@@ -12,6 +12,7 @@ import FormChangePassword from '@/shared/view/presentations/modal/ChangePassword
 import { Modal } from 'antd';
 import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
+import useQueryVendorTypes from '../../../repositories/useGetVendorTypes';
 
 const VendorUserEditContainer = () => {
 	const [form] = useForm();
@@ -30,6 +31,7 @@ const VendorUserEditContainer = () => {
 	} = useQueryVendorUserDetail(id as string, form);
 
 	const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+	const { result: vendorTypes } = useQueryVendorTypes();
 
 	const { mutate: mutateEditPassword } = useMutateEditPassword(
 		closeModal,
@@ -78,6 +80,9 @@ const VendorUserEditContainer = () => {
 					<div className="p-[20px]">
 						<LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
 							<PageFormEdit
+								dynamicSelectOptions={{
+									vendorTypes: vendorTypes ? vendorTypes.data : [],
+								}}
 								form={form}
 								onSave={mutateEdit}
 								onChangePasswordClick={() => openModal!('password', id)}

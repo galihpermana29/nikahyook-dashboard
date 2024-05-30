@@ -10,39 +10,41 @@ import useQueryProductTypes from '@/routes/admin/vendor-management/vendor-conten
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
 
 const VendorProductCreateContainer = () => {
-	const { mutate, isLoading } = useCreateProduct();
-	const [form] = useForm();
+  const { mutate, isLoading } = useCreateProduct();
+  const [form] = useForm();
 
-	const userId = JSON.parse(localStorage.getItem('admin')!)?.user_id;
+  const userId = JSON.parse(localStorage.getItem('admin')!)?.user_id;
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const { result: resultProductTypes, error: errorProductTypes } =
-		useQueryProductTypes();
-	const { result: resultTags, error: errorTags, refetch } = useQueryTags();
+  const { result: resultProductTypes, error: errorProductTypes } =
+    useQueryProductTypes();
+  const { result: resultTags, error: errorTags, refetch } = useQueryTags();
 
-	return (
-		<ErrorBoundary
-			error={(errorTags || errorProductTypes) as AxiosError}
-			refetch={refetch}>
-			<TableHeaderTitle title="Create Vendor Product" withArrow={true} />
-			<div className="p-[20px]">
-				<LoadingHandler isLoading={isLoading} fullscreen={true}>
-					<PageFormCreate
-						dynamicSelectOptions={{
-							tags: resultTags!.selectOptions!,
-							productTypes: resultProductTypes!.selectOptions!,
-						}}
-						disabled={false}
-						id={userId as string}
-						form={form}
-						onSave={mutate}
-						onCancel={() => navigate(-1)}
-					/>
-				</LoadingHandler>
-			</div>
-		</ErrorBoundary>
-	);
+  return (
+    <ErrorBoundary
+      error={(errorTags || errorProductTypes) as AxiosError}
+      refetch={refetch}>
+      <TableHeaderTitle title="Create Vendor Product" withArrow={true} />
+      <div className="p-[20px]">
+        <LoadingHandler isLoading={isLoading} fullscreen={true}>
+          <PageFormCreate
+            dynamicSelectOptions={{
+              tags: resultTags ? resultTags!.selectOptions! : [],
+              productTypes: resultProductTypes
+                ? resultProductTypes!.selectOptions!
+                : [],
+            }}
+            disabled={false}
+            id={userId as string}
+            form={form}
+            onSave={mutate}
+            onCancel={() => navigate(-1)}
+          />
+        </LoadingHandler>
+      </div>
+    </ErrorBoundary>
+  );
 };
 
 export default VendorProductCreateContainer;

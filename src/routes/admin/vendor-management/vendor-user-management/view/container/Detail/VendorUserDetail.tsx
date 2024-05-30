@@ -7,6 +7,7 @@ import useQueryVendorUserDetail from '../../../repositories/useGetDetailVendorUs
 import useMutateEditVendorUser from '../../../repositories/useUpdateVendorUser';
 import { PageFormEdit } from '../../presentations/PageForm/PageFormEdit';
 import { AxiosError } from 'axios';
+import useQueryVendorTypes from '../../../repositories/useGetVendorTypes';
 
 const VendorUserDetailContainer = () => {
 	const [form] = useForm();
@@ -22,6 +23,7 @@ const VendorUserDetailContainer = () => {
 	} = useQueryVendorUserDetail(id as string, form);
 
 	const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+	const { result: vendorTypes } = useQueryVendorTypes();
 
 	return (
 		<div>
@@ -31,6 +33,9 @@ const VendorUserDetailContainer = () => {
 					<div className="p-[20px]">
 						<LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
 							<PageFormEdit
+								dynamicSelectOptions={{
+									vendorTypes: vendorTypes ? vendorTypes.data : [],
+								}}
 								form={form}
 								onSave={mutateEdit}
 								onCancel={() => {

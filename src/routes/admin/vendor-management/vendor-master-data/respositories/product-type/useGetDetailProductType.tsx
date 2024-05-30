@@ -1,6 +1,6 @@
 import { DashboardProductAPI } from "@/shared/repositories/productService";
 import { FormInstance } from "antd";
-import { TModalState } from "../usecase/useModalReducer";
+import { TModalState } from "../../usecase/useModalReducer";
 import { useQuery } from "react-query";
 
 const useQueryProductTypeDetail = (

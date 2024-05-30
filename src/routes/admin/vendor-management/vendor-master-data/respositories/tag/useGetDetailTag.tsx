@@ -1,7 +1,7 @@
 import { DashboardProductAPI } from '@/shared/repositories/productService';
 import { FormInstance } from 'antd';
 import { useQuery } from 'react-query';
-import { TModalState } from '../usecase/useModalReducer';
+import { TModalState } from '../../usecase/useModalReducer';
 
 const useQueryProductTagDetail = (
 	modalState?: TModalState,

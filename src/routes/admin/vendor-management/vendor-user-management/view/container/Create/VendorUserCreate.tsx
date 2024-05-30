@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { PageFormCreate } from '../../presentations/PageForm/PageFormCreate';
 import useMutateCreateVendorUser from '../../../repositories/useCreateVendorUser';
 import { AxiosError } from 'axios';
+import useQueryVendorTypes from '../../../repositories/useGetVendorTypes';
 
 const VendorUserCreateContainer = () => {
 	const [form] = useForm();
@@ -12,6 +13,7 @@ const VendorUserCreateContainer = () => {
 	const navigate = useNavigate();
 
 	const { mutate: mutateCreate, error } = useMutateCreateVendorUser();
+	const { result: vendorTypes } = useQueryVendorTypes();
 
 	return (
 		<div>
@@ -20,6 +22,9 @@ const VendorUserCreateContainer = () => {
 					<TableHeaderTitle title="Create User" withArrow={true} />
 					<div className="p-[20px]">
 						<PageFormCreate
+							dynamicSelectOptions={{
+								vendorTypes: vendorTypes ? vendorTypes.data : [],
+							}}
 							form={form}
 							onSave={mutateCreate}
 							onCancel={() => {

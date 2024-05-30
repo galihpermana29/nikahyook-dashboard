@@ -10,71 +10,71 @@ import VendorAlbum from '../VendorAlbum';
 import type { IDetailUserData } from '@/shared/models/userServicesInterface';
 
 interface IFormCreate {
-	initialValues: IDetailUserData | undefined;
-	form: FormInstance;
-	onSave: any;
-	onCancel: () => void;
-	id: string;
-	disabled: boolean;
-	onChangePasswordClick?: () => void;
-	showEditButton?: boolean;
+  initialValues: IDetailUserData | undefined;
+  form: FormInstance;
+  onSave: any;
+  onCancel: () => void;
+  id: string;
+  disabled: boolean;
+  onChangePasswordClick?: () => void;
+  showEditButton?: boolean;
 }
 
 export const PageFormEdit = ({
-	initialValues,
-	form,
-	onSave,
-	onCancel,
-	disabled = false,
-	showEditButton = false,
-	id,
-	onChangePasswordClick,
+  initialValues,
+  form,
+  onSave,
+  onCancel,
+  disabled = false,
+  showEditButton = false,
+  id,
+  onChangePasswordClick,
 }: IFormCreate) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	return (
-		<Form
-			form={form}
-			initialValues={initialValues}
-			onFinish={(val) => onSave({ payload: val, type: 'edit', id })}
-			layout="vertical"
-			disabled={disabled}
-			className="flex flex-col gap-5 relative">
-			<VendorInformation />
+  return (
+    <Form
+      form={form}
+      initialValues={initialValues}
+      onFinish={(val) => onSave({ payload: val, type: 'edit', id })}
+      layout="vertical"
+      disabled={disabled}
+      className="flex flex-col gap-5 relative">
+      <VendorInformation />
 
-			<PageHeader
-				title="Profile Details"
-				onCancel={onCancel}
-				id={id}
-				buttonsBefore={
-					<Button
-						onClick={onChangePasswordClick}
-						type="text"
-						className="text-ny-primary-500">
-						Change Password
-					</Button>
-				}
-				buttonsAfter={
-					showEditButton && (
-						<Button
-							disabled={false}
-							onClick={() =>
-								navigate(`/vendor-user-management/edit-user/${id}`)
-							}
-							className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
-							Edit
-						</Button>
-					)
-				}
-			/>
+      <PageHeader
+        title="Profile Details"
+        onCancel={onCancel}
+        id={id}
+        buttonsBefore={
+          <Button
+            onClick={onChangePasswordClick}
+            type="text"
+            className="text-ny-primary-500">
+            Change Password
+          </Button>
+        }
+        buttonsAfter={
+          showEditButton && (
+            <Button
+              disabled={false}
+              onClick={() =>
+                navigate(`/vendor-user-management/edit-user/${id}`)
+              }
+              className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
+              Edit
+            </Button>
+          )
+        }
+      />
 
-			<VendorProfilePicture />
+      <VendorProfilePicture />
 
-			<VendorBasicDetails />
+      <VendorBasicDetails />
 
-			<VendorAdditionalDetails />
+      <VendorAdditionalDetails form={form} />
 
-			<VendorAlbum />
-		</Form>
-	);
+      <VendorAlbum />
+    </Form>
+  );
 };

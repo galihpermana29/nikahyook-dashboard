@@ -107,6 +107,16 @@ class DashboardUserServices extends ApiClass {
 		);
 		return data;
 	}
+
+	public async getAllClientUser(query?: string): Promise<IAllUserResponseRoot> {
+		const token = JSON.parse(localStorage.getItem('token')!);
+
+		const { data } = await this.axiosInstance.get<IAllUserResponseRoot>(
+			`/users?type=user${query ? `&${query}` : ''}`,
+			{ headers: { Authorization: `Bearer ${token}` } }
+		);
+		return data;
+	}
 }
 
 export const DashboardUserAPI = new DashboardUserServices();

@@ -11,43 +11,45 @@ import useQueryProductTypes from '@/routes/admin/vendor-management/vendor-conten
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
 
 const VendorProductDetailContainer = () => {
-	const [form] = useForm();
-	const navigate = useNavigate();
-	const { id } = useParams();
-	const {
-		isLoading: loadingGetDetail,
-		refetch,
-		error,
-	} = useQueryVendorContentsDetail(id as string, form);
-	const { result: resultProductTypes, error: errorProductTypes } =
-		useQueryProductTypes();
-	const { result: resultTags, error: errorTags } = useQueryTags();
-	const { mutate: mutateEdit } = useMutateEditVendorContent(refetch);
+  const [form] = useForm();
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const {
+    isLoading: loadingGetDetail,
+    refetch,
+    error,
+  } = useQueryVendorContentsDetail(id as string, form);
+  const { result: resultProductTypes, error: errorProductTypes } =
+    useQueryProductTypes();
+  const { result: resultTags, error: errorTags } = useQueryTags();
+  const { mutate: mutateEdit } = useMutateEditVendorContent(refetch);
 
-	return (
-		<div>
-			<ErrorBoundary
-				error={(error || errorTags || errorProductTypes) as AxiosError}
-				refetch={refetch}>
-				<TableHeaderTitle title="Detail Vendor Product" withArrow={true} />
-				<div className="p-[20px]">
-					<LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
-						<PageFormEdit
-							dynamicSelectOptions={{
-								tags: resultTags!.selectOptions!,
-								productTypes: resultProductTypes!.selectOptions!,
-							}}
-							disabled={true}
-							id={id as string}
-							form={form}
-							onSave={mutateEdit}
-							onCancel={() => navigate(-1)}
-						/>
-					</LoadingHandler>
-				</div>
-			</ErrorBoundary>
-		</div>
-	);
+  return (
+    <div>
+      <ErrorBoundary
+        error={(error || errorTags || errorProductTypes) as AxiosError}
+        refetch={refetch}>
+        <TableHeaderTitle title="Detail Vendor Product" withArrow={true} />
+        <div className="p-[20px]">
+          <LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
+            <PageFormEdit
+              dynamicSelectOptions={{
+                tags: resultTags ? resultTags!.selectOptions! : [],
+                productTypes: resultProductTypes
+                  ? resultProductTypes!.selectOptions!
+                  : [],
+              }}
+              disabled={true}
+              id={id as string}
+              form={form}
+              onSave={mutateEdit}
+              onCancel={() => navigate(-1)}
+            />
+          </LoadingHandler>
+        </div>
+      </ErrorBoundary>
+    </div>
+  );
 };
 
 export default VendorProductDetailContainer;

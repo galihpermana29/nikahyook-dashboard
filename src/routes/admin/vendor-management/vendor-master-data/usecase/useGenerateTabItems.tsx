@@ -1,8 +1,8 @@
+import { ProductTypeContainer } from '../view/container/Table/TableProductType';
 import { TabsProps } from 'antd';
+import { TagDataContainer } from '../view/container/Table/TableTagData';
 import { useState } from 'react';
-import { TableTagData } from '../view/presentation/Table/TableTagData';
-import { TableProductType } from '../view/presentation/Table/TableProductType';
-import { TableVendorType } from '../view/presentation/Table/TableVendorType';
+import { VendorTypeContainer } from '../view/container/Table/TableVendorType';
 
 export const useGenerateTabItems = () => {
 	const [currentActiveTab, setCurrentActiveTab] = useState(1);
@@ -11,17 +11,17 @@ export const useGenerateTabItems = () => {
 		{
 			key: '1',
 			label: 'Tag Data',
-			children: <TableTagData />,
+			children: <TagDataContainer />,
 		},
 		{
 			key: '2',
 			label: 'Product Type',
-			children: <TableProductType />,
+			children: <ProductTypeContainer />,
 		},
 		{
 			key: '3',
 			label: 'Vendor Type',
-			children: <TableVendorType />,
+			children: <VendorTypeContainer />,
 		},
 	];
 
