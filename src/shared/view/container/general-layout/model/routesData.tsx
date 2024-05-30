@@ -17,6 +17,7 @@ import { VendorProductContainer } from '@/routes/vendor/product/VendorProduct';
 import VendorProductCreateContainer from '@/routes/vendor/product/view/container/Create/VendorContentCreate';
 import VendorProductEditContainer from '@/routes/vendor/product/view/container/Edit/VendorContentEdit';
 import VendorProductDetailContainer from '@/routes/vendor/product/view/container/Detail/VendorContentDetail';
+import ContentInspiration from '@/routes/admin/content-management/inspirations/ContentInspiration';
 
 export const vendorRoutes: ItemsDataI[] = [
 	{
@@ -248,6 +249,35 @@ export const staffRoutes: ItemsDataI[] = [
 		],
 		icon: null,
 		components: <DashboardContainer />,
+		show: true,
+	},
+	{
+		label: (
+			<div>
+				<div className="text-caption-1 font-[400] text-ny-gray-300">
+					CONTENT
+				</div>
+			</div>
+		),
+		key: '/content-management',
+		path: 'content-management',
+		children: [
+			{
+				label: (
+					<div className="text-caption-1 font-[400] text-ny-gray-300">
+						Inspiration
+					</div>
+				),
+				key: '/inspiration',
+				path: 'inspiration',
+				children: null,
+				icon: <img src={adminManagIconGray} alt="icon" />,
+				components: <ContentInspiration />,
+				show: true,
+			},
+		],
+		icon: null,
+		components: <ContentInspiration />,
 		show: true,
 	},
 ];

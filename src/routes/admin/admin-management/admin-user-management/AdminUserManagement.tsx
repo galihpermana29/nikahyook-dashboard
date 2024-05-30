@@ -17,12 +17,12 @@ import FormEdit from './view/presentations/Modal/FormEdit';
 import useQueryAdminsDetail from './repositories/useGetDetailUser';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
 import useMutateEditAdmins from './repositories/useUpdateUser';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
 import FormChangePassword from '@/shared/view/presentations/modal/ChangePasswordModal';
 import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';
 import { useLoaderData } from 'react-router-dom';
 import { ILoaderData } from '@/routes/root';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
+import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
 
 const AdminUserManagementContainer = () => {
 	const [form] = useForm();
