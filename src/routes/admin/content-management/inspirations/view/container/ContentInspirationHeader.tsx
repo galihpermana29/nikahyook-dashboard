@@ -1,6 +1,6 @@
 import { Button, Form, Modal, Select, type FormInstance } from 'antd';
 import addIcon from '@/assets/icon/add.png';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import type { TGeneralFilter } from '@/shared/models/generalInterfaces';
 import type { TModalState, TModalType } from '../../usecase/useModalReducer';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
@@ -67,12 +67,12 @@ export default function ContentInspirationHeader({
         {modalType[modalState!.type]}
       </Modal>
 
-      <DashboardTableFilter
+      <PageFilter
         form={form}
         onApplyFilter={handleFilter}
         onClearFilter={clearFilter}
         onSearch={setQuery}
-        queryAdmins={query}
+        query={query}
         buttonComponents={
           <Button
             disabled={!create}

@@ -1,7 +1,7 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
 import { useGenerateColumn } from './usecase/useGenerateColumn';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import { Form, Select } from 'antd';
 import useQueryClientUser from './repositories/useGetAllUser';
 import { useForm } from 'antd/es/form/Form';
@@ -48,9 +48,9 @@ export const UserManagementContainer = () => {
         onPaginationChanges={setQueryClientUser}
         loading={loadingGetAll}
         filterComponents={
-          <DashboardTableFilter
+          <PageFilter
             form={form}
-            queryAdmins={queryClientUser}
+            query={queryClientUser}
             onApplyFilter={handleFilter}
             onClearFilter={clearFilter}
             onSearch={setQueryClientUser}

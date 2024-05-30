@@ -6,7 +6,7 @@ import { useGenerateProductTypeColumn } from '../../../usecase/useGenerateProduc
 import { useLoaderData } from 'react-router-dom';
 import addIcon from '@/assets/icon/add.png';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import FormCreation from '../../presentation/Modal/FormCreation';
 import FormEdit from '../../presentation/Modal/FormEdit';
@@ -78,8 +78,7 @@ export const ProductTypeContainer = () => {
       <LoadingHandler
         isLoading={loadingGetDetail}
         fullscreen={false}
-        classname="h-[500px]"
-      >
+        classname="h-[500px]">
         <FormEdit
           id={modalState?.id}
           handleMutate={mutateEdit}
@@ -110,8 +109,7 @@ export const ProductTypeContainer = () => {
           }
           open={modalState?.isOpen}
           footer={null}
-          onCancel={closeModal}
-        >
+          onCancel={closeModal}>
           {modalType[modalState!.type]}
         </Modal>
         <DashboardTable
@@ -121,9 +119,9 @@ export const ProductTypeContainer = () => {
           loading={loadingGetAll}
           metadata={result ? result.meta_data : undefined}
           filterComponents={
-            <DashboardTableFilter
+            <PageFilter
               form={form}
-              queryAdmins={queryProductTypes}
+              query={queryProductTypes}
               onApplyFilter={handleFilter}
               onClearFilter={clearFilter}
               onSearch={setQueryProductTypes}
@@ -132,8 +130,7 @@ export const ProductTypeContainer = () => {
                   name={'status'}
                   label="Status"
                   initialValue={queryProductTypes.status}
-                  className="my-[10px]"
-                >
+                  className="my-[10px]">
                   <Select
                     className="h-[35px]"
                     options={[
@@ -148,8 +145,7 @@ export const ProductTypeContainer = () => {
                 <Button
                   disabled={!create}
                   onClick={() => openModal!('create')}
-                  className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer"
-                >
+                  className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
                   <img src={addIcon} alt="add-icon" />
                   Create Product Type
                 </Button>
