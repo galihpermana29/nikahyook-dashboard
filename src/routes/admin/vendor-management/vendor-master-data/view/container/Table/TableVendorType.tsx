@@ -1,7 +1,7 @@
 import { ILoaderData } from '@/routes/root';
 import { useForm } from 'antd/es/form/Form';
 import { useLoaderData } from 'react-router-dom';
-import useModalReducer from '../../../usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import useQueryVendorTypes from '../../../respositories/vendor-type/useGetAllVendorTypes';
 import { Button, Form, Modal, Select } from 'antd';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';

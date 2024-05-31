@@ -12,7 +12,7 @@ import FormCreation from '../../presentation/Modal/FormCreation';
 import FormEdit from '../../presentation/Modal/FormEdit';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
-import useModalReducer from '../../../usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import useMutateCreateProductType from '../../../respositories/product-type/useCreateProductType';
 import useMutateEditProductType from '../../../respositories/product-type/useUpdateProductType';
 import useQueryProductTypeDetail from '../../../respositories/product-type/useGetDetailProductType';

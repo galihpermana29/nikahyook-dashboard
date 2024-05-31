@@ -7,7 +7,7 @@ import useQueryVendorUserDetail from '../../../repositories/useGetDetailVendorUs
 import useMutateEditVendorUser from '../../../repositories/useUpdateVendorUser';
 import { PageFormEdit } from '../../presentations/PageForm/PageFormEdit';
 import { AxiosError } from 'axios';
-import useModalReducer from '../../../usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import FormChangePassword from '@/shared/view/presentations/modal/ChangePasswordModal';
 import { Modal } from 'antd';
 import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';

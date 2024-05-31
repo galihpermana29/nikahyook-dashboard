@@ -7,7 +7,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
-import { TModalType } from './useModalReducer';
+import { TModalType } from '@/shared/usecase/useModalReducer';
 
 const useGenerateColumnAdminRole = (
   remove: boolean,

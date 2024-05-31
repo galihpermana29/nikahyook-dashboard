@@ -5,7 +5,7 @@ import {
   IUpdateVendorTypePayloadRoot,
   IUpdateVendorTypeResponseRoot,
 } from '@/shared/models/vendorTypeInterface';
-import { TModalType } from './useModalReducer';
+import { TModalType } from '@/shared/usecase/useModalReducer';
 import { UseMutateFunction } from 'react-query';
 
 export const useGenerateVendorTypeColumn = (
@@ -69,8 +69,7 @@ export const useGenerateVendorTypeColumn = (
                   disabled: !remove,
                 },
               ],
-            }}
-          >
+            }}>
             <Button className="bg-ny-primary-100 text-caption-1 text-ny-primary-500 hover:!bg-ny-primary-100 hover:!text-ny-primary-500">
               <Space>
                 Actions

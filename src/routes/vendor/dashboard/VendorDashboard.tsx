@@ -8,7 +8,7 @@ import FormChangePassword from '@/shared/view/presentations/modal/ChangePassword
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import type { AxiosError } from 'axios';
-import useModalReducer from './usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import { PageFormEdit } from './view/presentations/Form/PageFormEdit';
 import type { ILoginData } from '@/shared/models/userServicesInterface';
 import profileCover from '@/assets/vendor-profile-cover.jpeg';

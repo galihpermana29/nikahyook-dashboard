@@ -8,7 +8,7 @@ import { useGenerateTagDataColumn } from '../../../usecase/useGenerateTagDataCol
 import { useLoaderData } from 'react-router-dom';
 import { ILoaderData } from '@/routes/root';
 import useMutateEditProductTag from '../../../respositories/tag/useUpdateTag';
-import useModalReducer from '../../../usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import FormCreation from '../../presentation/Modal/FormCreation';
 import useMutateCreateProductTag from '../../../respositories/tag/useCreateTag';
 import LoadingHandler from '@/shared/view/container/loading/Loading';

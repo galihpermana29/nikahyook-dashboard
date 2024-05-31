@@ -10,7 +10,7 @@ import useMutateCreateAdminRole from './repositories/useCreateRole';
 import useQueryAdminRoles from './repositories/useGetAllRole';
 import useMutateEditAdminRoles from './repositories/useUpdateRole';
 import useGenerateColumnAdminRole from './usecase/useGenerateColumn';
-import useModalReducer from './usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import FormCreation from './view/presentation/Modal/FormCreation';
 import { IAllRolesData } from '@/shared/models/roleServicesInterface';
 import LoadingHandler from '@/shared/view/container/loading/Loading';

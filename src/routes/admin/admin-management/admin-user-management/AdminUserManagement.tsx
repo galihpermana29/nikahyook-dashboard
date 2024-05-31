@@ -9,7 +9,6 @@ import DashboardTable from '@/shared/view/presentations/dashboard-table/Dashboar
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import FormCreation from './view/presentations/Modal/FormCreation';
 import useGenerateColumnAdminUser from './usecase/useGenerateColumn';
-import useModalReducer from './usecase/useModalReducer';
 import useMutateCreateAdmins from './repositories/useCreateUser';
 import useQueryAdmins from './repositories/useGetAllUser';
 import FormEdit from './view/presentations/Modal/FormEdit';
@@ -23,6 +22,7 @@ import { ILoaderData } from '@/routes/root';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 
 const AdminUserManagementContainer = () => {
   const [form] = useForm();

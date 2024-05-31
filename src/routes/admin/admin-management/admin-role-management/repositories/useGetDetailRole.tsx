@@ -1,7 +1,7 @@
-import { DashboardRoleAPI } from "@/shared/repositories/roleServies";
-import { FormInstance } from "antd";
-import { useQuery } from "react-query";
-import { TModalState } from "../usecase/useModalReducer";
+import { DashboardRoleAPI } from '@/shared/repositories/roleServies';
+import type { TModalState } from '@/shared/usecase/useModalReducer';
+import { FormInstance } from 'antd';
+import { useQuery } from 'react-query';
 
 const useQueryRoleDetail = (
   modalState?: TModalState,
@@ -18,7 +18,7 @@ const useQueryRoleDetail = (
   };
 
   const { data, error, isLoading, refetch } = useQuery({
-    queryKey: ["role-detail", modalState!.id],
+    queryKey: ['role-detail', modalState!.id],
     queryFn: getDetail,
     enabled: modalState!.id ? true : false,
   });
