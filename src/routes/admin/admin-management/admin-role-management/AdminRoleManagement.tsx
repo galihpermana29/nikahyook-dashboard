@@ -103,7 +103,7 @@ export const AdminRoleManagementContainer = () => {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="Admin Role Management" />
+      <PageTitle title="Admin Role Management" />
       <Modal
         title={<div className="capitalize">{`${modalState?.type} Role`}</div>}
         open={modalState?.isOpen}
@@ -114,9 +114,9 @@ export const AdminRoleManagementContainer = () => {
 
       <DashboardTable<IAllRolesData>
         filterComponents={
-          <DashboardTableFilter
+          <PageFilter
             form={form}
-            queryAdmins={queryAdminRoles}
+            query={queryAdminRoles}
             onApplyFilter={handleFilter}
             onClearFilter={clearFilter}
             buttonComponents={
