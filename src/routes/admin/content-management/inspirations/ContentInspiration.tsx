@@ -11,6 +11,7 @@ import useQueryInspirations from './repositories/useQueryInspirations';
 import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
 import InspirationPagination from './view/presentations/InspirationPagination';
+import useMutateCreateInspirations from './repositories/useCreateInspirations';
 
 export default function ContentInspiration() {
   const [form] = Form.useForm();
@@ -37,6 +38,10 @@ export default function ContentInspiration() {
   const { create } = permissions;
 
   const { openModal, closeModal, modalState } = useModalReducer(formModal);
+  const { mutate: mutateCreate } = useMutateCreateInspirations(
+    closeModal,
+    refetch
+  );
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
@@ -44,6 +49,7 @@ export default function ContentInspiration() {
         <PageTitle title="Inspiration" />
 
         <ContentInspirationHeader
+          handleMutate={mutateCreate}
           clearFilter={clearFilter}
           create={create}
           form={form}

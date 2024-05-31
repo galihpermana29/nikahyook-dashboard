@@ -7,6 +7,12 @@ import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
 import FormCreation from '../presentations/Modal/FormCreation';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
+import type { UseMutateFunction } from 'react-query';
+import type {
+  ICreateInspirationPayloadRoot,
+  ICreateInspirationResponseRoot,
+} from '@/shared/models/inspirationInterfaces';
+import type { AxiosError } from 'axios';
 
 interface IContentInspirationHeaderProps {
   form: FormInstance<any>;
@@ -20,6 +26,11 @@ interface IContentInspirationHeaderProps {
     | undefined;
   closeModal: (() => void) | undefined;
   modalState: TModalState | undefined;
+  handleMutate: UseMutateFunction<
+    ICreateInspirationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateInspirationPayloadRoot
+  >;
 }
 
 export default function ContentInspirationHeader({
@@ -32,6 +43,7 @@ export default function ContentInspirationHeader({
   openModal,
   closeModal,
   modalState,
+  handleMutate,
 }: IContentInspirationHeaderProps) {
   const [formModal] = Form.useForm();
 
@@ -39,8 +51,7 @@ export default function ContentInspirationHeader({
     create: (
       <FormCreation
         form={formModal}
-        // TODO: add use mutate from API
-        // handleMutate={mutateCreate}
+        handleMutate={handleMutate}
         footer={
           <FormFooter
             secondaryText="Cancel"

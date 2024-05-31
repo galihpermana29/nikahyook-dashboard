@@ -1,20 +1,81 @@
-import { Form, type FormInstance } from 'antd';
+import type {
+  ICreateInspirationPayloadRoot,
+  ICreateInspirationResponseRoot,
+} from '@/shared/models/inspirationInterfaces';
+import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
+import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
+import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
+import { Form, Input, Select, type FormInstance } from 'antd';
+import type { AxiosError } from 'axios';
+import type { UseMutateFunction } from 'react-query';
 
 interface IFormCreation {
   form: FormInstance<any>;
   footer: React.ReactNode;
-  // TODO: change this to useMutate from API
-  //   handleMutate: UseMutateFunction<
-  //     ICreateUserResponseRoot,
-  //     AxiosError<unknown, any>,
-  //     ICreateUserPayloadRoot,
-  //     unknown
-  //   >;
+  handleMutate: UseMutateFunction<
+    ICreateInspirationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateInspirationPayloadRoot
+  >;
 }
 
-export default function FormCreation({ form, footer }: IFormCreation) {
+export default function FormCreation({
+  form,
+  footer,
+  handleMutate,
+}: IFormCreation) {
   return (
-    <Form form={form} layout="vertical">
+    <Form form={form} layout="vertical" onFinish={handleMutate}>
+      <div className="flex gap-[20px]">
+        <div className="w-full max-w-[187px] flex-1">
+          <Form.Item noStyle name={'image'}>
+            <DraggerUpload
+              profileImageURL={form.getFieldValue('image')}
+              form={form}
+              formItemName="image"
+            />
+          </Form.Item>
+        </div>
+
+        <div className="flex-1">
+          <Form.Item
+            className="my-[8px]"
+            name={'name'}
+            label="Name"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your name!',
+              },
+            ]}>
+            <Input
+              placeholder="Enter your detail here"
+              className="h-[40px] rounded-[8px] text-caption-1 font-[400]"
+            />
+          </Form.Item>
+          <Form.Item
+            className="my-[8px]"
+            name={'tags'}
+            label="Tags"
+            rules={[
+              {
+                required: true,
+                message: 'Please include your inspiration tags!',
+              },
+            ]}>
+            <Select
+              showSearch
+              filterOption={useFilterSelectOptions}
+              filterSort={useSortSelectOptions}
+              mode="multiple"
+              className="w-full h-[35px]"
+              placeholder="Tag"
+              // TODO: change this to query result
+              options={[{ label: 'Tes tag', value: 1 }]}
+            />
+          </Form.Item>
+        </div>
+      </div>
       {footer}
     </Form>
   );

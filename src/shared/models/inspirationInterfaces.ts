@@ -17,3 +17,23 @@ export interface IAllInspirationResponseRoot {
   data: IDetailInspirationData[];
   meta_data: Metadata;
 }
+
+export interface ICreateInspirationPayloadRoot {
+  name: string;
+  image: string;
+  tags: Omit<IInspirationTagData, 'name'>;
+}
+
+export interface ICreateInspirationResponseRoot {
+  data: string;
+}
+
+export interface IEditInspirationPayloadRoot {
+  name: string;
+  image: string;
+  tags: Omit<IInspirationTagData, 'name'>;
+}
+
+export interface IEditInspirationResponseRoot {
+  data: string;
+}
