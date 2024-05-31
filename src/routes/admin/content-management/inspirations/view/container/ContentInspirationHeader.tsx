@@ -83,20 +83,18 @@ export default function ContentInspirationHeader({
           </Button>
         }
         filterComponents={
-          <>
-            <Form.Item name={'tag'} label="Tag" className="my-[10px]">
-              <Select
-                showSearch
-                filterOption={useFilterSelectOptions}
-                filterSort={useSortSelectOptions}
-                mode="multiple"
-                className="w-full max-w-[224px] h-[35px]"
-                placeholder="Tag"
-                // TODO: change this to query result
-                options={[{ label: 'Tes tag', value: '1' }]}
-              />
-            </Form.Item>
-          </>
+          <Form.Item name={'tag'} label="Tag" className="my-[10px]">
+            <Select
+              showSearch
+              filterOption={useFilterSelectOptions}
+              filterSort={useSortSelectOptions}
+              mode="multiple"
+              className="w-full max-w-[224px] h-[35px]"
+              placeholder="Tag"
+              // TODO: change this to query result
+              options={[{ label: 'Tes tag', value: '1' }]}
+            />
+          </Form.Item>
         }
       />
     </div>

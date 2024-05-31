@@ -57,7 +57,13 @@ export default function ContentInspiration() {
 
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
           {inspirations.map((inspiration) => (
-            <InspirationCard key={inspiration.id} inspiration={inspiration} />
+            <InspirationCard
+              closeModal={closeModal}
+              openModal={openModal}
+              modalState={modalState}
+              key={inspiration.id}
+              inspiration={inspiration}
+            />
           ))}
         </div>
 
