@@ -14,94 +14,91 @@ import type { ILoginData } from '@/shared/models/userServicesInterface';
 import profileCover from '@/assets/vendor-profile-cover.jpeg';
 
 export default function VendorProfileContainer() {
-	const [form] = Form.useForm();
-	const [formModal] = Form.useForm();
+  const [form] = Form.useForm();
+  const [formModal] = Form.useForm();
 
-	const { modalState, closeModal, openModal } = useModalReducer(formModal);
+  const { modalState, closeModal, openModal } = useModalReducer(formModal);
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const userDetail = localStorage ? localStorage.getItem('admin') : null;
+  const userDetail = localStorage ? localStorage.getItem('admin') : null;
 
-	const parsedUserDetail = userDetail
-		? (JSON.parse(userDetail) as ILoginData)
-		: undefined;
+  const parsedUserDetail = userDetail
+    ? (JSON.parse(userDetail) as ILoginData)
+    : undefined;
 
-	const userId = parsedUserDetail ? parsedUserDetail.user_id : '';
+  const userId = parsedUserDetail ? parsedUserDetail.user_id : '';
 
-	const {
-		data: initialValues,
-		isLoading: loadingGetDetail,
-		refetch,
-		error,
-	} = useQueryVendorUserDetail(userId as string, form);
+  const {
+    isLoading: loadingGetDetail,
+    refetch,
+    error,
+  } = useQueryVendorUserDetail(userId as string, form);
+  const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
 
-	const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+  const { mutate: mutateEditPassword } = useMutateEditPassword(
+    closeModal,
+    refetch
+  );
 
-	const { mutate: mutateEditPassword } = useMutateEditPassword(
-		closeModal,
-		refetch
-	);
+  const modalType = {
+    password: (
+      <FormChangePassword
+        id={modalState?.id}
+        form={formModal}
+        handleMutate={mutateEditPassword}
+        footer={
+          <FormFooter
+            secondaryText="Cancel"
+            secondaryProps={{
+              onClick: () => closeModal!(),
+            }}
+            primaryText="Save"
+            primaryProps={{ type: 'submit' }}
+          />
+        }
+      />
+    ),
+  };
 
-	const modalType = {
-		password: (
-			<FormChangePassword
-				id={modalState?.id}
-				form={formModal}
-				handleMutate={mutateEditPassword}
-				footer={
-					<FormFooter
-						secondaryText="Cancel"
-						secondaryProps={{
-							onClick: () => closeModal!(),
-						}}
-						primaryText="Save"
-						primaryProps={{ type: 'submit' }}
-					/>
-				}
-			/>
-		),
-	};
+  return (
+    <div>
+      <ErrorBoundary error={error as AxiosError} refetch={refetch}>
+        <Modal
+          title={
+            <div className="capitalize">
+              {modalState?.type === 'password'
+                ? 'Change Password'
+                : `${modalState?.type} User`}
+            </div>
+          }
+          open={modalState?.isOpen}
+          footer={null}
+          onCancel={closeModal}>
+          {modalType[modalState!.type]}
+        </Modal>
 
-	return (
-		<div>
-			<ErrorBoundary error={error as AxiosError} refetch={refetch}>
-				<Modal
-					title={
-						<div className="capitalize">
-							{modalState?.type === 'password'
-								? 'Change Password'
-								: `${modalState?.type} User`}
-						</div>
-					}
-					open={modalState?.isOpen}
-					footer={null}
-					onCancel={closeModal}>
-					{modalType[modalState!.type]}
-				</Modal>
+        <div className="bg-white relative">
+          <div className="bg-ny-primary-500 h-[12.5rem] w-full absolute top-0 rounded-xl overflow-hidden bg-bottom">
+            <img src={profileCover} className="bg-ny-primary-500 bg-cover" />
+          </div>
 
-				<div className="bg-white relative">
-					<div className="bg-ny-primary-500 h-[12.5rem] w-full absolute top-0 rounded-xl overflow-hidden bg-bottom">
-						<img src={profileCover} className="bg-ny-primary-500 bg-cover" />
-					</div>
-
-					<div className="p-[20px]">
-						<LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
-							<PageFormEdit
-								initialValues={initialValues}
-								form={form}
-								onSave={mutateEdit}
-								onChangePasswordClick={() => openModal!('password', userId)}
-								onCancel={() => {
-									navigate(-1);
-								}}
-								id={userId as string}
-								disabled={false}
-							/>
-						</LoadingHandler>
-					</div>
-				</div>
-			</ErrorBoundary>
-		</div>
-	);
+          <div className="p-[20px]">
+            <LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
+              <PageFormEdit
+                form={form}
+                onSave={mutateEdit}
+                onChangePasswordClick={() => openModal!('password', userId)}
+                onCancel={() => {
+                  navigate(-1);
+                }}
+                id={userId as string}
+                disabled={false}
+              />
+            </LoadingHandler>
+          </div>
+        </div>
+      </ErrorBoundary>
+    </div>
+  );
 }

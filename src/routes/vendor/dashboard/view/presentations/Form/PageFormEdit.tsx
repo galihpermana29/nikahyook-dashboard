@@ -7,10 +7,8 @@ import VendorProfilePicture from '../VendorProfilePicture';
 import VendorBasicDetails from '../VendorBasicDetails';
 import VendorAdditionalDetails from '../VendorAdditionalDetails';
 import VendorAlbum from '../VendorAlbum';
-import type { IDetailUserData } from '@/shared/models/userServicesInterface';
 
 interface IFormCreate {
-  initialValues: IDetailUserData | undefined;
   form: FormInstance;
   onSave: any;
   onCancel: () => void;
@@ -21,7 +19,6 @@ interface IFormCreate {
 }
 
 export const PageFormEdit = ({
-  initialValues,
   form,
   onSave,
   onCancel,
@@ -35,7 +32,6 @@ export const PageFormEdit = ({
   return (
     <Form
       form={form}
-      initialValues={initialValues}
       onFinish={(val) => onSave({ payload: val, type: 'edit', id })}
       layout="vertical"
       disabled={disabled}

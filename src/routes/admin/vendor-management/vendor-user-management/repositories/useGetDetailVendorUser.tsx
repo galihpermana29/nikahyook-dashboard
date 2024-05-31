@@ -18,7 +18,6 @@ const useQueryVendorUserDetail = (id: string, form?: FormInstance) => {
           vendor_description: '',
           vendor_album: [],
         };
-
     form!.setFieldsValue({
       ...data,
       date_of_birth: dayjs(data.date_of_birth),

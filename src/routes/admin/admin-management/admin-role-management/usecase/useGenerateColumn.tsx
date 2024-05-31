@@ -40,9 +40,9 @@ const useGenerateColumnAdminRole = (
       dataIndex: 'permissions',
       key: 'feature_permission',
       render: (permissions: IRolePermission[]) => {
-        const tags = permissions.map(
+        const tags = permissions?.map(
           ({ feature_permission, feature_access }) => {
-            const access = feature_access.map((access) =>
+            const access = feature_access?.map((access) =>
               access[0] === 'v' ? 'R' : access[0].toUpperCase()
             );
 
@@ -54,7 +54,7 @@ const useGenerateColumnAdminRole = (
 
         return (
           <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <div className="bg-ny-gray-100 text-ny-gray-600 capitalize px-2 rounded-[4px] border border-ny-gray-300">
                 {tag}
               </div>
