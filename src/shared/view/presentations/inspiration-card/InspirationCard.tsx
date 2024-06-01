@@ -73,7 +73,7 @@ export default function InspirationCard({
             <h4 className="font-medium">{inspiration.name}</h4>
 
             <Button
-              disabled={edit}
+              disabled={!edit}
               onClick={() => openModal!('edit')}
               className="p-0 m-0 shrink-0"
               type="link">
