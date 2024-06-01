@@ -5,7 +5,7 @@ import {
   IUpdateProductTypePayloadRoot,
   IUpdateProductTypeResponseRoot,
 } from '@/shared/models/productServicesInterface';
-import { TModalType } from './useModalReducer';
+import { TModalType } from '@/shared/usecase/useModalReducer';
 import { UseMutateFunction } from 'react-query';
 
 export const useGenerateProductTypeColumn = (
@@ -69,8 +69,7 @@ export const useGenerateProductTypeColumn = (
                   disabled: !remove,
                 },
               ],
-            }}
-          >
+            }}>
             <Button className="bg-ny-primary-100 text-caption-1 text-ny-primary-500 hover:!bg-ny-primary-100 hover:!text-ny-primary-500">
               <Space>
                 Actions

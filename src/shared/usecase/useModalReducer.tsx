@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useReducer } from 'react';
+import { FormInstance } from 'antd';
 
-const OPEN_MODAL = "OPEN_MODAL";
-const CLOSE_MODAL = "CLOSE_MODAL";
+const OPEN_MODAL = 'OPEN_MODAL';
+const CLOSE_MODAL = 'CLOSE_MODAL';
 
-export type TModalType = "edit" | "detail";
+export type TModalType = 'edit' | 'create' | 'password' | 'detail';
 
 export interface IModalReducerReturn {
   modalState?: TModalState;
@@ -19,8 +20,8 @@ export type TModalState = {
 };
 
 export type Action =
-  | { type: "OPEN_MODAL"; modalType: TModalType; id?: string }
-  | { type: "CLOSE_MODAL" };
+  | { type: 'OPEN_MODAL'; modalType: TModalType; id?: string }
+  | { type: 'CLOSE_MODAL' };
 
 const modalReducer = (state: TModalState, action: Action) => {
   switch (action.type) {
@@ -42,19 +43,20 @@ const modalReducer = (state: TModalState, action: Action) => {
 
 const initialState: TModalState = {
   isOpen: false,
-  type: "detail",
+  type: 'create',
   id: undefined,
 };
 
-const useModalReducer = (): IModalReducerReturn => {
+const useModalReducer = (form?: FormInstance<any>): IModalReducerReturn => {
   const [modalState, dispatch] = useReducer(modalReducer, initialState);
 
   const openModal = (modalType: TModalType, id?: string) => {
-    dispatch({ type: "OPEN_MODAL", modalType, id });
+    if (modalType === 'create') form!.resetFields();
+    dispatch({ type: 'OPEN_MODAL', modalType, id });
   };
 
   const closeModal = () => {
-    dispatch({ type: "CLOSE_MODAL" });
+    dispatch({ type: 'CLOSE_MODAL' });
   };
 
   return { openModal, closeModal, modalState };

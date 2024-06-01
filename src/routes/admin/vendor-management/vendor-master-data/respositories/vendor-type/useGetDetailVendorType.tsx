@@ -1,6 +1,6 @@
 import { DashboardVendorTypeAPI } from '@/shared/repositories/vendorTypeService';
 import { FormInstance } from 'antd';
-import { TModalState } from '../../usecase/useModalReducer';
+import { TModalState } from '@/shared/usecase/useModalReducer';
 import { useQuery } from 'react-query';
 
 const useQueryVendorTypeDetail = (

@@ -1,6 +1,6 @@
 import addIcon from '@/assets/icon/add.png';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import { Button, Form, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import useQueryProductTags from '../../../respositories/tag/useGetAllTags';
@@ -8,7 +8,7 @@ import { useGenerateTagDataColumn } from '../../../usecase/useGenerateTagDataCol
 import { useLoaderData } from 'react-router-dom';
 import { ILoaderData } from '@/routes/root';
 import useMutateEditProductTag from '../../../respositories/tag/useUpdateTag';
-import useModalReducer from '../../../usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import FormCreation from '../../presentation/Modal/FormCreation';
 import useMutateCreateProductTag from '../../../respositories/tag/useCreateTag';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
@@ -76,8 +76,7 @@ export const TagDataContainer = () => {
       <LoadingHandler
         isLoading={loadingGetDetail}
         fullscreen={false}
-        classname="h-[500px]"
-      >
+        classname="h-[500px]">
         <FormEdit
           id={modalState?.id}
           handleMutate={mutateEdit}
@@ -105,8 +104,7 @@ export const TagDataContainer = () => {
         title={<div className="capitalize">{`${modalState?.type} Tag`}</div>}
         open={modalState?.isOpen}
         footer={null}
-        onCancel={closeModal}
-      >
+        onCancel={closeModal}>
         {modalType[modalState!.type]}
       </Modal>
 
@@ -116,9 +114,9 @@ export const TagDataContainer = () => {
         data={data?.data}
         loading={loadingGetAll}
         filterComponents={
-          <DashboardTableFilter
+          <PageFilter
             form={form}
-            queryAdmins={queryProductTags}
+            query={queryProductTags}
             onApplyFilter={handleFilter}
             onClearFilter={clearFilter}
             onSearch={setQueryProductTags}
@@ -127,8 +125,7 @@ export const TagDataContainer = () => {
                 name={'status'}
                 label="Status"
                 initialValue={queryProductTags.status}
-                className="my-[10px]"
-              >
+                className="my-[10px]">
                 <Select
                   className="h-[35px]"
                   options={[
@@ -143,8 +140,7 @@ export const TagDataContainer = () => {
               <Button
                 disabled={!create}
                 onClick={() => openModal!('create')}
-                className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer"
-              >
+                className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
                 <img src={addIcon} alt="add-icon" />
                 Create Tag
               </Button>

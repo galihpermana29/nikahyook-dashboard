@@ -26,6 +26,7 @@ import VendorUserCreateContainer from '@/routes/admin/vendor-management/vendor-u
 import VendorUserDetailContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Detail/VendorUserDetail';
 import VendorUserEditContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Edit/VendorUserEdit';
 import vendorUserManagIconGray from '@/assets/icon/vendor-user-manag-icon-gray.svg';
+import ContentInspiration from '@/routes/admin/content-management/inspirations/ContentInspiration';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -302,6 +303,35 @@ export const staffRoutes: ItemsDataI[] = [
     ],
     icon: null,
     components: <DashboardContainer />,
+    show: true,
+  },
+  {
+    label: (
+      <div>
+        <div className="text-caption-1 font-[400] text-ny-gray-300">
+          CONTENT
+        </div>
+      </div>
+    ),
+    key: '/content-management',
+    path: 'content-management',
+    children: [
+      {
+        label: (
+          <div className="text-caption-1 font-[400] text-ny-gray-300">
+            Inspiration
+          </div>
+        ),
+        key: '/inspiration',
+        path: 'inspiration',
+        children: null,
+        icon: <img src={adminManagIconGray} alt="icon" />,
+        components: <ContentInspiration />,
+        show: true,
+      },
+    ],
+    icon: null,
+    components: <ContentInspiration />,
     show: true,
   },
 ];

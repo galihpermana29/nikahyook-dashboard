@@ -1,7 +1,7 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { useGenerateColumn } from './usecase/useGenerateColumn';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import { Form, Select } from 'antd';
 import useQueryClientUser from './repositories/useGetAllUser';
 import { useForm } from 'antd/es/form/Form';
@@ -41,16 +41,16 @@ export const UserManagementContainer = () => {
   );
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="User Management" />
+      <PageTitle title="User Management" />
       <DashboardTable
         columns={columns}
         data={data?.data}
         onPaginationChanges={setQueryClientUser}
         loading={loadingGetAll}
         filterComponents={
-          <DashboardTableFilter
+          <PageFilter
             form={form}
-            queryAdmins={queryClientUser}
+            query={queryClientUser}
             onApplyFilter={handleFilter}
             onClearFilter={clearFilter}
             onSearch={setQueryClientUser}

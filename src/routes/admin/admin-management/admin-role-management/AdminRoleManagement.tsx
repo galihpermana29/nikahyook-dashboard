@@ -1,8 +1,8 @@
 import addIcon from '@/assets/icon/add.png';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
-import DashboardTableFilter from '@/shared/view/presentations/dashboard-table/DashboardTableFilter';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { Button, Form, Modal, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import { AxiosError } from 'axios';
@@ -10,7 +10,7 @@ import useMutateCreateAdminRole from './repositories/useCreateRole';
 import useQueryAdminRoles from './repositories/useGetAllRole';
 import useMutateEditAdminRoles from './repositories/useUpdateRole';
 import useGenerateColumnAdminRole from './usecase/useGenerateColumn';
-import useModalReducer from './usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import FormCreation from './view/presentation/Modal/FormCreation';
 import { IAllRolesData } from '@/shared/models/roleServicesInterface';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
@@ -103,8 +103,7 @@ export const AdminRoleManagementContainer = () => {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <TableHeaderTitle title="Admin Role Management" />
-
+      <PageTitle title="Admin Role Management" />
       <Modal
         title={<div className="capitalize">{`${modalState?.type} Role`}</div>}
         open={modalState?.isOpen}
@@ -115,9 +114,9 @@ export const AdminRoleManagementContainer = () => {
 
       <DashboardTable<IAllRolesData>
         filterComponents={
-          <DashboardTableFilter
+          <PageFilter
             form={form}
-            queryAdmins={queryAdminRoles}
+            query={queryAdminRoles}
             onApplyFilter={handleFilter}
             onClearFilter={clearFilter}
             buttonComponents={

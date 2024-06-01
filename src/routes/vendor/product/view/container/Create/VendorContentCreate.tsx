@@ -1,5 +1,5 @@
 import LoadingHandler from '@/shared/view/container/loading/Loading';
-import TableHeaderTitle from '@/shared/view/presentations/table-header-title/TableHeaderTitle';
+import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFormCreate from '../../presentations/PageForm/PageFormCreate';
 import useCreateProduct from '../../../repositories/useCreateProduct';
 import { useForm } from 'antd/es/form/Form';
@@ -25,7 +25,7 @@ const VendorProductCreateContainer = () => {
     <ErrorBoundary
       error={(errorTags || errorProductTypes) as AxiosError}
       refetch={refetch}>
-      <TableHeaderTitle title="Create Vendor Product" withArrow={true} />
+      <PageTitle title="Create Vendor Product" withArrow={true} />
       <div className="p-[20px]">
         <LoadingHandler isLoading={isLoading} fullscreen={true}>
           <PageFormCreate
