@@ -1,8 +1,8 @@
-import type { Metadata } from './generalInterfaces';
+import type { Metadata, TGeneralSelectOptions } from './generalInterfaces';
 
 export interface IInspirationTagData {
   id: number;
-  name: string;
+  label: string;
 }
 
 export interface IDetailInspirationData {
@@ -18,10 +18,16 @@ export interface IAllInspirationResponseRoot {
   meta_data: Metadata;
 }
 
+export interface ICreateInspirationInputRoot {
+  name: string;
+  image: string;
+  tags: TGeneralSelectOptions[];
+}
+
 export interface ICreateInspirationPayloadRoot {
   name: string;
   image: string;
-  tags: Omit<IInspirationTagData, 'name'>;
+  tags: Pick<IInspirationTagData, 'id'>[];
 }
 
 export interface ICreateInspirationResponseRoot {
@@ -31,7 +37,13 @@ export interface ICreateInspirationResponseRoot {
 export interface IEditInspirationPayloadRoot {
   name: string;
   image: string;
-  tags: Omit<IInspirationTagData, 'name'>;
+  tags: Pick<IInspirationTagData, 'id'>[];
+}
+
+export interface IEditInspirationInputRoot {
+  name: string;
+  image: string;
+  tags: TGeneralSelectOptions[];
 }
 
 export interface IEditInspirationResponseRoot {

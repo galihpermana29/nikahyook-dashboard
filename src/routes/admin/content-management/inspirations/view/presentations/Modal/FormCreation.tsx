@@ -1,5 +1,6 @@
+import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
 import type {
-  ICreateInspirationPayloadRoot,
+  ICreateInspirationInputRoot,
   ICreateInspirationResponseRoot,
 } from '@/shared/models/inspirationInterfaces';
 import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
@@ -15,7 +16,7 @@ interface IFormCreation {
   handleMutate: UseMutateFunction<
     ICreateInspirationResponseRoot,
     AxiosError<unknown, any>,
-    ICreateInspirationPayloadRoot
+    ICreateInspirationInputRoot
   >;
 }
 
@@ -24,6 +25,8 @@ export default function FormCreation({
   footer,
   handleMutate,
 }: IFormCreation) {
+  const { result: tags, isLoading } = useQueryTags();
+
   return (
     <Form form={form} layout="vertical" onFinish={handleMutate}>
       <div className="flex gap-[20px]">
@@ -65,13 +68,13 @@ export default function FormCreation({
             ]}>
             <Select
               showSearch
+              loading={isLoading}
               filterOption={useFilterSelectOptions}
               filterSort={useSortSelectOptions}
               mode="multiple"
               className="w-full h-[35px]"
               placeholder="Tag"
-              // TODO: change this to query result
-              options={[{ label: 'Tes tag', value: 1 }]}
+              options={tags?.selectOptions}
             />
           </Form.Item>
         </div>

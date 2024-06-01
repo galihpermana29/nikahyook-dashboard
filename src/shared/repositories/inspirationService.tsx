@@ -2,6 +2,8 @@ import type {
   IAllInspirationResponseRoot,
   ICreateInspirationPayloadRoot,
   ICreateInspirationResponseRoot,
+  IEditInspirationPayloadRoot,
+  IEditInspirationResponseRoot,
 } from '../models/inspirationInterfaces';
 import { ApiClass } from './generalApi';
 
@@ -35,6 +37,21 @@ class InspirationServices extends ApiClass {
             Authorization: `Bearer ${token}`,
           },
         }
+      );
+    return data;
+  }
+
+  public async editInspiration(
+    payload: IEditInspirationPayloadRoot,
+    id: number
+  ): Promise<IEditInspirationResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } =
+      await this.axiosInstance.patch<IEditInspirationResponseRoot>(
+        `/inspirations/${id}`,
+        payload,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
     return data;
   }

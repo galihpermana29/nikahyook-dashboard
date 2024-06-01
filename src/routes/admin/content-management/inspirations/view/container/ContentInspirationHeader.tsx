@@ -2,20 +2,22 @@ import { Button, Form, Modal, Select, type FormInstance } from 'antd';
 import addIcon from '@/assets/icon/add.png';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import type { TGeneralFilter } from '@/shared/models/generalInterfaces';
-import type { TModalState, TModalType } from '../../usecase/useModalReducer';
+import type { TModalState, TModalType } from '@/shared/usecase/useModalReducer';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
 import FormCreation from '../presentations/Modal/FormCreation';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import type { UseMutateFunction } from 'react-query';
 import type {
-  ICreateInspirationPayloadRoot,
+  ICreateInspirationInputRoot,
   ICreateInspirationResponseRoot,
 } from '@/shared/models/inspirationInterfaces';
 import type { AxiosError } from 'axios';
+import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
 
 interface IContentInspirationHeaderProps {
   form: FormInstance<any>;
+  formModal: FormInstance<any>;
   handleFilter: (value: any) => void;
   clearFilter: () => void;
   setQuery: React.Dispatch<React.SetStateAction<TGeneralFilter>>;
@@ -29,12 +31,13 @@ interface IContentInspirationHeaderProps {
   handleMutate: UseMutateFunction<
     ICreateInspirationResponseRoot,
     AxiosError<unknown, any>,
-    ICreateInspirationPayloadRoot
+    ICreateInspirationInputRoot
   >;
 }
 
 export default function ContentInspirationHeader({
   form,
+  formModal,
   handleFilter,
   clearFilter,
   setQuery,
@@ -45,8 +48,6 @@ export default function ContentInspirationHeader({
   modalState,
   handleMutate,
 }: IContentInspirationHeaderProps) {
-  const [formModal] = Form.useForm();
-
   const modalType = {
     create: (
       <FormCreation
@@ -65,6 +66,8 @@ export default function ContentInspirationHeader({
       />
     ),
   };
+
+  const { result: tags, isLoading } = useQueryTags();
 
   return (
     <div className="mb-5">
@@ -86,7 +89,7 @@ export default function ContentInspirationHeader({
         query={query}
         buttonComponents={
           <Button
-            disabled={!create}
+            disabled={create}
             onClick={() => openModal!('create')}
             className="hover:!bg-ny-primary-500 hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
             <img src={addIcon} alt="add-icon" />
@@ -94,16 +97,16 @@ export default function ContentInspirationHeader({
           </Button>
         }
         filterComponents={
-          <Form.Item name={'tag'} label="Tag" className="my-[10px]">
+          <Form.Item name={'tags'} label="Tag" className="my-[10px]">
             <Select
               showSearch
+              loading={isLoading}
               filterOption={useFilterSelectOptions}
               filterSort={useSortSelectOptions}
               mode="multiple"
               className="w-full max-w-[224px] h-[35px]"
               placeholder="Tag"
-              // TODO: change this to query result
-              options={[{ label: 'Tes tag', value: '1' }]}
+              options={tags?.selectOptions}
             />
           </Form.Item>
         }

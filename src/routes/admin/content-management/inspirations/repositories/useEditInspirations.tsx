@@ -1,18 +1,19 @@
-import type { ICreateInspirationInputRoot } from '@/shared/models/inspirationInterfaces';
+import type { IEditInspirationInputRoot } from '@/shared/models/inspirationInterfaces';
 import { InspirationAPI } from '@/shared/repositories/inspirationService';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
 
-const useMutateCreateInspirations = (
+const useMutateEditInspirations = (
+  id: number,
   closeModal?: () => void,
   refetch?: () => void
 ) => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
-  const createInspirations = async (payload: ICreateInspirationInputRoot) => {
+  const editInspirations = async (payload: IEditInspirationInputRoot) => {
     if (!payload.image) throw showPopError('Please upload an image!');
 
     const newPayload = {
@@ -23,7 +24,7 @@ const useMutateCreateInspirations = (
       })),
     };
 
-    const data = await InspirationAPI.createInspiration(newPayload);
+    const data = await InspirationAPI.editInspiration(newPayload, id);
 
     return data;
   };
@@ -34,16 +35,16 @@ const useMutateCreateInspirations = (
   };
 
   const { mutate, error, isLoading } = useMutation({
-    mutationFn: (payload: ICreateInspirationInputRoot) =>
-      createInspirations(payload),
+    mutationFn: (payload: IEditInspirationInputRoot) =>
+      editInspirations(payload),
     onError: handleError,
     onSuccess: () => {
       closeModal!();
       refetch!();
-      showSuccessMessage('Inspiration successfully added!');
+      showSuccessMessage('Inspiration successfully edited!');
     },
   });
   return { mutate, error, isLoading };
 };
 
-export default useMutateCreateInspirations;
+export default useMutateEditInspirations;

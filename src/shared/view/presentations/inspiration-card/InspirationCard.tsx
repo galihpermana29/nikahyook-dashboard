@@ -4,43 +4,44 @@ import FormEdit from '@/routes/admin/content-management/inspirations/view/presen
 import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
 import { Button, Form, Modal, Tag } from 'antd';
 import FormFooter from '../form-footer/FormFooter';
-import type {
-  TModalState,
-  TModalType,
-} from '@/routes/admin/content-management/inspirations/usecase/useModalReducer';
 import { useLoaderData } from 'react-router-dom';
 import type { ILoaderData } from '@/routes/root';
+import useModalReducer from '@/shared/usecase/useModalReducer';
+import useMutateEditInspirations from '@/routes/admin/content-management/inspirations/repositories/useEditInspirations';
 
 interface IInspirationCardProps {
   inspiration: IDetailInspirationData;
-  openModal:
-    | ((modalType: TModalType, id?: string | undefined) => void)
-    | undefined;
-  closeModal: (() => void) | undefined;
-  modalState: TModalState | undefined;
+  refetch?: () => void;
 }
 
 export default function InspirationCard({
   inspiration,
-  openModal,
-  closeModal,
-  modalState,
+  refetch,
 }: IInspirationCardProps) {
   const [formModal] = Form.useForm();
   const { permissions } = useLoaderData() as ILoaderData;
   const { edit } = permissions;
+  const { openModal, closeModal, modalState } = useModalReducer(formModal);
+  const { mutate: mutateEdit } = useMutateEditInspirations(
+    inspiration.id,
+    closeModal,
+    refetch
+  );
 
   const modalType = {
     edit: (
       <FormEdit
+        initialValues={inspiration}
         form={formModal}
-        // TODO: add use mutate from API
-        // handleMutate={mutateCreate}
+        handleMutate={mutateEdit}
         footer={
           <FormFooter
             secondaryText="Cancel"
             secondaryProps={{
-              onClick: () => closeModal!(),
+              onClick: () => {
+                formModal.resetFields();
+                return closeModal!();
+              },
             }}
             primaryText="Create"
             primaryProps={{ type: 'submit' }}
@@ -62,19 +63,17 @@ export default function InspirationCard({
       </Modal>
 
       <div className="flex rounded-md w-full border-2 flex-col overflow-hidden">
-        <div className="bg-ny-primary-500 h-auto w-full overflow-hidden bg-bottom">
-          <img
-            src={defaultInspirationImage}
-            alt="default inspiration"
-            style={{ backgroundSize: 'cover' }}
-          />
-        </div>
+        <img
+          className="bg-cover max-h-72 flex-grow flex size-full overflow-hidden"
+          src={inspiration.image ?? defaultInspirationImage}
+          alt="default inspiration"
+        />
         <div className="flex flex-col gap-2 p-3 w-full">
           <div className="flex items-center gap-4 w-full justify-between">
             <h4 className="font-medium">{inspiration.name}</h4>
 
             <Button
-              disabled={!edit}
+              disabled={edit}
               onClick={() => openModal!('edit')}
               className="p-0 m-0 shrink-0"
               type="link">
@@ -85,8 +84,8 @@ export default function InspirationCard({
           <div className="flex flex-col w-full gap-2">
             <div className="flex w-full items-center">
               {inspiration.tags.map((tag) => (
-                <Tag key={tag.name} className="capitalize w-max">
-                  {tag.name}
+                <Tag key={tag.label} className="capitalize w-max">
+                  {tag.label}
                 </Tag>
               ))}
             </div>

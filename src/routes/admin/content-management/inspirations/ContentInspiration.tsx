@@ -1,6 +1,6 @@
 import ContentInspirationHeader from './view/container/ContentInspirationHeader';
 import { Form } from 'antd';
-import useModalReducer from './usecase/useModalReducer';
+import useModalReducer from '@/shared/usecase/useModalReducer';
 import { useLoaderData } from 'react-router-dom';
 import type { ILoaderData } from '@/routes/root';
 import InspirationCard from '@/shared/view/presentations/inspiration-card/InspirationCard';
@@ -37,7 +37,7 @@ export default function ContentInspiration() {
   const { permissions } = useLoaderData() as ILoaderData;
   const { create } = permissions;
 
-  const { openModal, closeModal, modalState } = useModalReducer(formModal);
+  const { openModal, closeModal, modalState } = useModalReducer(form);
   const { mutate: mutateCreate } = useMutateCreateInspirations(
     closeModal,
     refetch
@@ -45,14 +45,15 @@ export default function ContentInspiration() {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <LoadingHandler classname="h-screen" isLoading={isLoading}>
-        <PageTitle title="Inspiration" />
+      <PageTitle title="Inspiration" />
 
+      <LoadingHandler classname="h-screen" isLoading={isLoading}>
         <ContentInspirationHeader
           handleMutate={mutateCreate}
           clearFilter={clearFilter}
           create={create}
           form={form}
+          formModal={formModal}
           handleFilter={handleFilter}
           query={query}
           setQuery={setQuery}
@@ -64,9 +65,7 @@ export default function ContentInspiration() {
         <div className="grid grid-cols-3 gap-x-5 gap-y-4">
           {inspirations.map((inspiration) => (
             <InspirationCard
-              closeModal={closeModal}
-              openModal={openModal}
-              modalState={modalState}
+              refetch={refetch}
               key={inspiration.id}
               inspiration={inspiration}
             />

@@ -15,6 +15,7 @@ export default function useQueryInspirations(form: FormInstance<any>) {
   const status = searchParams.get('status');
   const limit = searchParams.get('limit');
   const page = searchParams.get('page');
+  const tags = searchParams.get('tags');
 
   // Default filter state
   const initialFilterState: TGeneralFilter = {
@@ -22,6 +23,7 @@ export default function useQueryInspirations(form: FormInstance<any>) {
     page: 1,
     keyword: '',
     status: 'default',
+    tags: [],
   };
 
   // Change filter state based on searchParams
@@ -31,6 +33,7 @@ export default function useQueryInspirations(form: FormInstance<any>) {
     page: page ? parseInt(page) : initialFilterState.page,
     keyword: keyword ?? initialFilterState.keyword,
     status: status ?? initialFilterState.status,
+    tags: [tags ?? ''],
   });
 
   const { objectToQueryParams } = useConvertQuery();
@@ -61,9 +64,15 @@ export default function useQueryInspirations(form: FormInstance<any>) {
   const getInspirations = async () => {
     const queryParams = objectToQueryParams(query);
     setSearchParams(queryParams);
-    const { data, meta_data } = await InspirationAPI.getAllInspirations(
+    const { data: result, meta_data } = await InspirationAPI.getAllInspirations(
       queryParams
     );
+    const { dataToSelectOptions } = useSuccessAxios();
+
+    const data = result.map((item) => ({
+      ...item,
+      tags: dataToSelectOptions(item.tags, 'id', 'name'),
+    }));
 
     return { data: addIndexToData(data), meta_data };
   };
