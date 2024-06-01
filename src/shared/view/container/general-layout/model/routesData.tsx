@@ -117,8 +117,8 @@ export const staffRoutes: ItemsDataI[] = [
             Admin Account
           </div>
         ),
-        key: '/admin-user-management',
-        path: 'admin-user-management',
+        key: '/admin-account',
+        path: 'admin-account',
         children: null,
         icon: <img src={adminManagIconGray} alt="icon" />,
         components: <AdminUserManagementContainer />,
@@ -130,8 +130,8 @@ export const staffRoutes: ItemsDataI[] = [
             Role Management
           </div>
         ),
-        key: '/admin-role-management',
-        path: 'admin-role-management',
+        key: '/role-management',
+        path: 'role-management',
         children: null,
         icon: <img src={adminRoleManagIconGray} alt="icon" />,
         components: <AdminRoleManagementContainer />,
@@ -157,8 +157,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor Account
           </div>
         ),
-        key: '/vendor-user-management',
-        path: 'vendor-user-management',
+        key: '/vendor-account',
+        path: 'vendor-account',
         children: null,
         icon: <img src={vendorUserManagIconGray} alt="icon" />,
         components: <VendorUserManagementContainer />,
@@ -170,8 +170,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor User Create
           </div>
         ),
-        key: '/vendor-user-management/create-user',
-        path: 'vendor-user-management/create-user',
+        key: '/vendor-account/create-user',
+        path: 'vendor-account/create-user',
         children: [],
         icon: <img src={vendorUserManagIconGray} alt="icon" />,
         components: <VendorUserCreateContainer />,
@@ -183,8 +183,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor User Create
           </div>
         ),
-        key: '/vendor-user-management/detail-user',
-        path: 'vendor-user-management/detail-user/:id',
+        key: '/vendor-account/detail-user',
+        path: 'vendor-account/detail-user/:id',
         children: [],
         icon: <img src={vendorUserManagIconGray} alt="icon" />,
         components: <VendorUserDetailContainer />,
@@ -196,8 +196,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor Edit
           </div>
         ),
-        key: '/vendor-user-management/edit-user',
-        path: 'vendor-user-management/edit-user/:id',
+        key: '/vendor-account/edit-user',
+        path: 'vendor-account/edit-user/:id',
         children: [],
         icon: <img src={vendorUserManagIconGray} alt="icon" />,
         components: <VendorUserEditContainer />,
@@ -206,11 +206,11 @@ export const staffRoutes: ItemsDataI[] = [
       {
         label: (
           <div className="text-caption-1 font-[400] text-ny-gray-300">
-            Vendor Content
+            Vendor Product
           </div>
         ),
-        key: '/vendor-content',
-        path: 'vendor-content',
+        key: '/vendor-product',
+        path: 'vendor-product',
         children: null,
         icon: <img src={vendorContentIconGray} alt="icon" />,
         components: <VendorContentContainer />,
@@ -222,8 +222,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor Edit
           </div>
         ),
-        key: '/vendor-content/edit-product',
-        path: 'vendor-content/edit-product/:id',
+        key: '/vendor-product/edit-product',
+        path: 'vendor-product/edit-product/:id',
         children: [],
         icon: <img src={vendorContentIconGray} alt="icon" />,
         components: <VendorContentEditContainer />,
@@ -235,8 +235,8 @@ export const staffRoutes: ItemsDataI[] = [
             Vendor Detail
           </div>
         ),
-        key: '/vendor-content/detail-product',
-        path: 'vendor-content/detail-product/:id',
+        key: '/vendor-product/detail-product',
+        path: 'vendor-product/detail-product/:id',
         children: [],
         icon: <img src={vendorContentIconGray} alt="icon" />,
         components: <VendorContentDetailContainer />,
@@ -248,8 +248,8 @@ export const staffRoutes: ItemsDataI[] = [
             Master Data
           </div>
         ),
-        key: '/vendor-master-data',
-        path: 'vendor-master-data',
+        key: '/master-data',
+        path: 'master-data',
         children: null,
         icon: <img src={vendorMasterDataIconGray} alt="icon" />,
         components: <VendorMasterDataContainer />,
@@ -266,17 +266,17 @@ export const staffRoutes: ItemsDataI[] = [
         <div className="text-caption-1 font-[400] text-ny-gray-300">USER</div>
       </div>
     ),
-    key: '/user-management',
-    path: 'user-management',
+    key: '/user-account',
+    path: 'user-account',
     children: [
       {
         label: (
           <div className="text-caption-1 font-[400] text-ny-gray-300">
-            User Management
+            User Account
           </div>
         ),
-        key: '/user-management',
-        path: 'user-management',
+        key: '/user-account',
+        path: 'user-account',
         children: null,
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <UserManagementContainer />,
@@ -284,8 +284,8 @@ export const staffRoutes: ItemsDataI[] = [
       },
       {
         label: null,
-        key: '/user-management/detail-user',
-        path: 'user-management/detail-user/:id',
+        key: '/user-account/detail-user',
+        path: 'user-account/detail-user/:id',
         children: [],
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <ClientUserDetailContainer />,
@@ -293,8 +293,8 @@ export const staffRoutes: ItemsDataI[] = [
       },
       {
         label: null,
-        key: '/user-management/edit-user',
-        path: 'user-management/edit-user/:id',
+        key: '/user-account/edit-user',
+        path: 'user-account/edit-user/:id',
         children: [],
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <ClientUserEditContainer />,

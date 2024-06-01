@@ -63,17 +63,19 @@ export default function InspirationCard({
       </Modal>
 
       <div className="flex rounded-md w-full border-2 flex-col overflow-hidden">
-        <img
-          className="bg-cover max-h-72 flex-grow flex size-full overflow-hidden"
-          src={inspiration.image ?? defaultInspirationImage}
-          alt="default inspiration"
-        />
+        <div className="h-[348px]">
+          <img
+            className="bg-cover h-[348px] w-full"
+            src={inspiration.image ?? defaultInspirationImage}
+            alt="default inspiration"
+          />
+        </div>
         <div className="flex flex-col gap-2 p-3 w-full">
           <div className="flex items-center gap-4 w-full justify-between">
             <h4 className="font-medium">{inspiration.name}</h4>
 
             <Button
-              disabled={!edit}
+              disabled={edit}
               onClick={() => openModal!('edit')}
               className="p-0 m-0 shrink-0"
               type="link">

@@ -38,7 +38,15 @@ export default function FormEdit({
       layout="vertical">
       <div className="flex gap-[20px]">
         <div className="w-full max-w-[187px] flex-1">
-          <Form.Item noStyle name={'image'}>
+          <Form.Item
+            className="my-[8px]"
+            name={'image'}
+            rules={[
+              {
+                required: true,
+                message: 'Please input the image!',
+              },
+            ]}>
             <DraggerUpload
               profileImageURL={form.getFieldValue('image')}
               form={form}
@@ -79,7 +87,7 @@ export default function FormEdit({
               filterOption={useFilterSelectOptions}
               filterSort={useSortSelectOptions}
               mode="multiple"
-              className="w-full h-[35px]"
+              className="w-full min-h-[40px]"
               placeholder="Tag"
               options={tags?.selectOptions}
             />

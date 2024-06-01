@@ -84,7 +84,7 @@ export const VendorContentContainer = () => {
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     mode="multiple"
-                    className="w-full max-w-[224px] h-[35px]"
+                    className="w-full max-w-[224px] min-h-[40px]"
                     placeholder="Tag"
                     options={resultTags?.filterOptions}
                   />

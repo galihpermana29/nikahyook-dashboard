@@ -46,7 +46,7 @@ const useMutateCreateVendorUser = () => {
     onError: handleError,
     onSuccess: () => {
       showSuccessMessage('Vendor successfully added!');
-      navigate('/vendor-user-management');
+      navigate('/vendor-account');
     },
   });
   return { mutate, error, isLoading };

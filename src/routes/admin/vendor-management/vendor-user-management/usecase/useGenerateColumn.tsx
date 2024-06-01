@@ -66,7 +66,7 @@ const useGenerateColumnVendorUser = (
                   label: 'Edit',
                   key: '1',
                   onClick: () => {
-                    onNavigate!(`/vendor-user-management/edit-user/${id}`);
+                    onNavigate!(`/vendor-account/edit-user/${id}`);
                   },
                   disabled: !edit,
                 },
@@ -74,7 +74,7 @@ const useGenerateColumnVendorUser = (
                   label: 'View Detail',
                   key: '2',
                   onClick: () => {
-                    onNavigate!(`/vendor-user-management/detail-user/${id}`);
+                    onNavigate!(`/vendor-account/detail-user/${id}`);
                   },
                   disabled: !view,
                 },
