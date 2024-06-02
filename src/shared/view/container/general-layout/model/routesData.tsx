@@ -348,8 +348,8 @@ export const staffRoutes: ItemsDataI[] = [
       },
       {
         label: null,
-        key: '/curatorial/edit-user',
-        path: 'curatorial/edit-user/:id',
+        key: '/curatorial/edit-curatorial',
+        path: 'curatorial/edit-curatorial/:id',
         children: null,
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <ClientUserEditContainer />,
@@ -357,8 +357,8 @@ export const staffRoutes: ItemsDataI[] = [
       },
       {
         label: null,
-        key: '/curatorial/create-user',
-        path: 'curatorial/create-user',
+        key: '/curatorial/create-curatorial',
+        path: 'curatorial/create-curatorial',
         children: null,
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <CuratorialCreate />,
