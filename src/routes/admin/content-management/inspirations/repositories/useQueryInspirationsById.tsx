@@ -2,14 +2,11 @@ import { FormInstance } from 'antd';
 import { useQuery } from 'react-query';
 import { TModalState } from '@/shared/usecase/useModalReducer';
 import { InspirationAPI } from '@/shared/repositories/inspirationService';
-import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 
 const useQueryInspirationById = (
   modalState?: TModalState,
   form?: FormInstance<any>
 ) => {
-  const { dataToSelectOptions } = useSuccessAxios();
-
   const getDetail = async () => {
     const { data } = await InspirationAPI.getInspirationById(
       modalState?.id ?? ''
@@ -17,8 +14,9 @@ const useQueryInspirationById = (
 
     form!.setFieldsValue({
       ...data,
-      tags: dataToSelectOptions(data.tags, 'id', 'name'),
+      tags: data.tags.map((tag) => tag.id),
     });
+
     return data;
   };
 

@@ -17,7 +17,7 @@ const useMutateEditInspirations = (
     const newPayload = {
       image: payload.image,
       name: payload.name,
-      tags: payload.tags.map((tagOptions) => ({ id: tagOptions.value })),
+      tags: payload.tags.map((tagId) => ({ id: tagId })),
     };
 
     const data = await InspirationAPI.editInspiration(newPayload, id);
