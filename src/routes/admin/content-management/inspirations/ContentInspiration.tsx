@@ -124,6 +124,7 @@ export default function ContentInspiration() {
           clearFilter={clearFilter}
           create={create}
           form={form}
+          tags={tags?.selectOptions}
           formModal={form}
           handleFilter={handleFilter}
           query={query}
