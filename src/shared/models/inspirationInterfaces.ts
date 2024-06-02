@@ -1,4 +1,4 @@
-import type { Metadata } from './generalInterfaces';
+import type { Metadata, TGeneralSelectOptions } from './generalInterfaces';
 
 export interface IInspirationTagData {
   id: number;
@@ -26,7 +26,7 @@ export interface IGetInspirationByIdResponseRoot {
 export interface ICreateInspirationInputRoot {
   name: string;
   image: string;
-  tags: number[];
+  tags: TGeneralSelectOptions[];
 }
 
 export interface ICreateInspirationPayloadRoot {
@@ -49,7 +49,7 @@ export interface IEditInspirationInputRoot {
   id: number;
   name: string;
   image: string;
-  tags: number[];
+  tags: TGeneralSelectOptions[];
 }
 
 export interface IEditInspirationResponseRoot {
