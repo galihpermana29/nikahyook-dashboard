@@ -14,14 +14,10 @@ const useMutateEditInspirations = (
   const { showSuccessMessage } = useSuccessAxios();
 
   const editInspirations = async (payload: IEditInspirationInputRoot) => {
-    if (!payload.image) throw showPopError('Please upload an image!');
-
     const newPayload = {
       image: payload.image,
       name: payload.name,
-      tags: payload.tags.map((tag) => ({
-        id: tag.value,
-      })),
+      tags: payload.tags.map((tagId) => ({ id: tagId })),
     };
 
     const data = await InspirationAPI.editInspiration(newPayload, id);

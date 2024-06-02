@@ -13,8 +13,6 @@ const useMutateCreateInspirations = (
   const { showSuccessMessage } = useSuccessAxios();
 
   const createInspirations = async (payload: ICreateInspirationInputRoot) => {
-    if (!payload.image) throw showPopError('Please upload an image!');
-
     const newPayload = {
       image: payload.image,
       name: payload.name,
