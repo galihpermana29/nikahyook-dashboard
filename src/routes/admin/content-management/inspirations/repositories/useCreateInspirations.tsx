@@ -16,9 +16,7 @@ const useMutateCreateInspirations = (
     const newPayload = {
       image: payload.image,
       name: payload.name,
-      tags: payload.tags.map((tag) => ({
-        id: tag.value,
-      })),
+      tags: payload.tags.map((tagId) => ({ id: tagId })),
     };
 
     const data = await InspirationAPI.createInspiration(newPayload);
