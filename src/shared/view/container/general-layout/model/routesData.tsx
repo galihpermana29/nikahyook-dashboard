@@ -31,6 +31,8 @@ import GalleryIcon from '@/assets/icon/gallery.svg';
 import EditIcon from '@/assets/icon/edit-2.svg';
 import CuratorialsPage from '@/routes/admin/content-management/curatorials/CuratorialsPage';
 import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
+import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
+import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -348,11 +350,20 @@ export const staffRoutes: ItemsDataI[] = [
       },
       {
         label: null,
+        key: '/curatorial/detail-curatorial',
+        path: '/curatorial/detail-curatorial/:id',
+        children: null,
+        icon: <img src={userManagIconGray} alt="icon" />,
+        components: <CuratorialDetail />,
+        show: false,
+      },
+      {
+        label: null,
         key: '/curatorial/edit-curatorial',
         path: 'curatorial/edit-curatorial/:id',
         children: null,
         icon: <img src={userManagIconGray} alt="icon" />,
-        components: <ClientUserEditContainer />,
+        components: <CuratorialEdit />,
         show: false,
       },
       {

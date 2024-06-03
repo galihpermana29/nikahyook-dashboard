@@ -45,7 +45,7 @@ export interface IRootCuratorialData {
   id: number;
   name: string;
   expert_name: string;
-  expert_photo: string;
+  expert_photo: string | string[];
   images: string | string[];
   total_price: number;
   description: string;
@@ -70,8 +70,8 @@ export interface IAllCuratorialResponseRoot {
 export interface IUpdateCuratorialPayloadRoot
   extends IRootCuratorialData,
     Pick<IDetailCuratorialData, 'status'> {
-  products: IRootCuratorialProduct[];
-  inspirations: IRootCuratorialInspiration[];
+  products: IRootCuratorialProduct['id'][];
+  inspirations: IRootCuratorialInspiration['id'][];
 }
 
 export interface IUpdateCuratorialResponseRoot {
@@ -79,20 +79,21 @@ export interface IUpdateCuratorialResponseRoot {
   status: string;
 }
 
-export interface ICreateCuratorialInputRoot {
+export interface ICuratorialInputRoot {
   expert_photo: IDetailCuratorialData['expert_photo'];
   name: IDetailCuratorialData['name'];
   expert_name: IDetailCuratorialData['expert_name'];
   description: IDetailCuratorialData['description'];
   images: IDetailCuratorialData['images'];
-  inspirations_photos: IDetailCuratorialInspiration['image'][];
-  products_photos: IDetailCuratorialProduct['images'];
+  total_price: IDetailCuratorialData['total_price'];
+  inspirations: IDetailCuratorialInspiration['id'][];
+  products: IDetailCuratorialProduct['id'][];
 }
 
 export interface ICreateCuratorialPayloadRoot
   extends Omit<IRootCuratorialData, 'id'> {
-  products: IRootCuratorialProduct[];
-  inspirations: IRootCuratorialInspiration[];
+  products: Pick<IRootCuratorialProduct, 'id'>[];
+  inspirations: Pick<IRootCuratorialInspiration, 'id'>[];
 }
 
 export interface ICreateCuratorialResponseRoot {

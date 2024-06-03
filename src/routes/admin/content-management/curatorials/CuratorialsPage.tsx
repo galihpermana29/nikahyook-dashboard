@@ -62,7 +62,7 @@ export default function CuratorialsPage() {
             onSearch={setQueryOptions}
             buttonComponents={
               <Button
-                disabled={create}
+                disabled={!create}
                 href="curatorial/create-curatorial"
                 className="hover:!bg-ny-primary-500 hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
                 <img src={addIcon} alt="add-icon" />

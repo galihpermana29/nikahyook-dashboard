@@ -3,22 +3,32 @@ import LoadingHandler from '@/shared/view/container/loading/Loading';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { useForm } from 'antd/es/form/Form';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
-import FormCreation from '../../presentations/PageForm/FormCreation';
+import { useNavigate, useParams } from 'react-router-dom';
 import useMutateCreateCuratorials from '../../../repositories/useCreateCuratorial';
+import FormEdit from '../../presentations/PageForm/FormEdit';
+import useQueryCuratorialDetail from '../../../repositories/useGetDetailCuratorial';
+import { Modal } from 'antd';
 import ProductModal from '../../presentations/Modal/ProductModal';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
-import { Modal } from 'antd';
-import useModalReducer from '../../../usecase/useModalReducer';
 import InspirationModal from '../../presentations/Modal/InspirationModal';
+import useModalReducer from '../../../usecase/useModalReducer';
 
-const CuratorialCreate = () => {
+const CuratorialDetail = () => {
   const [form] = useForm();
   const [formModal] = useForm();
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const { mutate: mutateEdit, error, isLoading } = useMutateCreateCuratorials();
+  const { mutate: mutateEdit, error: errorCreate } =
+    useMutateCreateCuratorials();
+
+  const {
+    error: errorFetch,
+    isLoading,
+    refetch,
+  } = useQueryCuratorialDetail(id ?? '', form);
+
   const { openModal, closeModal, modalState } = useModalReducer(formModal);
 
   const modalType = {
@@ -56,10 +66,8 @@ const CuratorialCreate = () => {
 
   return (
     <ErrorBoundary
-      error={error as AxiosError}
-      refetch={() => {
-        return;
-      }}>
+      error={(errorCreate as AxiosError) || (errorFetch as AxiosError)}
+      refetch={refetch}>
       <Modal
         title={<div className="capitalize">{`Search ${modalState?.type}`}</div>}
         open={modalState?.isOpen}
@@ -69,13 +77,14 @@ const CuratorialCreate = () => {
       </Modal>
 
       <div className="bg-white">
-        <PageTitle title="Create Curatorial" withArrow={true} />
+        <PageTitle title="View Curatorial" withArrow={true} />
         <div className="p-[20px]">
           <LoadingHandler isLoading={isLoading} fullscreen={true}>
-            <FormCreation
-              form={form}
+            <FormEdit
               openModal={openModal}
+              form={form}
               handleMutate={mutateEdit}
+              disabled={true}
               onCancel={() => {
                 navigate(-1);
               }}
@@ -87,4 +96,4 @@ const CuratorialCreate = () => {
   );
 };
 
-export default CuratorialCreate;
+export default CuratorialDetail;

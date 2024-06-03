@@ -95,7 +95,7 @@ const useGenerateColumnCuratorials = (
                   label: 'View Detail',
                   key: '2',
                   onClick: () =>
-                    onNavigate!(`/curatorial/edit-curatorial/${id}`),
+                    onNavigate!(`/curatorial/detail-curatorial/${id}`),
                   disabled: !view,
                 },
                 {

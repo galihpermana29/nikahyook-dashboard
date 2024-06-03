@@ -1,4 +1,7 @@
-import type { ICreateCuratorialPayloadRoot } from '@/shared/models/curatorialInterfaces';
+import type {
+  ICreateCuratorialPayloadRoot,
+  ICuratorialInputRoot,
+} from '@/shared/models/curatorialInterfaces';
 import { CuratorialsAPI } from '@/shared/repositories/curatorialServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
@@ -10,8 +13,16 @@ const useMutateCreateCuratorials = (refetch?: () => void) => {
   const { showSuccessMessage } = useSuccessAxios();
 
   // TODO: change type of payload to ICreateCuratorialInputRoot
-  const createCuratorial = async (payload: ICreateCuratorialPayloadRoot) => {
-    const data = await CuratorialsAPI.createCuratorial(payload);
+  const createCuratorial = async (payload: ICuratorialInputRoot) => {
+    const newPayload = {
+      ...payload,
+      products: payload.products.map((productId) => ({ id: productId })),
+      inspirations: payload.inspirations.map((inspirationId) => ({
+        id: inspirationId,
+      })),
+    } as ICreateCuratorialPayloadRoot;
+
+    const data = await CuratorialsAPI.createCuratorial(newPayload);
 
     return data;
   };
@@ -22,8 +33,7 @@ const useMutateCreateCuratorials = (refetch?: () => void) => {
   };
 
   const { mutate, error, isLoading } = useMutation({
-    mutationFn: (payload: ICreateCuratorialPayloadRoot) =>
-      createCuratorial(payload),
+    mutationFn: (payload: ICuratorialInputRoot) => createCuratorial(payload),
     onError: handleError,
     onSuccess: () => {
       refetch!();

@@ -1,6 +1,6 @@
 import type {
-  ICreateCuratorialResponseRoot,
   ICuratorialInputRoot,
+  IUpdateCuratorialResponseRoot,
 } from '@/shared/models/curatorialInterfaces';
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
@@ -12,30 +12,33 @@ import { UseMutateFunction } from 'react-query';
 import addIcon from '@/assets/icon/add.png';
 import type { TCuratorialModalType } from '../../../usecase/useModalReducer';
 
-interface IFormCreation {
+interface IFormEdit {
+  onCancel: () => void;
   form: FormInstance<any>;
+  disabled: boolean;
   handleMutate: UseMutateFunction<
-    ICreateCuratorialResponseRoot,
+    IUpdateCuratorialResponseRoot,
     AxiosError<unknown, any>,
     ICuratorialInputRoot,
     unknown
   >;
-  onCancel: () => void;
   openModal?: (
     modalType: TCuratorialModalType,
     id?: string | undefined
   ) => void;
 }
 
-const FormCreation = ({
+const FormEdit = ({
   form,
   handleMutate,
   onCancel,
+  disabled,
   openModal,
-}: IFormCreation) => {
+}: IFormEdit) => {
   return (
     <div>
       <Form
+        disabled={disabled}
         className="space-y-6"
         form={form}
         layout="vertical"
@@ -154,4 +157,4 @@ const FormCreation = ({
   );
 };
 
-export default FormCreation;
+export default FormEdit;
