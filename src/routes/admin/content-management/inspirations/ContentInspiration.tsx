@@ -1,5 +1,5 @@
 import ContentInspirationHeader from './view/container/ContentInspirationHeader';
-import { Form, Modal } from 'antd';
+import { Button, Form, Modal } from 'antd';
 import useModalReducer from '@/shared/usecase/useModalReducer';
 import { useLoaderData } from 'react-router-dom';
 import type { ILoaderData } from '@/routes/root';
@@ -18,6 +18,7 @@ import FormEdit from './view/presentations/Modal/FormEdit';
 import useMutateEditInspirations from './repositories/useEditInspirations';
 import useQueryTags from '../../vendor-management/vendor-content/repositories/useGetAllTags';
 import useQueryInspirationById from './repositories/useQueryInspirationsById';
+import threeDots from '@/assets/icon/more-circle.svg';
 
 export default function ContentInspiration() {
   const [form] = Form.useForm();
@@ -138,9 +139,16 @@ export default function ContentInspiration() {
           {inspirations.map((inspiration) => (
             <InspirationCard
               key={inspiration.id}
-              disableEdit={!edit}
-              openModal={openModal}
               inspiration={inspiration}
+              miscButton={
+                <Button
+                  disabled={edit}
+                  onClick={() => openModal!('edit', inspiration.id.toString())}
+                  className="p-0 m-0 shrink-0"
+                  type="link">
+                  <img src={threeDots} />
+                </Button>
+              }
             />
           ))}
         </div>
