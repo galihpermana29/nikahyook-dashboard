@@ -10,11 +10,13 @@ const useQueryCuratorialDetail = (
   const getDetail = async () => {
     const { data } = await CuratorialsAPI.getCuratorialById(id);
 
-    form!.setFieldsValue({
+    const newFieldsValue = {
       ...data,
       inspirations: data.inspirations.map((inspiration) => inspiration.id),
       products: data.products.map((product) => product.id),
-    });
+    } as ICuratorialInputRoot;
+
+    form?.setFieldsValue(newFieldsValue);
 
     return data;
   };

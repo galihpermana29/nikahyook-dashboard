@@ -125,11 +125,13 @@ const FormEdit = ({
                 Add Inspiration
               </Button>
 
-              <span>{form.getFieldValue('inspiration')?.length ?? 0} / 10</span>
+              <span>
+                {form.getFieldValue('inspirations')?.length ?? 0} / 10
+              </span>
             </div>
 
-            <Form.Item name={'inspiration'}>
-              <Select></Select>
+            <Form.Item name={'inspirations'}>
+              <Select mode="multiple"></Select>
             </Form.Item>
           </div>
         </FormRow>
@@ -144,11 +146,11 @@ const FormEdit = ({
                 Attach Product
               </Button>
 
-              <span>IDR {form.getFieldValue('product')?.length ?? 0}</span>
+              <span>IDR {form.getFieldValue('products')?.length ?? 0}</span>
             </div>
 
             <Form.Item name={'products'}>
-              <Select></Select>
+              <Select mode="multiple"></Select>
             </Form.Item>
           </div>
         </FormRow>
