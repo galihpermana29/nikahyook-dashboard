@@ -1,46 +1,42 @@
 import defaultInspirationImage from '@/assets/default-inspiration-image.jpeg';
-import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
+import type { IDetailProductData } from '@/shared/models/productServicesInterface';
 import { Tag } from 'antd';
 
-interface IInspirationCardProps {
-  inspiration: IDetailInspirationData;
+interface IProductCardProps {
+  product: IDetailProductData;
   miscButton?: React.ReactNode;
 }
 
-export default function InspirationCard({
-  inspiration,
+export default function ProductCard({
+  product,
   miscButton,
-}: IInspirationCardProps) {
+}: IProductCardProps) {
   return (
     <div className="flex rounded-md border-2 flex-col overflow-hidden">
       <div className="h-[348px]">
         <img
           className="bg-cover h-[348px] w-full"
-          src={inspiration.image ?? defaultInspirationImage}
+          src={product.images[0] ?? defaultInspirationImage}
           alt="default inspiration"
         />
       </div>
       <div className="flex flex-col gap-2 p-3 w-full">
         <div className="flex items-center gap-4 w-full justify-between">
-          <h4 className="font-medium">{inspiration.name}</h4>
+          <h4 className="font-medium">{product.title}</h4>
 
           {miscButton}
         </div>
 
         <div className="flex flex-col w-full gap-2">
           <div className="flex w-full items-center">
-            {inspiration.tags.map((tag) => (
-              <Tag key={tag.label} className="capitalize w-max">
-                {tag.label}
+            {product.tags.map((tag) => (
+              <Tag key={tag.name} className="capitalize w-max">
+                {tag.name}
               </Tag>
             ))}
           </div>
 
-          <Tag
-            className="capitalize w-max"
-            color={inspiration.status === 'active' ? 'green' : 'red'}>
-            {inspiration.status}
-          </Tag>
+          <p className="text-ny-gray-400">{product.vendor_name}</p>
         </div>
       </div>
     </div>

@@ -6,9 +6,9 @@ const CLOSE_MODAL = 'CLOSE_MODAL';
 export type TCuratorialModalType = 'product' | 'inspiration';
 
 export interface ICuratorialModalReducerReturn {
-  modalState?: TCuratorialModalState;
-  openModal?: (modalType: TCuratorialModalType, id?: string) => void;
-  closeModal?: () => void;
+  modalState: TCuratorialModalState;
+  openModal: (modalType: TCuratorialModalType, id?: string) => void;
+  closeModal: () => void;
 }
 
 export type TCuratorialModalState = {

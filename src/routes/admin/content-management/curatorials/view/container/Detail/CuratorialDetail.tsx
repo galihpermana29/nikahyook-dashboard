@@ -8,13 +8,12 @@ import useMutateCreateCuratorials from '../../../repositories/useCreateCuratoria
 import FormEdit from '../../presentations/PageForm/FormEdit';
 import useQueryCuratorialDetail from '../../../repositories/useGetDetailCuratorial';
 import { Modal } from 'antd';
-import ProductModal from '../../presentations/Modal/ProductModal';
-import InspirationModal from '../../presentations/Modal/InspirationModal';
 import useModalReducer from '../../../usecase/useModalReducer';
-import CuratorialModalFooter from '../../presentations/CuratorialModalFooter';
+import useGetCuratorialModalType from '../../../repositories/useGetCuratorialModalType';
 
 const CuratorialDetail = () => {
   const [form] = useForm();
+  const [filterForm] = useForm();
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -30,48 +29,14 @@ const CuratorialDetail = () => {
 
   const { openModal, closeModal, modalState } = useModalReducer();
 
-  const modalType = {
-    product: (
-      <ProductModal
-        form={form}
-        fieldName="products"
-        footer={
-          <CuratorialModalFooter
-            itemCount={form.getFieldValue('products')?.length}
-            secondaryText="Cancel"
-            secondaryProps={{
-              onClick: () => closeModal!(),
-            }}
-            primaryText="Add"
-            primaryProps={{ type: 'submit' }}
-          />
-        }
-      />
-    ),
-    inspiration: (
-      <InspirationModal
-        form={form}
-        fieldName="inspirations"
-        footer={
-          <CuratorialModalFooter
-            itemCount={form.getFieldValue('inspirations')?.length}
-            secondaryText="Cancel"
-            secondaryProps={{
-              onClick: () => closeModal!(),
-            }}
-            primaryText="Add"
-            primaryProps={{ type: 'submit' }}
-          />
-        }
-      />
-    ),
-  };
+  const modalType = useGetCuratorialModalType({ filterForm, form, closeModal });
 
   return (
     <ErrorBoundary
       error={(errorCreate as AxiosError) || (errorFetch as AxiosError)}
       refetch={refetch}>
       <Modal
+        className="max-w-max"
         title={<div className="capitalize">{`Search ${modalState?.type}`}</div>}
         open={modalState?.isOpen}
         footer={null}
