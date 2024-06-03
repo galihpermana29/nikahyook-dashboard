@@ -9,9 +9,9 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import addIcon from '@/assets/icon/add.png';
-import useQueryVendorContent from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllContent';
 import useMutateEditVendorContent from '@/routes/admin/vendor-management/vendor-content/repositories/useUpdateContent';
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
+import useQueryVendorContent from './repositories/useGetAllContent';
 
 export const VendorProductContainer = () => {
   const [form] = useForm();
