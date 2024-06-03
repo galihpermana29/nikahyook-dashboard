@@ -142,7 +142,7 @@ export default function ContentInspiration() {
               inspiration={inspiration}
               miscButton={
                 <Button
-                  disabled={edit}
+                  disabled={!edit}
                   onClick={() => openModal!('edit', inspiration.id.toString())}
                   className="p-0 m-0 shrink-0"
                   type="link">
