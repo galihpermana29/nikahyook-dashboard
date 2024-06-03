@@ -122,10 +122,12 @@ const FormCreation = ({
                 Add Inspiration
               </Button>
 
-              <span>{form.getFieldValue('inspiration')?.length ?? 0} / 10</span>
+              <span>
+                {form.getFieldValue('inspirations')?.length ?? 0} / 10
+              </span>
             </div>
 
-            <Form.Item name={'inspiration'}>
+            <Form.Item name={'inspirations'}>
               <Select></Select>
             </Form.Item>
           </div>
@@ -141,7 +143,7 @@ const FormCreation = ({
                 Attach Product
               </Button>
 
-              <span>IDR {form.getFieldValue('product')?.length ?? 0}</span>
+              <span>IDR {form.getFieldValue('products')?.length ?? 0}</span>
             </div>
 
             <Form.Item name={'products'}>
