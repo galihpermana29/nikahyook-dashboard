@@ -13,14 +13,10 @@ const useMutateCreateInspirations = (
   const { showSuccessMessage } = useSuccessAxios();
 
   const createInspirations = async (payload: ICreateInspirationInputRoot) => {
-    if (!payload.image) throw showPopError('Please upload an image!');
-
     const newPayload = {
       image: payload.image,
       name: payload.name,
-      tags: payload.tags.map((tag) => ({
-        id: tag.value,
-      })),
+      tags: payload.tags.map((tagId) => ({ id: tagId })),
     };
 
     const data = await InspirationAPI.createInspiration(newPayload);

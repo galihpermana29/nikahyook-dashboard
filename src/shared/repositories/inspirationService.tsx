@@ -4,6 +4,7 @@ import type {
   ICreateInspirationResponseRoot,
   IEditInspirationPayloadRoot,
   IEditInspirationResponseRoot,
+  IGetInspirationByIdResponseRoot,
 } from '../models/inspirationInterfaces';
 import { ApiClass } from './generalApi';
 
@@ -21,6 +22,21 @@ class InspirationServices extends ApiClass {
       `/inspirations${query ? `?${query}` : ''}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
+
+    return data;
+  }
+
+  public async getInspirationById(
+    id: string
+  ): Promise<IGetInspirationByIdResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } =
+      await this.axiosInstance.get<IGetInspirationByIdResponseRoot>(
+        `/inspirations/${id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
     return data;
   }
 

@@ -1,4 +1,4 @@
-import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
+import type { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
 import type {
   ICreateInspirationInputRoot,
   ICreateInspirationResponseRoot,
@@ -13,6 +13,7 @@ import type { UseMutateFunction } from 'react-query';
 interface IFormCreation {
   form: FormInstance<any>;
   footer: React.ReactNode;
+  tags?: TGeneralSelectOptions[];
   handleMutate: UseMutateFunction<
     ICreateInspirationResponseRoot,
     AxiosError<unknown, any>,
@@ -23,10 +24,9 @@ interface IFormCreation {
 export default function FormCreation({
   form,
   footer,
+  tags,
   handleMutate,
 }: IFormCreation) {
-  const { result: tags, isLoading } = useQueryTags();
-
   return (
     <Form form={form} layout="vertical" onFinish={handleMutate}>
       <div className="flex gap-[20px]">
@@ -77,12 +77,11 @@ export default function FormCreation({
             <Select
               mode="multiple"
               showSearch
-              loading={isLoading}
               filterOption={useFilterSelectOptions}
               filterSort={useSortSelectOptions}
               className="w-full min-h-[40px]"
               placeholder="Tag"
-              options={tags?.selectOptions}
+              options={tags}
             />
           </Form.Item>
         </div>

@@ -24,7 +24,6 @@ export interface ILoaderData {
 export async function PermissionLoader(): Promise<ILoaderData> {
   const admin: ILoginData = JSON.parse(localStorage.getItem('admin')!);
   const { data } = await DashboardUserAPI.getUserById(admin.user_id);
-
   const currentRoute = window.location.pathname
     .split('/')[1]
     .split('-')
