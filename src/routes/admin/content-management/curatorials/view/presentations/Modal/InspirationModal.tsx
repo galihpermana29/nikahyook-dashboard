@@ -2,6 +2,7 @@ import { Form, type FormInstance } from 'antd';
 
 interface IFormInspiration {
   form: FormInstance<any>;
+  fieldName: string;
   footer: React.ReactNode;
 }
 

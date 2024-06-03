@@ -1,5 +1,4 @@
 import { useReducer } from 'react';
-import { FormInstance } from 'antd';
 
 const OPEN_MODAL = 'OPEN_MODAL';
 const CLOSE_MODAL = 'CLOSE_MODAL';
@@ -47,13 +46,10 @@ const initialState: TCuratorialModalState = {
   id: undefined,
 };
 
-const useModalReducer = (
-  form?: FormInstance<any>
-): ICuratorialModalReducerReturn => {
+const useModalReducer = (): ICuratorialModalReducerReturn => {
   const [modalState, dispatch] = useReducer(modalReducer, initialState);
 
   const openModal = (modalType: TCuratorialModalType, id?: string) => {
-    form!.resetFields();
     dispatch({ type: 'OPEN_MODAL', modalType, id });
   };
 

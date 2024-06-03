@@ -7,31 +7,32 @@ import { useNavigate } from 'react-router-dom';
 import FormCreation from '../../presentations/PageForm/FormCreation';
 import useMutateCreateCuratorials from '../../../repositories/useCreateCuratorial';
 import ProductModal from '../../presentations/Modal/ProductModal';
-import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import { Modal } from 'antd';
 import useModalReducer from '../../../usecase/useModalReducer';
 import InspirationModal from '../../presentations/Modal/InspirationModal';
+import CuratorialModalFooter from '../../presentations/CuratorialModalFooter';
 
 const CuratorialCreate = () => {
   const [form] = useForm();
-  const [formModal] = useForm();
 
   const navigate = useNavigate();
 
   const { mutate: mutateEdit, error, isLoading } = useMutateCreateCuratorials();
-  const { openModal, closeModal, modalState } = useModalReducer(formModal);
+  const { openModal, closeModal, modalState } = useModalReducer();
 
   const modalType = {
     product: (
       <ProductModal
-        form={formModal}
+        form={form}
+        fieldName="products"
         footer={
-          <FormFooter
+          <CuratorialModalFooter
+            itemCount={form.getFieldValue('products')?.length}
             secondaryText="Cancel"
             secondaryProps={{
               onClick: () => closeModal!(),
             }}
-            primaryText="Create"
+            primaryText="Add"
             primaryProps={{ type: 'submit' }}
           />
         }
@@ -39,14 +40,16 @@ const CuratorialCreate = () => {
     ),
     inspiration: (
       <InspirationModal
-        form={formModal}
+        form={form}
+        fieldName="inspirations"
         footer={
-          <FormFooter
+          <CuratorialModalFooter
+            itemCount={form.getFieldValue('inspirations')?.length}
             secondaryText="Cancel"
             secondaryProps={{
               onClick: () => closeModal!(),
             }}
-            primaryText="Create"
+            primaryText="Add"
             primaryProps={{ type: 'submit' }}
           />
         }

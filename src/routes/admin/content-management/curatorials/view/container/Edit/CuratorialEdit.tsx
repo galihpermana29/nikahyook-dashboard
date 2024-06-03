@@ -9,13 +9,12 @@ import FormEdit from '../../presentations/PageForm/FormEdit';
 import useQueryCuratorialDetail from '../../../repositories/useGetDetailCuratorial';
 import { Modal } from 'antd';
 import ProductModal from '../../presentations/Modal/ProductModal';
-import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import InspirationModal from '../../presentations/Modal/InspirationModal';
 import useModalReducer from '../../../usecase/useModalReducer';
+import CuratorialModalFooter from '../../presentations/CuratorialModalFooter';
 
 const CuratorialEdit = () => {
   const [form] = useForm();
-  const [formModal] = useForm();
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -29,19 +28,21 @@ const CuratorialEdit = () => {
     refetch,
   } = useQueryCuratorialDetail(id ?? '', form);
 
-  const { openModal, closeModal, modalState } = useModalReducer(formModal);
+  const { openModal, closeModal, modalState } = useModalReducer();
 
   const modalType = {
     product: (
       <ProductModal
-        form={formModal}
+        form={form}
+        fieldName="products"
         footer={
-          <FormFooter
+          <CuratorialModalFooter
+            itemCount={form.getFieldValue('products')?.length}
             secondaryText="Cancel"
             secondaryProps={{
               onClick: () => closeModal!(),
             }}
-            primaryText="Create"
+            primaryText="Add"
             primaryProps={{ type: 'submit' }}
           />
         }
@@ -49,14 +50,16 @@ const CuratorialEdit = () => {
     ),
     inspiration: (
       <InspirationModal
-        form={formModal}
+        form={form}
+        fieldName="inspirations"
         footer={
-          <FormFooter
+          <CuratorialModalFooter
+            itemCount={form.getFieldValue('inspirations')?.length}
             secondaryText="Cancel"
             secondaryProps={{
               onClick: () => closeModal!(),
             }}
-            primaryText="Create"
+            primaryText="Add"
             primaryProps={{ type: 'submit' }}
           />
         }
