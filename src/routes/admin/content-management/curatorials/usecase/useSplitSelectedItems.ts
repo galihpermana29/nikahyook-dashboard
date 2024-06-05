@@ -8,9 +8,9 @@ export default function useSplitSelectedItems<T extends { id: number }>({
   selectedId,
 }: Params<T>) {
   return {
-    not_selected: (data.filter((item: T) => !selectedId.includes(item.id)) ??
+    not_selected: (data?.filter((item: T) => !selectedId.includes(item.id)) ??
       []) as T[],
-    selected: (data.filter((item: T) => selectedId.includes(item.id)) ??
+    selected: (data?.filter((item: T) => selectedId.includes(item.id)) ??
       []) as T[],
   };
 }
