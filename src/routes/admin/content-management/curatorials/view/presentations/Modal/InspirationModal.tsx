@@ -13,6 +13,7 @@ import useToggleSelect from '../../../usecase/useToggleSelect';
 import Pagination from '@/shared/view/presentations/pagination/Pagination';
 import useQueryCuratorialInspirations from '../../../repositories/useQueryCuratorialInspirations';
 import useSplitSelectedItems from '../../../usecase/useSplitSelectedItems';
+import { useDebounce } from '@uidotdev/usehooks';
 
 interface IFormInspiration {
   filterForm: FormInstance;
@@ -44,10 +45,13 @@ export default function InspirationModal({
     form?.getFieldValue(fieldName) ?? []
   );
 
-  const items = useSplitSelectedItems({
-    data: result?.data as IDetailInspirationData[],
-    selectedId: selected,
-  });
+  const items = useDebounce(
+    useSplitSelectedItems({
+      data: result?.data as IDetailInspirationData[],
+      selectedId: selected,
+    }),
+    165
+  );
 
   const handleSubmit = (selected: number[], form: FormInstance) => {
     return form.setFieldValue(fieldName, selected);
@@ -55,7 +59,7 @@ export default function InspirationModal({
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <LoadingHandler classname="h-52" isLoading={isLoading}>
+      <LoadingHandler classname="h-[35rem]" isLoading={isLoading}>
         <PageFilter
           form={filterForm}
           onApplyFilter={handleFilter}
@@ -76,7 +80,7 @@ export default function InspirationModal({
             </Form.Item>
           }
         />
-        <div className="grid grid-cols-4 gap-2 mt-5">
+        <div className="grid grid-cols-4 gap-2 mt-5 min-h-96">
           {/* make sure selected items are always shown first in the list */}
           {[...items.selected, ...items.not_selected].map((inspiration) => (
             <button
@@ -113,7 +117,10 @@ export default function InspirationModal({
             <div className="flex gap-4 w-full">
               <button
                 type="button"
-                onClick={() => closeModal()}
+                onClick={() => {
+                  setSelected(form?.getFieldValue(fieldName) ?? []);
+                  closeModal();
+                }}
                 className="flex-1 rounded-[8px] h-[40px] bg-ny-primary-100 text-ny-primary-500 text-body-2 font-[400]">
                 Cancel
               </button>

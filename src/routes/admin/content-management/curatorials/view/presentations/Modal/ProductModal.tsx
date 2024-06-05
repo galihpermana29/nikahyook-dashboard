@@ -14,6 +14,7 @@ import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedP
 import Pagination from '@/shared/view/presentations/pagination/Pagination';
 import useQueryCuratorialProducts from '../../../repositories/useQueryCuratorialProducts';
 import useSplitSelectedItems from '../../../usecase/useSplitSelectedItems';
+import { useDebounce } from '@uidotdev/usehooks';
 
 interface IFormProduct {
   filterForm: FormInstance;
@@ -47,10 +48,13 @@ export default function ProductModal({
     form?.getFieldValue(fieldName) ?? []
   );
 
-  const items = useSplitSelectedItems({
-    data: result?.data as IDetailProductData[],
-    selectedId: selected,
-  });
+  const items = useDebounce(
+    useSplitSelectedItems({
+      data: result?.data as IDetailProductData[],
+      selectedId: selected,
+    }),
+    165
+  );
 
   const totalPrice = useGetTotalSelectedPrice(selected);
   const handleChangePrice = (form: FormInstance) => {
@@ -65,7 +69,7 @@ export default function ProductModal({
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <LoadingHandler classname="h-52" isLoading={isLoading}>
+      <LoadingHandler classname="h-[35rem]" isLoading={isLoading}>
         <PageFilter
           form={filterForm}
           onApplyFilter={handleFilter}
@@ -87,7 +91,7 @@ export default function ProductModal({
           }
         />
 
-        <div className="grid grid-cols-4 gap-2 mt-5">
+        <div className="grid grid-cols-4 gap-2 mt-5 min-h-96">
           {/* make sure selected items are always shown first in the list */}
           {[...items.selected, ...items.not_selected].map((product) => (
             <button
@@ -124,7 +128,10 @@ export default function ProductModal({
             <div className="flex gap-4 w-full">
               <button
                 type="button"
-                onClick={() => closeModal()}
+                onClick={() => {
+                  setSelected(form?.getFieldValue(fieldName) ?? []);
+                  closeModal();
+                }}
                 className="flex-1 rounded-[8px] h-[40px] bg-ny-primary-100 text-ny-primary-500 text-body-2 font-[400]">
                 Cancel
               </button>
