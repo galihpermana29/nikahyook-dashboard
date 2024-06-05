@@ -28,6 +28,10 @@ export default function ProductCard({
         </div>
 
         <div className="flex flex-col w-full gap-2">
+          <p className="text-base font-medium my-2 text-left">
+            IDR {product.price}
+          </p>
+
           <div className="flex w-full items-center flex-wrap gap-y-2">
             {product.tags.map((tag) => (
               <Tag key={tag.name} className="capitalize w-max">
@@ -36,9 +40,14 @@ export default function ProductCard({
             ))}
           </div>
 
-          <p className="text-ny-gray-400 w-full text-left">
-            {product.vendor_name}
-          </p>
+          <div className="flex items-center gap-1 flex-wrap">
+            <Tag
+              className="capitalize w-max"
+              color={product.status === 'active' ? 'green' : 'red'}>
+              {product.status}
+            </Tag>
+            <p className="text-ny-gray-400 text-left">{product.vendor_name}</p>
+          </div>
         </div>
       </div>
     </div>
