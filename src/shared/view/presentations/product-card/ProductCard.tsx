@@ -13,9 +13,9 @@ export default function ProductCard({
 }: IProductCardProps) {
   return (
     <div className="flex rounded-md border-2 h-full flex-col">
-      <div className="h-[348px]">
+      <div className="aspect-square">
         <img
-          className="bg-cover h-[348px] w-full"
+          className="bg-cover object-cover aspect-square size-full"
           src={product.images[0] ?? defaultInspirationImage}
           alt="default inspiration"
         />

@@ -13,9 +13,9 @@ export default function InspirationCard({
 }: IInspirationCardProps) {
   return (
     <div className="flex rounded-md border-2 flex-col overflow-hidden">
-      <div className="h-[348px]">
+      <div className="aspect-square">
         <img
-          className="bg-cover h-[348px] w-full"
+          className="bg-cover object-cover aspect-square size-full"
           src={inspiration.image ?? defaultInspirationImage}
           alt="default inspiration"
         />
@@ -28,7 +28,7 @@ export default function InspirationCard({
         </div>
 
         <div className="flex flex-col w-full gap-2">
-          <div className="flex w-full items-center">
+          <div className="flex w-full items-center flex-wrap gap-y-2">
             {inspiration.tags.map((tag) => (
               <Tag key={tag.label} className="capitalize w-max">
                 {tag.label}
