@@ -11,10 +11,6 @@ import { useSearchParams } from 'react-router-dom';
 const useQueryCuratorialProducts = (form: FormInstance<any>) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const page = searchParams.get('page');
-  const keyword = searchParams.get('keyword');
-  const status = searchParams.get('status');
-  const tags = searchParams.getAll('tags').filter((tag) => tag !== '');
   const maxPrice = searchParams.get('max_price');
   const minPrice = searchParams.get('min_price');
 
@@ -30,10 +26,10 @@ const useQueryCuratorialProducts = (form: FormInstance<any>) => {
 
   const [queryVendorContent, setQueryVendorContent] = useState<TGeneralFilter>({
     limit: initialFilterState.limit,
-    page: page ? parseInt(page) : initialFilterState.page,
-    keyword: keyword ? keyword : initialFilterState.keyword,
-    status: status ? status : initialFilterState.status,
-    tags: tags ? tags : initialFilterState.tags,
+    page: initialFilterState.page,
+    keyword: initialFilterState.keyword,
+    tags: initialFilterState.tags,
+    status: initialFilterState.status,
     max_price: maxPrice ? maxPrice : initialFilterState.max_price,
     min_price: minPrice ? minPrice : initialFilterState.min_price,
   });

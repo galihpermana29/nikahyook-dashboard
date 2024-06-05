@@ -12,11 +12,7 @@ export default function useQueryCuratorialInspirations(
   form: FormInstance<any>
 ) {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const keyword = searchParams.get('keyword');
   const status = searchParams.get('status');
-  const page = searchParams.get('page');
-  const tags = searchParams.get('tags');
 
   // Default filter state
   const initialFilterState: TGeneralFilter = {
@@ -31,10 +27,10 @@ export default function useQueryCuratorialInspirations(
   // use default filter state if its searchParams' key doesn't exist
   const [query, setQuery] = useState<TGeneralFilter>({
     limit: initialFilterState.limit,
-    page: page ? parseInt(page) : initialFilterState.page,
-    keyword: keyword ?? initialFilterState.keyword,
-    status: status ?? initialFilterState.status,
-    tags: tags ? [tags] : initialFilterState.tags,
+    page: initialFilterState.page,
+    keyword: initialFilterState.keyword,
+    tags: initialFilterState.tags,
+    status: status ? status : initialFilterState.status,
   });
 
   const { objectToQueryParams } = useConvertQuery();
