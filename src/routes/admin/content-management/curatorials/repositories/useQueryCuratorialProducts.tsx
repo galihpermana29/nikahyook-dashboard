@@ -23,7 +23,7 @@ const useQueryCuratorialProducts = (form: FormInstance<any>) => {
     page: 1,
     keyword: '',
     tags: [],
-    status: 'default',
+    status: 'active',
     max_price: '',
     min_price: '',
   };
@@ -31,11 +31,11 @@ const useQueryCuratorialProducts = (form: FormInstance<any>) => {
   const [queryVendorContent, setQueryVendorContent] = useState<TGeneralFilter>({
     limit: initialFilterState.limit,
     page: page ? parseInt(page) : initialFilterState.page,
-    keyword: keyword ? keyword : '',
-    status: status ? status : 'default',
-    tags: tags ? tags : [''],
-    max_price: maxPrice ? maxPrice : '',
-    min_price: minPrice ? minPrice : '',
+    keyword: keyword ? keyword : initialFilterState.keyword,
+    status: status ? status : initialFilterState.status,
+    tags: tags ? tags : initialFilterState.tags,
+    max_price: maxPrice ? maxPrice : initialFilterState.max_price,
+    min_price: minPrice ? minPrice : initialFilterState.min_price,
   });
 
   const { objectToQueryParams } = useConvertQuery();

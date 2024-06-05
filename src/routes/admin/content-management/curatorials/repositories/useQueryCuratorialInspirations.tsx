@@ -23,7 +23,7 @@ export default function useQueryCuratorialInspirations(
     limit: 8,
     page: 1,
     keyword: '',
-    status: 'default',
+    status: 'active',
     tags: [],
   };
 
@@ -34,7 +34,7 @@ export default function useQueryCuratorialInspirations(
     page: page ? parseInt(page) : initialFilterState.page,
     keyword: keyword ?? initialFilterState.keyword,
     status: status ?? initialFilterState.status,
-    tags: [tags ?? ''],
+    tags: tags ? [tags] : initialFilterState.tags,
   });
 
   const { objectToQueryParams } = useConvertQuery();
