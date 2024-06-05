@@ -16,7 +16,8 @@ export default function SelectedInspirations({
     selectedItemsId?.includes(item.id)
   );
 
-  if (!selectedItems || !selectedItemsId) return emptyComponent;
+  if (!selectedItems || selectedItems.length === 0 || !selectedItemsId)
+    return emptyComponent;
 
   return (
     <div className="grid grid-cols-2 gap-2">
