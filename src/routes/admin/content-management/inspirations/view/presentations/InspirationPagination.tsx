@@ -15,11 +15,12 @@ export default function InspirationPagination({
   >;
 }) {
   const paginationProps = {
-    current: metadata ? metadata.current_page : 1,
-    total: metadata ? metadata.total_pages : 1,
+    total: metadata ? metadata.total_items : 10,
+    pageSize: metadata ? metadata.limit : 10,
     onChange(page) {
       onPaginationChanges((state) => ({ ...state, page }));
     },
+    current: metadata ? metadata.current_page : 1,
   };
 
   if (!metadata)
