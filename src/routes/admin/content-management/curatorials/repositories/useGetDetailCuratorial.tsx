@@ -12,6 +12,7 @@ const useQueryCuratorialDetail = (
 
     const newFieldsValue = {
       ...data,
+      images: data.images[0] === '' ? [] : data.images,
       inspirations: data.inspirations.map((inspiration) => inspiration.id),
       products: data.products.map((product) => product.id),
     } as ICuratorialInputRoot;

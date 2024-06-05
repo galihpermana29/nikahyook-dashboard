@@ -146,14 +146,6 @@ const FormCreation = ({
                   required: true,
                   message: 'Please input your inspirations!',
                 },
-                {
-                  min: 1,
-                  message: 'Please input atleast 1 inspiration',
-                },
-                {
-                  max: 10,
-                  message: 'Please input no more than 10 inspirations',
-                },
               ]}
               noStyle
               name={'inspirations'}>
@@ -189,10 +181,6 @@ const FormCreation = ({
                 {
                   required: true,
                   message: 'Please input your products!',
-                },
-                {
-                  min: 1,
-                  message: 'Please input atleast 1 product',
                 },
               ]}
               noStyle

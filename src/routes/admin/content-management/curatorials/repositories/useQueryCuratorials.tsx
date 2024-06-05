@@ -41,9 +41,14 @@ const useQueryCuratorials = (form: FormInstance) => {
   const getCuratorials = async () => {
     const queryParams = objectToQueryParams(queryOptions);
     setSearchParams(queryParams);
-    const { data, meta_data } = await CuratorialsAPI.getAllCuratorials(
+    const { data: result, meta_data } = await CuratorialsAPI.getAllCuratorials(
       queryParams
     );
+
+    const data = result?.map((item) => ({
+      ...item,
+      images: item.images[0] === '' ? [] : item.images,
+    }));
 
     return { data: addIndexToData(data), meta_data };
   };

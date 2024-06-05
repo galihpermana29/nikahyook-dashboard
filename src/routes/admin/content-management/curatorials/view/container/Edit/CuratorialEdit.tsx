@@ -58,7 +58,7 @@ const CuratorialEdit = () => {
                 mutateEdit({ payload, id: parseInt(id ?? '') })
               }
               id={id ?? ''}
-              disabled={!edit ?? false}
+              disabled={!edit}
               onCancel={() => {
                 navigate(-1);
               }}
