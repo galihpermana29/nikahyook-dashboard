@@ -28,6 +28,7 @@ interface IFormCreation {
     modalType: TCuratorialModalType,
     id?: string | undefined
   ) => void;
+  disabled?: boolean;
 }
 
 const FormCreation = ({
@@ -35,10 +36,12 @@ const FormCreation = ({
   handleMutate,
   onCancel,
   openModal,
+  disabled,
 }: IFormCreation) => {
   return (
     <div>
       <Form
+        disabled={disabled}
         className="space-y-6"
         form={form}
         layout="vertical"
@@ -116,15 +119,7 @@ const FormCreation = ({
         <FormRow
           title="Album"
           description="Set your additional photo to your album">
-          <Form.Item
-            rules={[
-              {
-                required: true,
-                message: 'Please input photos to your album!',
-              },
-            ]}
-            noStyle
-            name={'images'}>
+          <Form.Item noStyle name={'images'}>
             <DraggerUpload limit={10} form={form} formItemName="images" />
           </Form.Item>
         </FormRow>
@@ -150,6 +145,14 @@ const FormCreation = ({
                 {
                   required: true,
                   message: 'Please input your inspirations!',
+                },
+                {
+                  min: 1,
+                  message: 'Please input atleast 1 inspiration',
+                },
+                {
+                  max: 10,
+                  message: 'Please input no more than 10 inspirations',
                 },
               ]}
               noStyle
@@ -186,6 +189,10 @@ const FormCreation = ({
                 {
                   required: true,
                   message: 'Please input your products!',
+                },
+                {
+                  min: 1,
+                  message: 'Please input atleast 1 product',
                 },
               ]}
               noStyle

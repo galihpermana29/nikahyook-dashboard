@@ -3,13 +3,14 @@ import LoadingHandler from '@/shared/view/container/loading/Loading';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { useForm } from 'antd/es/form/Form';
 import { AxiosError } from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLoaderData, useNavigate, useParams } from 'react-router-dom';
 import FormEdit from '../../presentations/PageForm/FormEdit';
 import useQueryCuratorialDetail from '../../../repositories/useGetDetailCuratorial';
 import { Modal } from 'antd';
 import useModalReducer from '../../../usecase/useModalReducer';
 import useGetCuratorialModalType from '../../../repositories/useGetCuratorialModalType';
 import useMutateUpdateCuratorial from '../../../repositories/useUpdateCuratorial';
+import type { ILoaderData } from '@/routes/root';
 
 const CuratorialEdit = () => {
   const [form] = useForm();
@@ -30,6 +31,8 @@ const CuratorialEdit = () => {
   const { openModal, closeModal, modalState } = useModalReducer();
 
   const modalType = useGetCuratorialModalType({ filterForm, form, closeModal });
+  const { permissions } = useLoaderData() as ILoaderData;
+  const { edit } = permissions;
 
   return (
     <ErrorBoundary
@@ -55,7 +58,7 @@ const CuratorialEdit = () => {
                 mutateEdit({ payload, id: parseInt(id ?? '') })
               }
               id={id ?? ''}
-              disabled={false}
+              disabled={!edit ?? false}
               onCancel={() => {
                 navigate(-1);
               }}

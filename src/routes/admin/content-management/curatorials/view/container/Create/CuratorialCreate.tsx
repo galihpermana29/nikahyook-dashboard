@@ -3,12 +3,13 @@ import LoadingHandler from '@/shared/view/container/loading/Loading';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import { useForm } from 'antd/es/form/Form';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import FormCreation from '../../presentations/PageForm/FormCreation';
 import useMutateCreateCuratorials from '../../../repositories/useCreateCuratorial';
 import { Modal } from 'antd';
 import useModalReducer from '../../../usecase/useModalReducer';
 import useGetCuratorialModalType from '../../../repositories/useGetCuratorialModalType';
+import type { ILoaderData } from '@/routes/root';
 
 const CuratorialCreate = () => {
   const [form] = useForm();
@@ -18,6 +19,8 @@ const CuratorialCreate = () => {
 
   const { mutate: mutateEdit, error, isLoading } = useMutateCreateCuratorials();
   const { openModal, closeModal, modalState } = useModalReducer();
+  const { permissions } = useLoaderData() as ILoaderData;
+  const { create } = permissions;
 
   const modalType = useGetCuratorialModalType({ filterForm, form, closeModal });
 
@@ -37,6 +40,7 @@ const CuratorialCreate = () => {
         <div className="p-[20px]">
           <LoadingHandler isLoading={isLoading} fullscreen={true}>
             <FormCreation
+              disabled={!create}
               form={form}
               openModal={openModal}
               handleMutate={mutateEdit}
