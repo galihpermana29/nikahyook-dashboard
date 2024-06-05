@@ -12,7 +12,7 @@ export default function ProductCard({
   miscButton,
 }: IProductCardProps) {
   return (
-    <div className="flex rounded-md border-2 flex-col overflow-hidden">
+    <div className="flex rounded-md border-2 h-full flex-col">
       <div className="h-[348px]">
         <img
           className="bg-cover h-[348px] w-full"
@@ -28,7 +28,7 @@ export default function ProductCard({
         </div>
 
         <div className="flex flex-col w-full gap-2">
-          <div className="flex w-full items-center">
+          <div className="flex w-full items-center flex-wrap gap-y-2">
             {product.tags.map((tag) => (
               <Tag key={tag.name} className="capitalize w-max">
                 {tag.name}
@@ -36,7 +36,9 @@ export default function ProductCard({
             ))}
           </div>
 
-          <p className="text-ny-gray-400">{product.vendor_name}</p>
+          <p className="text-ny-gray-400 w-full text-left">
+            {product.vendor_name}
+          </p>
         </div>
       </div>
     </div>

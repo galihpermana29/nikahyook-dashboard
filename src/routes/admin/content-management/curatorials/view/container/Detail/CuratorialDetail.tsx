@@ -36,7 +36,7 @@ const CuratorialDetail = () => {
       error={(errorCreate as AxiosError) || (errorFetch as AxiosError)}
       refetch={refetch}>
       <Modal
-        className="max-w-max"
+        width={'90%'}
         title={<div className="capitalize">{`Search ${modalState?.type}`}</div>}
         open={modalState?.isOpen}
         footer={null}
@@ -49,6 +49,8 @@ const CuratorialDetail = () => {
         <div className="p-[20px]">
           <LoadingHandler isLoading={isLoading} fullscreen={true}>
             <FormEdit
+              id={id ?? ''}
+              showEditButton
               openModal={openModal}
               form={form}
               handleMutate={mutateEdit}

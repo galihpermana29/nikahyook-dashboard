@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
-const useQueryCuratorials = (form: FormInstance<any>) => {
+const useQueryCuratorials = (form: FormInstance) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const keyword = searchParams.get('keyword');

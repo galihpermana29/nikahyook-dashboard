@@ -5,16 +5,20 @@ import type {
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
-import { Button, Form, FormInstance, Input, Select } from 'antd';
+import { Button, Empty, Form, FormInstance, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 import addIcon from '@/assets/icon/add.png';
 import type { TCuratorialModalType } from '../../../usecase/useModalReducer';
+import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedPrice';
+import DisplaySelectedProducts from '../../../repositories/useDisplaySelectedProducts';
+import DisplaySelectedInspirations from '../../../repositories/useDisplaySelectedInspirations';
+import { useNavigate } from 'react-router-dom';
 
 interface IFormEdit {
   onCancel: () => void;
-  form: FormInstance<any>;
+  form: FormInstance;
   disabled: boolean;
   handleMutate: UseMutateFunction<
     IUpdateCuratorialResponseRoot,
@@ -26,6 +30,8 @@ interface IFormEdit {
     modalType: TCuratorialModalType,
     id?: string | undefined
   ) => void;
+  showEditButton?: boolean;
+  id: string;
 }
 
 const FormEdit = ({
@@ -34,7 +40,11 @@ const FormEdit = ({
   onCancel,
   disabled,
   openModal,
+  showEditButton,
+  id,
 }: IFormEdit) => {
+  const navigate = useNavigate();
+
   return (
     <div>
       <Form
@@ -43,13 +53,38 @@ const FormEdit = ({
         form={form}
         layout="vertical"
         onFinish={handleMutate}>
-        <PageHeader title="Curatorial Details" onCancel={onCancel} />
+        <PageHeader
+          title="Curatorial Details"
+          onCancel={onCancel}
+          buttonsAfter={
+            showEditButton && (
+              <Button
+                disabled={false}
+                onClick={() => navigate(`/curatorial/edit-curatorial/${id}`)}
+                className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
+                Edit
+              </Button>
+            )
+          }
+        />
 
         <FormRow
           title="Curatorial Picture"
           description="This will be displayed on curatorial profile">
-          <Form.Item noStyle name={'expert_photo'}>
-            <DraggerUpload form={form} formItemName="expert_photo" />
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please input curatorial's picture!",
+              },
+            ]}
+            noStyle
+            name={'expert_photo'}>
+            <DraggerUpload
+              form={form}
+              profileImageURL={form.getFieldValue('expert_photo')}
+              formItemName="expert_photo"
+            />
           </Form.Item>
         </FormRow>
 
@@ -108,8 +143,21 @@ const FormEdit = ({
         <FormRow
           title="Album"
           description="Set your additional photo to your album">
-          <Form.Item noStyle name={'images'}>
-            <DraggerUpload limit={10} form={form} formItemName="images" />
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: 'Please input photos to your album',
+              },
+            ]}
+            noStyle
+            name={'images'}>
+            <DraggerUpload
+              profileImageURL={form.getFieldValue('images')}
+              limit={10}
+              form={form}
+              formItemName="images"
+            />
           </Form.Item>
         </FormRow>
 
@@ -129,9 +177,21 @@ const FormEdit = ({
                 {form.getFieldValue('inspirations')?.length ?? 0} / 10
               </span>
             </div>
-
-            <Form.Item name={'inspirations'}>
-              <Select mode="multiple"></Select>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your inspirations!',
+                },
+              ]}
+              noStyle
+              name={'inspirations'}>
+              <DisplaySelectedInspirations
+                selectedItemsId={form.getFieldValue('inspirations')}
+                emptyComponent={
+                  <Empty className="w-full border py-20 rounded-lg" />
+                }
+              />
             </Form.Item>
           </div>
         </FormRow>
@@ -146,11 +206,28 @@ const FormEdit = ({
                 Attach Product
               </Button>
 
-              <span>IDR {form.getFieldValue('products')?.length ?? 0}</span>
+              <Form.Item noStyle name="total_price">
+                <span>
+                  IDR {useGetTotalSelectedPrice(form.getFieldValue('products'))}
+                </span>
+              </Form.Item>
             </div>
 
-            <Form.Item name={'products'}>
-              <Select mode="multiple"></Select>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your products!',
+                },
+              ]}
+              noStyle
+              name={'products'}>
+              <DisplaySelectedProducts
+                selectedItemsId={form.getFieldValue('products')}
+                emptyComponent={
+                  <Empty className="w-full border py-20 rounded-lg" />
+                }
+              />
             </Form.Item>
           </div>
         </FormRow>

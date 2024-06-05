@@ -1,7 +1,7 @@
 import type { Metadata } from '@/shared/models/generalInterfaces';
-import { Pagination, Row } from 'antd';
+import { Pagination as PaginationAntd, Row } from 'antd';
 
-export default function InspirationPagination({
+export default function Pagination({
   metadata,
   onPaginationChanges,
 }: {
@@ -26,7 +26,7 @@ export default function InspirationPagination({
   if (!metadata)
     return (
       <Row justify="end">
-        <Pagination {...paginationProps} />
+        <PaginationAntd {...paginationProps} />
       </Row>
     );
 
@@ -41,7 +41,7 @@ export default function InspirationPagination({
         Showing {numberOfItems} to {upperNumberofItems} of {total_items} entries
       </p>
 
-      <Pagination className="my-0" {...paginationProps} />
+      <PaginationAntd className="my-0" {...paginationProps} />
     </div>
   );
 }

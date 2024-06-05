@@ -3,8 +3,8 @@ import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { UseMutateFunction } from 'react-query';
 import { AxiosError } from 'axios';
 import type {
+  ICuratorialInputRoot,
   IDetailCuratorialData,
-  IUpdateCuratorialPayloadRoot,
   IUpdateCuratorialResponseRoot,
 } from '@/shared/models/curatorialInterfaces';
 import type { NavigateFunction } from 'react-router-dom';
@@ -18,7 +18,7 @@ const useGenerateColumnCuratorials = (
     IUpdateCuratorialResponseRoot,
     AxiosError,
     {
-      payload: IUpdateCuratorialPayloadRoot;
+      payload: ICuratorialInputRoot;
       id: number;
     },
     unknown
@@ -41,13 +41,15 @@ const useGenerateColumnCuratorials = (
     },
     {
       title: 'Product',
-      dataIndex: 'product',
-      key: 'product',
+      dataIndex: 'products',
+      key: 'products',
       render: (products: IDetailCuratorialData['products']) =>
         products ? (
-          products.map((product) => (
-            <span className="last:mr-0 mr-1">{product.title}</span>
-          ))
+          <div className="flex w-full items-center flex-wrap">
+            {products.map((product) => (
+              <Tag>{product.title}</Tag>
+            ))}
+          </div>
         ) : (
           <span>No products</span>
         ),
@@ -58,11 +60,13 @@ const useGenerateColumnCuratorials = (
       key: 'vendor_name',
       render: (vendors: IDetailCuratorialData['vendor']) =>
         vendors ? (
-          vendors.map((vendor) => (
-            <span className="last:mr-0 mr-1">{vendor.name}</span>
-          ))
+          <div className="flex w-full items-center flex-wrap">
+            {vendors.map((vendor) => (
+              <Tag>{vendor.name}</Tag>
+            ))}
+          </div>
         ) : (
-          <span>No vendors</span>
+          <Tag>No vendors</Tag>
         ),
     },
     {

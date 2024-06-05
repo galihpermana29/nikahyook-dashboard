@@ -5,15 +5,18 @@ import type {
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
-import { Button, Form, FormInstance, Input, Select } from 'antd';
+import { Button, Empty, Form, FormInstance, Input } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 import addIcon from '@/assets/icon/add.png';
 import type { TCuratorialModalType } from '../../../usecase/useModalReducer';
+import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedPrice';
+import DisplaySelectedProducts from '../../../repositories/useDisplaySelectedProducts';
+import DisplaySelectedInspirations from '../../../repositories/useDisplaySelectedInspirations';
 
 interface IFormCreation {
-  form: FormInstance<any>;
+  form: FormInstance;
   handleMutate: UseMutateFunction<
     ICreateCuratorialResponseRoot,
     AxiosError<unknown, any>,
@@ -45,7 +48,15 @@ const FormCreation = ({
         <FormRow
           title="Curatorial Picture"
           description="This will be displayed on curatorial profile">
-          <Form.Item noStyle name={'expert_photo'}>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please input curatorial's name!",
+              },
+            ]}
+            noStyle
+            name={'expert_photo'}>
             <DraggerUpload form={form} formItemName="expert_photo" />
           </Form.Item>
         </FormRow>
@@ -105,7 +116,15 @@ const FormCreation = ({
         <FormRow
           title="Album"
           description="Set your additional photo to your album">
-          <Form.Item noStyle name={'images'}>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: 'Please input photos to your album!',
+              },
+            ]}
+            noStyle
+            name={'images'}>
             <DraggerUpload limit={10} form={form} formItemName="images" />
           </Form.Item>
         </FormRow>
@@ -126,9 +145,21 @@ const FormCreation = ({
                 {form.getFieldValue('inspirations')?.length ?? 0} / 10
               </span>
             </div>
-
-            <Form.Item name={'inspirations'}>
-              <Select></Select>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your inspirations!',
+                },
+              ]}
+              noStyle
+              name={'inspirations'}>
+              <DisplaySelectedInspirations
+                selectedItemsId={form.getFieldValue('inspirations')}
+                emptyComponent={
+                  <Empty className="w-full border py-20 rounded-lg" />
+                }
+              />
             </Form.Item>
           </div>
         </FormRow>
@@ -143,11 +174,28 @@ const FormCreation = ({
                 Attach Product
               </Button>
 
-              <span>IDR {form.getFieldValue('products')?.length ?? 0}</span>
+              <Form.Item noStyle name="total_price">
+                <span>
+                  IDR {useGetTotalSelectedPrice(form.getFieldValue('products'))}
+                </span>
+              </Form.Item>
             </div>
 
-            <Form.Item name={'products'}>
-              <Select></Select>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your products!',
+                },
+              ]}
+              noStyle
+              name={'products'}>
+              <DisplaySelectedProducts
+                selectedItemsId={form.getFieldValue('products')}
+                emptyComponent={
+                  <Empty className="w-full border py-20 rounded-lg" />
+                }
+              />
             </Form.Item>
           </div>
         </FormRow>

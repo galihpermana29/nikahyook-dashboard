@@ -7,15 +7,17 @@ import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
-const useMutateCreateCuratorials = (refetch?: () => void) => {
+const useMutateCreateCuratorials = () => {
+  const navigate = useNavigate();
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
-  // TODO: change type of payload to ICreateCuratorialInputRoot
   const createCuratorial = async (payload: ICuratorialInputRoot) => {
     const newPayload = {
       ...payload,
+      status: 'active',
       products: payload.products.map((productId) => ({ id: productId })),
       inspirations: payload.inspirations.map((inspirationId) => ({
         id: inspirationId,
@@ -36,8 +38,8 @@ const useMutateCreateCuratorials = (refetch?: () => void) => {
     mutationFn: (payload: ICuratorialInputRoot) => createCuratorial(payload),
     onError: handleError,
     onSuccess: () => {
-      refetch!();
       showSuccessMessage('Curatorial successfully added!');
+      navigate('/curatorial');
     },
   });
   return { mutate, error, isLoading };

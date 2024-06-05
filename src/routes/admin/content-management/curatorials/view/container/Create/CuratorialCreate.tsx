@@ -24,7 +24,7 @@ const CuratorialCreate = () => {
   return (
     <ErrorBoundary error={error as AxiosError}>
       <Modal
-        width={'80vw'}
+        width={'90%'}
         title={<div className="capitalize">{`Search ${modalState?.type}`}</div>}
         open={modalState?.isOpen}
         footer={null}

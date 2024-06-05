@@ -68,10 +68,10 @@ export interface IAllCuratorialResponseRoot {
 }
 
 export interface IUpdateCuratorialPayloadRoot
-  extends IRootCuratorialData,
-    Pick<IDetailCuratorialData, 'status'> {
-  products: IRootCuratorialProduct['id'][];
-  inspirations: IRootCuratorialInspiration['id'][];
+  extends Omit<Omit<ICuratorialInputRoot, 'inspirations'>, 'products'> {
+  status: IDetailCuratorialData['status'];
+  products: IRootCuratorialProduct[];
+  inspirations: IRootCuratorialInspiration[];
 }
 
 export interface IUpdateCuratorialResponseRoot {

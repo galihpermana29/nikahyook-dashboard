@@ -2,7 +2,6 @@ import type { ILoaderData } from '@/routes/root';
 import { Button, Form, Select } from 'antd';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import useGenerateColumnCuratorials from './usecase/useGenerateColumn';
-import useQueryCuratorials from './repositories/useGetAllCuratorials';
 import useMutateUpdateCuratorial from './repositories/useUpdateCuratorial';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import type { AxiosError } from 'axios';
@@ -12,6 +11,7 @@ import type { IDetailInspirationData } from '@/shared/models/inspirationInterfac
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import addIcon from '@/assets/icon/add.png';
 import type { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
+import useQueryCuratorials from './repositories/useQueryCuratorials';
 
 export default function CuratorialsPage() {
   const [form] = Form.useForm();
