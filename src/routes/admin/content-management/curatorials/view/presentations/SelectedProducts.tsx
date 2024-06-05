@@ -1,17 +1,17 @@
 import type { IDetailProductData } from '@/shared/models/productServicesInterface';
-import useGetAllInspirations from './useGetAllInspirations';
-import InspirationCard from '@/shared/view/presentations/inspiration-card/InspirationCard';
+import ProductCard from '@/shared/view/presentations/product-card/ProductCard';
+import useGetAllProducts from '../../repositories/useGetAllProducts';
 
 type Props = {
   selectedItemsId: number[];
   emptyComponent: React.ReactNode;
 };
 
-export default function DisplaySelectedInspirations({
+export default function SelectedProducts({
   selectedItemsId,
   emptyComponent,
 }: Props) {
-  const { result } = useGetAllInspirations();
+  const { result } = useGetAllProducts();
   const selectedItems = result?.data?.filter((item: IDetailProductData) =>
     selectedItemsId?.includes(item.id)
   );
@@ -20,8 +20,8 @@ export default function DisplaySelectedInspirations({
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      {selectedItems.map((inspiration) => (
-        <InspirationCard key={inspiration.id} inspiration={inspiration} />
+      {selectedItems.map((product) => (
+        <ProductCard key={product.id} product={product} />
       ))}
     </div>
   );

@@ -12,9 +12,9 @@ import { UseMutateFunction } from 'react-query';
 import addIcon from '@/assets/icon/add.png';
 import type { TCuratorialModalType } from '../../../usecase/useModalReducer';
 import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedPrice';
-import DisplaySelectedProducts from '../../../repositories/useDisplaySelectedProducts';
-import DisplaySelectedInspirations from '../../../repositories/useDisplaySelectedInspirations';
 import { useNavigate } from 'react-router-dom';
+import SelectedProducts from '../SelectedProducts';
+import SelectedInspirations from '../SelectedInspirations';
 
 interface IFormEdit {
   onCancel: () => void;
@@ -186,7 +186,7 @@ const FormEdit = ({
               ]}
               noStyle
               name={'inspirations'}>
-              <DisplaySelectedInspirations
+              <SelectedInspirations
                 selectedItemsId={form.getFieldValue('inspirations')}
                 emptyComponent={
                   <Empty className="w-full border py-20 rounded-lg" />
@@ -222,7 +222,7 @@ const FormEdit = ({
               ]}
               noStyle
               name={'products'}>
-              <DisplaySelectedProducts
+              <SelectedProducts
                 selectedItemsId={form.getFieldValue('products')}
                 emptyComponent={
                   <Empty className="w-full border py-20 rounded-lg" />

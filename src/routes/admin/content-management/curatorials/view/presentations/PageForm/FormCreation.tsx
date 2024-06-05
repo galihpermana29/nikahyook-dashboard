@@ -12,8 +12,8 @@ import { UseMutateFunction } from 'react-query';
 import addIcon from '@/assets/icon/add.png';
 import type { TCuratorialModalType } from '../../../usecase/useModalReducer';
 import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedPrice';
-import DisplaySelectedProducts from '../../../repositories/useDisplaySelectedProducts';
-import DisplaySelectedInspirations from '../../../repositories/useDisplaySelectedInspirations';
+import SelectedInspirations from '../SelectedInspirations';
+import SelectedProducts from '../SelectedProducts';
 
 interface IFormCreation {
   form: FormInstance;
@@ -154,7 +154,7 @@ const FormCreation = ({
               ]}
               noStyle
               name={'inspirations'}>
-              <DisplaySelectedInspirations
+              <SelectedInspirations
                 selectedItemsId={form.getFieldValue('inspirations')}
                 emptyComponent={
                   <Empty className="w-full border py-20 rounded-lg" />
@@ -190,7 +190,7 @@ const FormCreation = ({
               ]}
               noStyle
               name={'products'}>
-              <DisplaySelectedProducts
+              <SelectedProducts
                 selectedItemsId={form.getFieldValue('products')}
                 emptyComponent={
                   <Empty className="w-full border py-20 rounded-lg" />
