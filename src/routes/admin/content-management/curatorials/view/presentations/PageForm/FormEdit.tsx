@@ -143,15 +143,7 @@ const FormEdit = ({
         <FormRow
           title="Album"
           description="Set your additional photo to your album">
-          <Form.Item
-            rules={[
-              {
-                required: true,
-                message: 'Please input photos to your album',
-              },
-            ]}
-            noStyle
-            name={'images'}>
+          <Form.Item noStyle name={'images'}>
             <DraggerUpload
               profileImageURL={form.getFieldValue('images')}
               limit={10}
@@ -182,6 +174,14 @@ const FormEdit = ({
                 {
                   required: true,
                   message: 'Please input your inspirations!',
+                },
+                {
+                  min: 1,
+                  message: 'Please input atleast 1 inspiration',
+                },
+                {
+                  max: 10,
+                  message: 'Please input no more than 10 inspirations',
                 },
               ]}
               noStyle
@@ -218,6 +218,10 @@ const FormEdit = ({
                 {
                   required: true,
                   message: 'Please input your products!',
+                },
+                {
+                  min: 1,
+                  message: 'Please input atleast 1 product',
                 },
               ]}
               noStyle
