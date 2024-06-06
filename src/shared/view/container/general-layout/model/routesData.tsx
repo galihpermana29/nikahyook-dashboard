@@ -27,6 +27,12 @@ import VendorUserDetailContainer from '@/routes/admin/vendor-management/vendor-u
 import VendorUserEditContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Edit/VendorUserEdit';
 import vendorUserManagIconGray from '@/assets/icon/vendor-user-manag-icon-gray.svg';
 import ContentInspiration from '@/routes/admin/content-management/inspirations/ContentInspiration';
+import GalleryIcon from '@/assets/icon/gallery.svg';
+import EditIcon from '@/assets/icon/edit-2.svg';
+import CuratorialsPage from '@/routes/admin/content-management/curatorials/CuratorialsPage';
+import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
+import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
+import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -325,13 +331,53 @@ export const staffRoutes: ItemsDataI[] = [
         key: '/inspiration',
         path: 'inspiration',
         children: null,
-        icon: <img src={adminManagIconGray} alt="icon" />,
+        icon: <img src={GalleryIcon} alt="icon" />,
         components: <ContentInspiration />,
         show: true,
       },
+      {
+        label: (
+          <div className="text-caption-1 font-[400] text-ny-gray-300">
+            Curatorial
+          </div>
+        ),
+        key: '/curatorial',
+        path: 'curatorial',
+        children: null,
+        icon: <img src={EditIcon} alt="icon" />,
+        components: <CuratorialsPage />,
+        show: true,
+      },
+      {
+        label: null,
+        key: '/curatorial/detail-curatorial',
+        path: '/curatorial/detail-curatorial/:id',
+        children: null,
+        icon: <img src={userManagIconGray} alt="icon" />,
+        components: <CuratorialDetail />,
+        show: false,
+      },
+      {
+        label: null,
+        key: '/curatorial/edit-curatorial',
+        path: 'curatorial/edit-curatorial/:id',
+        children: null,
+        icon: <img src={userManagIconGray} alt="icon" />,
+        components: <CuratorialEdit />,
+        show: false,
+      },
+      {
+        label: null,
+        key: '/curatorial/create-curatorial',
+        path: 'curatorial/create-curatorial',
+        children: null,
+        icon: <img src={userManagIconGray} alt="icon" />,
+        components: <CuratorialCreate />,
+        show: false,
+      },
     ],
     icon: null,
-    components: <ContentInspiration />,
+    components: <DashboardContainer />,
     show: true,
   },
 ];

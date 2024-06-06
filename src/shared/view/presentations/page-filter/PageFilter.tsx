@@ -10,7 +10,7 @@ interface IPageFilter {
   form: FormInstance<any>;
   filterComponents: React.ReactNode;
   query: TGeneralFilter;
-  buttonComponents: React.ReactNode;
+  buttonComponents?: React.ReactNode;
 }
 const PageFilter = ({
   onSearch,

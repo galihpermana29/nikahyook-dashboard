@@ -10,7 +10,6 @@ import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import useQueryInspirations from './repositories/useQueryInspirations';
 import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
-import InspirationPagination from './view/presentations/InspirationPagination';
 import useMutateCreateInspirations from './repositories/useCreateInspirations';
 import FormCreation from './view/presentations/Modal/FormCreation';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
@@ -19,6 +18,7 @@ import useMutateEditInspirations from './repositories/useEditInspirations';
 import useQueryTags from '../../vendor-management/vendor-content/repositories/useGetAllTags';
 import useQueryInspirationById from './repositories/useQueryInspirationsById';
 import threeDots from '@/assets/icon/more-circle.svg';
+import Pagination from '@/shared/view/presentations/pagination/Pagination';
 
 export default function ContentInspiration() {
   const [form] = Form.useForm();
@@ -153,10 +153,7 @@ export default function ContentInspiration() {
           ))}
         </div>
 
-        <InspirationPagination
-          onPaginationChanges={setQuery}
-          metadata={meta_data}
-        />
+        <Pagination onPaginationChanges={setQuery} metadata={meta_data} />
       </LoadingHandler>
     </ErrorBoundary>
   );
