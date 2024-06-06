@@ -22,10 +22,11 @@ const CuratorialDetail = () => {
     useMutateCreateCuratorials();
 
   const {
+    data,
     error: errorFetch,
     isLoading,
     refetch,
-  } = useQueryCuratorialDetail(id ?? '', form);
+  } = useQueryCuratorialDetail(id ?? '');
 
   const { openModal, closeModal, modalState } = useModalReducer();
 
@@ -49,6 +50,7 @@ const CuratorialDetail = () => {
         <div className="p-[20px]">
           <LoadingHandler isLoading={isLoading} fullscreen={true}>
             <FormEdit
+              initialValues={data}
               id={id ?? ''}
               showEditButton
               openModal={openModal}

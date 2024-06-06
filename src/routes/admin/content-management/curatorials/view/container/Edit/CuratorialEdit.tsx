@@ -20,10 +20,11 @@ const CuratorialEdit = () => {
   const { id } = useParams();
 
   const {
+    data,
     error: errorFetch,
     isLoading,
     refetch,
-  } = useQueryCuratorialDetail(id ?? '', form);
+  } = useQueryCuratorialDetail(id ?? '');
 
   const { mutate: mutateEdit, error: errorCreate } =
     useMutateUpdateCuratorial(refetch);
@@ -52,6 +53,7 @@ const CuratorialEdit = () => {
         <div className="p-[20px]">
           <LoadingHandler isLoading={isLoading} fullscreen={true}>
             <FormEdit
+              initialValues={data}
               openModal={openModal}
               form={form}
               handleMutate={(payload) =>

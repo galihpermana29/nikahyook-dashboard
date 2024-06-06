@@ -52,13 +52,13 @@ const FormCreation = ({
           title="Curatorial Picture"
           description="This will be displayed on curatorial profile">
           <Form.Item
+            required
             rules={[
               {
                 required: true,
-                message: "Please input curatorial's name!",
+                message: 'Please input curatorial picture!',
               },
             ]}
-            noStyle
             name={'expert_photo'}>
             <DraggerUpload form={form} formItemName="expert_photo" />
           </Form.Item>
@@ -68,6 +68,7 @@ const FormCreation = ({
           title="Basic Details"
           description="Set vendor basic profile details">
           <Form.Item
+            required
             className="my-[8px]"
             name={'name'}
             label="Curatorial's Name"
@@ -84,6 +85,7 @@ const FormCreation = ({
           </Form.Item>
 
           <Form.Item
+            required
             className="my-[8px]"
             name={'expert_name'}
             label="Curator"
@@ -100,6 +102,7 @@ const FormCreation = ({
           </Form.Item>
 
           <Form.Item
+            required
             className="my-[8px]"
             name={'description'}
             label="Curatorial Description"
@@ -119,7 +122,7 @@ const FormCreation = ({
         <FormRow
           title="Album"
           description="Set your additional photo to your album">
-          <Form.Item noStyle name={'images'}>
+          <Form.Item required={false} noStyle name={'images'}>
             <DraggerUpload limit={10} form={form} formItemName="images" />
           </Form.Item>
         </FormRow>
@@ -141,13 +144,14 @@ const FormCreation = ({
               </span>
             </div>
             <Form.Item
+              className="m-0 p-0"
+              required
               rules={[
                 {
                   required: true,
                   message: 'Please input your inspirations!',
                 },
               ]}
-              noStyle
               name={'inspirations'}>
               <SelectedInspirations
                 selectedItemsId={form.getFieldValue('inspirations')}
@@ -177,13 +181,14 @@ const FormCreation = ({
             </div>
 
             <Form.Item
+              required
+              className="m-0 p-0"
               rules={[
                 {
                   required: true,
                   message: 'Please input your products!',
                 },
               ]}
-              noStyle
               name={'products'}>
               <SelectedProducts
                 selectedItemsId={form.getFieldValue('products')}

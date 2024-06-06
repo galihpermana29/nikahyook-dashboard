@@ -32,6 +32,7 @@ interface IFormEdit {
   ) => void;
   showEditButton?: boolean;
   id: string;
+  initialValues: ICuratorialInputRoot | undefined;
 }
 
 const FormEdit = ({
@@ -41,6 +42,7 @@ const FormEdit = ({
   disabled,
   openModal,
   showEditButton,
+  initialValues,
   id,
 }: IFormEdit) => {
   const navigate = useNavigate();
@@ -48,6 +50,7 @@ const FormEdit = ({
   return (
     <div>
       <Form
+        initialValues={initialValues}
         disabled={disabled}
         className="space-y-6"
         form={form}
@@ -72,13 +75,14 @@ const FormEdit = ({
           title="Curatorial Picture"
           description="This will be displayed on curatorial profile">
           <Form.Item
+            required
+            className="m-0 p-0"
             rules={[
               {
                 required: true,
                 message: "Please input curatorial's picture!",
               },
             ]}
-            noStyle
             name={'expert_photo'}>
             <DraggerUpload
               form={form}
@@ -170,13 +174,14 @@ const FormEdit = ({
               </span>
             </div>
             <Form.Item
+              required
+              className="m-0 p-0"
               rules={[
                 {
                   required: true,
                   message: 'Please input your inspirations!',
                 },
               ]}
-              noStyle
               name={'inspirations'}>
               <SelectedInspirations
                 selectedItemsId={form.getFieldValue('inspirations')}
@@ -206,13 +211,14 @@ const FormEdit = ({
             </div>
 
             <Form.Item
+              required
+              className="m-0 p-0"
               rules={[
                 {
                   required: true,
                   message: 'Please input your products!',
                 },
               ]}
-              noStyle
               name={'products'}>
               <SelectedProducts
                 selectedItemsId={form.getFieldValue('products')}

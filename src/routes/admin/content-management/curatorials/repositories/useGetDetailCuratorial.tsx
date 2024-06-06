@@ -1,12 +1,8 @@
-import { FormInstance } from 'antd';
 import { useQuery } from 'react-query';
 import { CuratorialsAPI } from '@/shared/repositories/curatorialServices';
 import type { ICuratorialInputRoot } from '@/shared/models/curatorialInterfaces';
 
-const useQueryCuratorialDetail = (
-  id: string,
-  form?: FormInstance<ICuratorialInputRoot>
-) => {
+const useQueryCuratorialDetail = (id: string) => {
   const getDetail = async () => {
     const { data } = await CuratorialsAPI.getCuratorialById(id);
 
@@ -17,9 +13,7 @@ const useQueryCuratorialDetail = (
       products: data.products.map((product) => product.id),
     } as ICuratorialInputRoot;
 
-    form?.setFieldsValue(newFieldsValue);
-
-    return data;
+    return newFieldsValue;
   };
 
   const { data, error, isLoading, refetch } = useQuery({
