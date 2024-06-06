@@ -18,7 +18,7 @@ const useMutateCreateCuratorials = () => {
     const newPayload = {
       ...payload,
       status: 'active',
-      images: payload.images.length > 0 ? payload.images : [''],
+      images: payload.images?.length > 0 ? payload.images : [''],
       products: payload.products.map((productId) => ({ id: productId })),
       inspirations: payload.inspirations.map((inspirationId) => ({
         id: inspirationId,
