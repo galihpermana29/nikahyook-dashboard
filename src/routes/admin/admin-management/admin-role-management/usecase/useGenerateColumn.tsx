@@ -54,8 +54,10 @@ const useGenerateColumnAdminRole = (
 
         return (
           <div className="flex flex-wrap gap-2">
-            {tags?.map((tag) => (
-              <div className="bg-ny-gray-100 text-ny-gray-600 capitalize px-2 rounded-[4px] border border-ny-gray-300">
+            {tags?.map((tag, idx) => (
+              <div
+                key={idx}
+                className="bg-ny-gray-100 text-ny-gray-600 capitalize px-2 rounded-[4px] border border-ny-gray-300">
                 {tag}
               </div>
             ))}

@@ -1,4 +1,4 @@
-import { DatePicker, Form, Input } from 'antd';
+import { Form, Input, InputNumber } from 'antd';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 
 export default function VendorBasicDetails() {
@@ -40,17 +40,17 @@ export default function VendorBasicDetails() {
       </Form.Item>
       <Form.Item
         className="my-[8px]"
-        name={'date_of_birth'}
-        label="Date of Birth"
+        name={'phone_number'}
+        label="Phone Number"
         rules={[
           {
             required: true,
-            message: 'Please input your date of birth!',
+            message: 'Please input your phone number!',
           },
         ]}>
-        <DatePicker
-          placeholder="Enter your detail here!"
-          className="text-caption-1 w-full"
+        <InputNumber
+          placeholder="Enter your detail here"
+          className="w-full rounded-[8px] text-caption-1 font-[400] "
         />
       </Form.Item>
     </FormRow>

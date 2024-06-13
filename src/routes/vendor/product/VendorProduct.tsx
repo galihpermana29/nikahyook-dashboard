@@ -1,7 +1,7 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, InputNumber, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import useGenerateColumnVendorProduct from './usecase/useGenerateColumn';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
@@ -28,10 +28,13 @@ export const VendorProductContainer = () => {
     error,
   } = useQueryVendorContent(form);
 
-  const { mutate: mutateEdit } = useMutateEditVendorContent(refetch);
+  const { mutate: mutateEdit } = useMutateEditVendorContent(
+    refetch,
+    null,
+    null
+  );
   const { result: resultTags, error: errorTags } = useQueryTags();
   const { columns } = useGenerateColumnVendorProduct(navigate, mutateEdit);
-
   return (
     <ErrorBoundary error={(error || errorTags) as AxiosError} refetch={refetch}>
       <PageTitle title="Vendor Product" />
@@ -39,7 +42,7 @@ export const VendorProductContainer = () => {
         columns={columns}
         onPaginationChanges={setQueryVendorContent}
         loading={isLoading}
-        data={result?.data}
+        data={result?.data ?? []}
         metadata={result ? result.meta_data : undefined}
         filterComponents={
           <PageFilter
@@ -90,9 +93,9 @@ export const VendorProductContainer = () => {
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     mode="multiple"
-                    className="w-full max-w-[224px] min-h-[40px]"
+                    className="w-full max-w-[224px]"
                     placeholder="Tag"
-                    options={resultTags?.filterOptions}
+                    options={resultTags?.selectOptions}
                   />
                 </Form.Item>
                 <Form.Item
@@ -100,7 +103,13 @@ export const VendorProductContainer = () => {
                   name={'min_price'}
                   initialValue={queryVendorContent.min_price}
                   className="my-[10px]">
-                  <Input
+                  <InputNumber
+                    formatter={(value: any) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value: any) =>
+                      value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+                    }
                     value={queryVendorContent.min_price}
                     className="h-[35px] w-full max-w-[300px] rounded-[8px] [&>input]:!text-caption-1 [&>input]:!font-[400]"
                     placeholder="Min Price"
@@ -110,7 +119,13 @@ export const VendorProductContainer = () => {
                   name={'max_price'}
                   initialValue={queryVendorContent.max_price}
                   className="my-[10px]">
-                  <Input
+                  <InputNumber
+                    formatter={(value: any) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value: any) =>
+                      value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+                    }
                     value={queryVendorContent.max_price}
                     className="h-[35px] w-full max-w-[300px] rounded-[8px] [&>input]:!text-caption-1 [&>input]:!font-[400]"
                     placeholder="Max Price"

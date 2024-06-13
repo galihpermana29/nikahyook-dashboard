@@ -1,7 +1,7 @@
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
-import { Form, Input, Select } from 'antd';
+import { Form, InputNumber, Select } from 'antd';
 import { useForm } from 'antd/es/form/Form';
 import useQueryVendorContent from './repositories/useGetAllContent';
 import useGenerateColumnVendorProduct from './usecase/useGenerateColumn';
@@ -28,13 +28,17 @@ export const VendorContentContainer = () => {
   } = useQueryVendorContent(form);
 
   const { result: resultTags } = useQueryTags();
-  const { mutate: mutateEdit } = useMutateEditVendorContent(refetch);
+  const { mutate: mutateEdit } = useMutateEditVendorContent(
+    refetch,
+    null,
+    null
+  );
 
   const { columns } = useGenerateColumnVendorProduct(navigate, mutateEdit);
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <PageTitle title="Vendor Content" />
+      <PageTitle title="Vendor Product" />
 
       <DashboardTable<IDetailProductData[]>
         columns={columns}
@@ -84,9 +88,9 @@ export const VendorContentContainer = () => {
                         .localeCompare((optionB?.label ?? '').toLowerCase())
                     }
                     mode="multiple"
-                    className="w-full max-w-[224px] min-h-[40px]"
+                    className="w-full max-w-[224px]"
                     placeholder="Tag"
-                    options={resultTags?.filterOptions}
+                    options={resultTags?.selectOptions}
                   />
                 </Form.Item>
                 <Form.Item
@@ -94,7 +98,13 @@ export const VendorContentContainer = () => {
                   name={'min_price'}
                   initialValue={queryVendorContent.min_price}
                   className="my-[10px]">
-                  <Input
+                  <InputNumber
+                    formatter={(value: any) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value: any) =>
+                      value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+                    }
                     value={queryVendorContent.min_price}
                     className="h-[35px] w-full max-w-[300px] rounded-[8px] [&>input]:!text-caption-1 [&>input]:!font-[400]"
                     placeholder="Min Price"
@@ -104,7 +114,13 @@ export const VendorContentContainer = () => {
                   name={'max_price'}
                   initialValue={queryVendorContent.max_price}
                   className="my-[10px]">
-                  <Input
+                  <InputNumber
+                    formatter={(value: any) =>
+                      `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                    }
+                    parser={(value: any) =>
+                      value?.replace(/\$\s?|(,*)/g, '') as unknown as number
+                    }
                     value={queryVendorContent.max_price}
                     className="h-[35px] w-full max-w-[300px] rounded-[8px] [&>input]:!text-caption-1 [&>input]:!font-[400]"
                     placeholder="Max Price"

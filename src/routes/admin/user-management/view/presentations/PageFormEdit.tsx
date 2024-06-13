@@ -5,7 +5,10 @@ import { Button, DatePicker, Form, Input, Radio, Select } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import { useNavigate } from 'react-router-dom';
 import { useGenerateDropdownOptions } from '../../usecase/useGenerateDropdownOptions';
-import { Geocoder } from '@mapbox/search-js-react';
+import useFilterVendorTypes from '@/routes/admin/vendor-management/vendor-user-management/repositories/useFilterVendorTypes';
+import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
+import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
+import { IVendorLocation } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 
 interface IFormCreate {
   form: FormInstance;
@@ -15,6 +18,14 @@ interface IFormCreate {
   disabled: boolean;
   onChangePasswordClick?: () => void;
   showEditButton?: boolean;
+  dynamicSelectOptions: {
+    vendorTypes: TGeneralSelectOptions[];
+    provinceTypes: TGeneralSelectOptions[];
+    cityTypes: TGeneralSelectOptions[];
+    districtTypes: TGeneralSelectOptions[];
+    villageTypes: TGeneralSelectOptions[];
+  };
+  onLocationChange: React.Dispatch<React.SetStateAction<IVendorLocation>>;
 }
 
 export const PageFormEdit = ({
@@ -24,6 +35,8 @@ export const PageFormEdit = ({
   disabled = false,
   showEditButton = false,
   id,
+  dynamicSelectOptions,
+  onLocationChange,
 }: IFormCreate) => {
   const navigate = useNavigate();
 
@@ -224,31 +237,54 @@ export const PageFormEdit = ({
               className="text-caption-1"
             />
           </Form.Item>
-          <Form.Item
-            className="my-[8px]"
-            name={'location'}
-            label="Location"
-            rules={[
-              {
-                required: true,
-                message: 'Please input location!',
-              },
-            ]}>
-            {disabled ? (
-              <Input
+          <div className="flex w-full gap-2">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select province!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={'province'}
+              label="Province">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, province: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.provinceTypes}
                 placeholder="Enter your detail here!"
                 className="text-caption-1"
               />
-            ) : (
-              <Geocoder
+            </Form.Item>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select city!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={'city'}
+              label="City">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, city: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.cityTypes}
                 placeholder="Enter your detail here!"
-                onRetrieve={(res) => {
-                  form.setFieldValue('location', res.properties.full_address);
-                }}
-                accessToken={import.meta.env.VITE_MAPBOX_KEY}
+                className="text-caption-1"
               />
-            )}
-          </Form.Item>
+            </Form.Item>
+          </div>
           <Form.Item
             className="my-[8px]"
             name={'wedding_date'}

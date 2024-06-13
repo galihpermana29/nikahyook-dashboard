@@ -1,39 +1,49 @@
 import {
-  IUpdateUserVendorInput,
-  IUpdateUserVendorPayload,
-  IUserVendorDetail,
+  ICreateUserVendorInput,
+  ICreateUserVendorPayload,
 } from '@/shared/models/userServicesInterface';
 import { DashboardUserAPI } from '@/shared/repositories/userServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
 import { useMutation } from 'react-query';
 import useParseVendorDetail from './useParseVendorDetail';
+import { IVendorLocation } from '../view/container/Create/VendorUserCreate';
 
-const useMutateEditVendorUser = (refetch?: () => void) => {
+const useMutateEditVendorUser = (
+  refetch: () => void,
+  vendorLocation?: IVendorLocation
+) => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
   const editVendorUser = async (
-    payload: IUpdateUserVendorInput,
+    payload: ICreateUserVendorInput,
     id: string
   ) => {
-    const detail: IUserVendorDetail = useParseVendorDetail(payload);
+    const json_text = useParseVendorDetail(payload);
 
-    const newPayload: IUpdateUserVendorPayload = {
+    const newPayload: ICreateUserVendorPayload = {
       name: payload.name,
       email: payload.email,
+      password: payload.password,
       profile_image_uri: payload.profile_image_uri ?? '',
-      date_of_birth: dayjs(payload.date_of_birth).format('YYYY-MM-DD'),
-      detail,
+      type: 'vendor',
+      phone_number: payload.phone_number.toString(),
+      detail: {
+        json_text,
+        location: {
+          ...vendorLocation!,
+          postal_code: payload.detail.location.postal_code,
+        },
+        vendor_type_id: payload.detail.vendor_type_id,
+      },
     };
-
     const data = await DashboardUserAPI.editUser(newPayload, id);
     return data;
   };
 
-  const updateStatus = async (payload: IUpdateUserVendorInput, id: string) => {
+  const updateStatus = async (payload: ICreateUserVendorInput, id: string) => {
     const data = await DashboardUserAPI.editUser(payload, id);
     return data;
   };
@@ -49,7 +59,7 @@ const useMutateEditVendorUser = (refetch?: () => void) => {
       id,
       type,
     }: {
-      payload: IUpdateUserVendorInput;
+      payload: ICreateUserVendorInput;
       id: string;
       type: 'delete' | 'update';
     }) => {

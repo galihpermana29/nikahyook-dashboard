@@ -1,30 +1,28 @@
-import { TGeneralFilter } from "@/shared/models/generalInterfaces";
-import { DashboardRoleAPI } from "@/shared/repositories/roleServies";
-import { DashboardUserAPI } from "@/shared/repositories/userServices";
-import useConvertQuery from "@/shared/usecase/useConvertQuery";
-import useSuccessAxios from "@/shared/usecase/useSuccessAxios";
-import { useDebounce } from "@uidotdev/usehooks";
-import { FormInstance } from "antd";
-import { useState } from "react";
-import { useQuery } from "react-query";
-import { useSearchParams } from "react-router-dom";
+import { TGeneralFilter } from '@/shared/models/generalInterfaces';
+import { DashboardRoleAPI } from '@/shared/repositories/roleServies';
+import { DashboardUserAPI } from '@/shared/repositories/userServices';
+import useConvertQuery from '@/shared/usecase/useConvertQuery';
+import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
+import { useDebounce } from '@uidotdev/usehooks';
+import { FormInstance } from 'antd';
+import { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useSearchParams } from 'react-router-dom';
 
-const useQueryAdmins = (
-  form: FormInstance<any>
-) => {
+const useQueryAdmins = (form: FormInstance<any>) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const keyword = searchParams.get("keyword");
-  const status = searchParams.get("status");
-  const limit = searchParams.get("limit");
-  const page = searchParams.get("page");
+  const keyword = searchParams.get('keyword');
+  const status = searchParams.get('status');
+  const limit = searchParams.get('limit');
+  const page = searchParams.get('page');
 
   // Default filter state
   const initialFilterState: TGeneralFilter = {
     limit: 10,
     page: 1,
-    keyword: "",
-    status: "default",
+    keyword: '',
+    status: 'default',
   };
 
   // Change filter state based on searchParams
@@ -43,23 +41,30 @@ const useQueryAdmins = (
   const getAdmins = async () => {
     const queryParams = objectToQueryParams(queryAdmins);
     setSearchParams(queryParams);
-    const { data, meta_data } = await DashboardUserAPI.getAllAdminUser(queryParams);
+    const { data, meta_data } = await DashboardUserAPI.getAllAdminUser(
+      queryParams
+    );
 
     return { data: addIndexToData(data), meta_data };
   };
 
   const getRoles = async () => {
-    const { data } = await DashboardRoleAPI.getAllRoles("status=active");
-    return dataToSelectOptions(data, "id", "name");
+    const { data } = await DashboardRoleAPI.getAllRoles('status=active');
+    return dataToSelectOptions(data, 'id', 'name');
   };
 
   const { data: roles } = useQuery({
-    queryKey: ["roles"],
+    queryKey: ['roles'],
     queryFn: getRoles,
   });
 
-  const { data: result, error, isLoading, refetch } = useQuery({
-    queryKey: ["admins", { ...queries }],
+  const {
+    data: result,
+    error,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ['admins', { ...queries }],
     queryFn: getAdmins,
   });
 

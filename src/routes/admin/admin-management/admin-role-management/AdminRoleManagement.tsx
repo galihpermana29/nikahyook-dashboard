@@ -85,7 +85,6 @@ export const AdminRoleManagementContainer = () => {
           detail={detailData}
           handleMutate={mutateEdit}
           form={formModal}
-          disable={true}
           footer={
             <FormFooter
               secondaryText="Cancel"
@@ -103,7 +102,7 @@ export const AdminRoleManagementContainer = () => {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <PageTitle title="Admin Role Management" />
+      <PageTitle title="Role Management" />
       <Modal
         title={<div className="capitalize">{`${modalState?.type} Role`}</div>}
         open={modalState?.isOpen}

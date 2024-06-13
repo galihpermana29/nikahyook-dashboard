@@ -51,7 +51,6 @@ const useQueryVendorContent = (form: FormInstance<any>) => {
     const { data, meta_data } = await DashboardProductAPI.getAllProducts(
       queryParams
     );
-
     return { data: addIndexToData(data), meta_data };
   };
 

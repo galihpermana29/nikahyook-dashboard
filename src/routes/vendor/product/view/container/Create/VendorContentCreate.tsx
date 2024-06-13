@@ -8,32 +8,70 @@ import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary'
 import { AxiosError } from 'axios';
 import useQueryProductTypes from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllProductTypes';
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
+import useQueryProvince from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllProvince';
+import useQueryCity from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllCity';
+import useQueryDistrict from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllDistrict';
+import useQueryVillage from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllVillage';
+import {
+  IVendorLocation,
+  initialState,
+} from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
+import { useState } from 'react';
 
 const VendorProductCreateContainer = () => {
-  const { mutate, isLoading } = useCreateProduct();
   const [form] = useForm();
+  const navigate = useNavigate();
 
   const userId = JSON.parse(localStorage.getItem('admin')!)?.user_id;
 
-  const navigate = useNavigate();
+  const [locationState, setLocationState] =
+    useState<IVendorLocation>(initialState);
+
+  const [activeCoverage, setActiveCoverage] = useState<any>({
+    province: [],
+    city: [],
+  });
+
+  const [coverageState, setCoverageState] = useState([]);
+
+  const { mutate, isLoading } = useCreateProduct(locationState, coverageState);
 
   const { result: resultProductTypes, error: errorProductTypes } =
     useQueryProductTypes();
   const { result: resultTags, error: errorTags, refetch } = useQueryTags();
 
+  const { result: provinceTypes, error: errorEmsifa } = useQueryProvince();
+  const { result: cityTypes } = useQueryCity(locationState.province?.value);
+  const { result: cityCoverageTypes } = useQueryCity(
+    activeCoverage.province.length > 0
+      ? activeCoverage.province?.[activeCoverage.province.length - 1].value
+      : null
+  );
+  const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
+  const { result: villageId } = useQueryVillage(locationState.district?.value);
+
   return (
     <ErrorBoundary
-      error={(errorTags || errorProductTypes) as AxiosError}
+      error={(errorTags || errorProductTypes || errorEmsifa) as AxiosError}
       refetch={refetch}>
       <PageTitle title="Create Vendor Product" withArrow={true} />
       <div className="p-[20px]">
         <LoadingHandler isLoading={isLoading} fullscreen={true}>
           <PageFormCreate
+            onActiveCoverageChange={setActiveCoverage}
+            onLocationChange={setLocationState}
+            setCoverageState={setCoverageState}
+            activeCoverage={activeCoverage}
             dynamicSelectOptions={{
               tags: resultTags ? resultTags!.selectOptions! : [],
               productTypes: resultProductTypes
                 ? resultProductTypes!.selectOptions!
                 : [],
+              provinceTypes: provinceTypes ?? [],
+              cityTypes: cityTypes ?? [],
+              districtTypes: districtTypes ?? [],
+              villageTypes: villageId ?? [],
+              cityCoverageTypes: cityCoverageTypes ?? [],
             }}
             disabled={false}
             id={userId as string}

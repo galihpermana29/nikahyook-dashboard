@@ -13,6 +13,12 @@ import { Modal } from 'antd';
 import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';
 import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import useQueryVendorTypes from '../../../repositories/useGetVendorTypes';
+import { IVendorLocation, initialState } from '../Create/VendorUserCreate';
+import { useState } from 'react';
+import useQueryProvince from '../../../repositories/useGetAllProvince';
+import useQueryCity from '../../../repositories/useGetAllCity';
+import useQueryDistrict from '../../../repositories/useGetAllDistrict';
+import useQueryVillage from '../../../repositories/useGetAllVillage';
 
 const VendorUserEditContainer = () => {
   const [form] = useForm();
@@ -23,20 +29,29 @@ const VendorUserEditContainer = () => {
   const navigate = useNavigate();
 
   const { id } = useParams();
+  const [locationState, setLocationState] =
+    useState<IVendorLocation>(initialState);
 
   const {
     isLoading: loadingGetDetail,
     refetch,
     error,
-  } = useQueryVendorUserDetail(id as string, form);
+  } = useQueryVendorUserDetail(id as string, form, setLocationState);
 
-  const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+  const { mutate: mutateEdit } = useMutateEditVendorUser(
+    refetch,
+    locationState
+  );
   const { result: vendorTypes } = useQueryVendorTypes();
 
   const { mutate: mutateEditPassword } = useMutateEditPassword(
     closeModal,
     refetch
   );
+  const { result: provinceTypes, error: errorEmsifa } = useQueryProvince();
+  const { result: cityTypes } = useQueryCity(locationState.province?.value);
+  const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
+  const { result: villageId } = useQueryVillage(locationState.district?.value);
 
   const modalType = {
     password: (
@@ -60,7 +75,9 @@ const VendorUserEditContainer = () => {
 
   return (
     <div>
-      <ErrorBoundary error={error as AxiosError} refetch={refetch}>
+      <ErrorBoundary
+        error={(error || errorEmsifa) as AxiosError}
+        refetch={refetch}>
         <Modal
           title={
             <div className="capitalize">
@@ -80,8 +97,13 @@ const VendorUserEditContainer = () => {
           <div className="p-[20px]">
             <LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
               <PageFormEdit
+                onLocationChange={setLocationState}
                 dynamicSelectOptions={{
                   vendorTypes: vendorTypes ? vendorTypes.data : [],
+                  provinceTypes: provinceTypes ?? [],
+                  cityTypes: cityTypes ?? [],
+                  districtTypes: districtTypes ?? [],
+                  villageTypes: villageId ?? [],
                 }}
                 form={form}
                 onSave={mutateEdit}

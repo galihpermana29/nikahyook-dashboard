@@ -22,3 +22,20 @@ export type TGeneralSelectOptions = {
   value: any;
   label: any;
 };
+
+export type TEmsifaAPIResponse = {
+  id: string;
+  name: string;
+};
+
+export type TPostalCodeResponse = {
+  code: number;
+  village: string;
+  district: string;
+  regency: string;
+  province: string;
+  latitude: number;
+  longitude: number;
+  elevation: number;
+  timezone: string;
+};

@@ -1,9 +1,9 @@
 import {
+  ICreateUserVendorInput,
   IUpdateUserResponseRoot,
-  type IUpdateUserVendorInput,
 } from '@/shared/models/userServicesInterface';
 import { DownOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
+import { Button, Dropdown, Space, TableProps, Tag } from 'antd';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 import { NavigateFunction } from 'react-router-dom';
@@ -17,7 +17,7 @@ const useGenerateColumnVendorUser = (
     IUpdateUserResponseRoot,
     AxiosError<unknown, any>,
     {
-      payload: IUpdateUserVendorInput;
+      payload: ICreateUserVendorInput;
       id: string;
       type: 'delete' | 'update';
     },
@@ -38,9 +38,9 @@ const useGenerateColumnVendorUser = (
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Date of Birth',
-      dataIndex: 'date_of_birth',
-      key: 'date_of_birth',
+      title: 'Phone Number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
       render: (text) => <a className="capitalize">{text}</a>,
     },
     {
@@ -57,8 +57,41 @@ const useGenerateColumnVendorUser = (
       title: 'Actions',
       dataIndex: '',
       key: 'actions',
+      align: 'center',
       render: ({ id, status }) => (
-        <Row gutter={[12, 12]}>
+        <div className="flex gap-[5px] justify-center">
+          {status === 'pending' && (
+            <>
+              <Button
+                onClick={() => {
+                  onChangeStatus!({
+                    payload: {
+                      status: 'inactive',
+                    } as unknown as ICreateUserVendorInput,
+                    id,
+                    type: 'delete',
+                  });
+                }}
+                htmlType="button"
+                className="border-ny-primary-500 text-ny-primary-500">
+                Reject
+              </Button>
+              <Button
+                onClick={() => {
+                  onChangeStatus!({
+                    payload: {
+                      status: 'active',
+                    } as unknown as ICreateUserVendorInput,
+                    id,
+                    type: 'delete',
+                  });
+                }}
+                htmlType="button"
+                className="hover:!bg-ny-primary-500 hover:!text-white bg-ny-primary-500 text-white cursor-pointer">
+                Approve
+              </Button>
+            </>
+          )}
           <Dropdown
             menu={{
               items: [
@@ -78,19 +111,21 @@ const useGenerateColumnVendorUser = (
                   },
                   disabled: !view,
                 },
-                {
-                  label: status === 'active' ? 'Deactivate' : 'Activate',
-                  key: '3',
-                  onClick: () =>
-                    onChangeStatus!({
-                      payload: {
-                        status: status === 'active' ? 'inactive' : 'active',
-                      },
-                      id,
-                      type: 'delete',
-                    }),
-                  disabled: !remove,
-                },
+                status !== 'pending'
+                  ? {
+                      label: status === 'active' ? 'Deactivate' : 'Activate',
+                      key: '3',
+                      onClick: () =>
+                        onChangeStatus!({
+                          payload: {
+                            status: status === 'active' ? 'inactive' : 'active',
+                          } as unknown as ICreateUserVendorInput,
+                          id,
+                          type: 'delete',
+                        }),
+                      disabled: !remove,
+                    }
+                  : null,
               ],
             }}>
             <Button className="bg-ny-primary-100 text-caption-1 text-ny-primary-500 hover:!bg-ny-primary-100 hover:!text-ny-primary-500">
@@ -100,7 +135,7 @@ const useGenerateColumnVendorUser = (
               </Space>
             </Button>
           </Dropdown>
-        </Row>
+        </div>
       ),
     },
   ];

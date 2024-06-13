@@ -3,7 +3,7 @@ import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { TModalType } from '@/shared/usecase/useModalReducer';
 import { UseMutateFunction } from 'react-query';
 import {
-  IUpdateUserPayloadRoot,
+  IUpdateUserAdminPayload,
   IUpdateUserResponseRoot,
 } from '@/shared/models/userServicesInterface';
 import { AxiosError } from 'axios';
@@ -15,9 +15,9 @@ const useGenerateColumnAdminUser = (
   onOpenModal?: (modalType: TModalType, id?: string | undefined) => void,
   onChangeStatus?: UseMutateFunction<
     IUpdateUserResponseRoot,
-    AxiosError,
+    AxiosError<unknown, any>,
     {
-      payload: IUpdateUserPayloadRoot;
+      payload: IUpdateUserAdminPayload;
       id: string;
       type: 'delete' | 'update';
     },
@@ -38,16 +38,16 @@ const useGenerateColumnAdminUser = (
       render: (text) => <a>{text}</a>,
     },
     {
-      title: 'Date of Birth',
-      dataIndex: 'date_of_birth',
-      key: 'date_of_birth',
+      title: 'Phone Number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
       render: (text) => <a>{text}</a>,
     },
     {
       title: 'Role Name',
-      dataIndex: 'role_name',
-      key: 'role_name',
-      render: (text) => <a className="capitalize">{text}</a>,
+      dataIndex: 'detail',
+      key: 'detail',
+      render: (text) => <a className="capitalize">{text?.role_name}</a>,
     },
     {
       title: 'Status',
@@ -87,7 +87,7 @@ const useGenerateColumnAdminUser = (
                     onChangeStatus!({
                       payload: {
                         status: status === 'active' ? 'inactive' : 'active',
-                      },
+                      } as IUpdateUserAdminPayload,
                       id,
                       type: 'delete',
                     }),

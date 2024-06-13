@@ -1,13 +1,12 @@
 import {
-  IUpdateUserClientInput,
   IUpdateUserResponseRoot,
+  IUserClientFormValues,
 } from '@/shared/models/userServicesInterface';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 import { NavigateFunction } from 'react-router-dom';
-import { useGenerateDropdownOptions } from './useGenerateDropdownOptions';
 
 export const useGenerateColumn = (
   remove: boolean,
@@ -16,17 +15,15 @@ export const useGenerateColumn = (
   onNavigate?: NavigateFunction,
   onChangeStatus?: UseMutateFunction<
     IUpdateUserResponseRoot,
-    AxiosError,
+    AxiosError<unknown, any>,
     {
-      payload: IUpdateUserClientInput;
+      payload: IUserClientFormValues;
       id: string;
       type: 'delete' | 'update';
     },
     unknown
   >
 ) => {
-  const { weddingRoleOptions } = useGenerateDropdownOptions();
-
   const columns: TableProps['columns'] = [
     {
       title: 'Name',
@@ -41,17 +38,31 @@ export const useGenerateColumn = (
       render: (text) => text,
     },
     {
-      title: 'Wedding Role',
+      title: 'Phone Number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      render: (text) => text,
+    },
+    {
+      title: 'Wedding Location',
       dataIndex: 'detail',
-      key: 'wedding_role',
-      render: ({ json_text }) => {
-        const detailJson = JSON.parse(json_text);
-
-        const role = weddingRoleOptions.filter(
-          (opt) => opt.value === detailJson.wedding_role
+      key: 'location',
+      render: ({ location }) => {
+        return (
+          <span className="capitalize">{location ? location.label : '-'}</span>
         );
-
-        return role[0]?.label ?? '-';
+      },
+    },
+    {
+      title: 'Wedding Date',
+      dataIndex: 'detail',
+      key: 'wedding_date',
+      render: ({ wedding_date }) => {
+        return (
+          <span className="capitalize">
+            {wedding_date ? wedding_date : '-'}
+          </span>
+        );
       },
     },
     {
@@ -104,7 +115,7 @@ export const useGenerateColumn = (
                     onChangeStatus!({
                       payload: {
                         status: status === 'active' ? 'inactive' : 'active',
-                      },
+                      } as IUserClientFormValues,
                       id,
                       type: 'delete',
                     }),

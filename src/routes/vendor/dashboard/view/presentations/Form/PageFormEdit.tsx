@@ -7,6 +7,8 @@ import VendorProfilePicture from '../VendorProfilePicture';
 import VendorBasicDetails from '../VendorBasicDetails';
 import VendorAdditionalDetails from '../VendorAdditionalDetails';
 import VendorAlbum from '../VendorAlbum';
+import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
+import { IVendorLocation } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 
 interface IFormCreate {
   form: FormInstance;
@@ -16,6 +18,13 @@ interface IFormCreate {
   disabled: boolean;
   onChangePasswordClick?: () => void;
   showEditButton?: boolean;
+  dynamicSelectOptions: {
+    provinceTypes: TGeneralSelectOptions[];
+    cityTypes: TGeneralSelectOptions[];
+    districtTypes: TGeneralSelectOptions[];
+    villageTypes: TGeneralSelectOptions[];
+  };
+  onLocationChange: React.Dispatch<React.SetStateAction<IVendorLocation>>;
 }
 
 export const PageFormEdit = ({
@@ -26,6 +35,8 @@ export const PageFormEdit = ({
   showEditButton = false,
   id,
   onChangePasswordClick,
+  dynamicSelectOptions,
+  onLocationChange,
 }: IFormCreate) => {
   const navigate = useNavigate();
 
@@ -66,7 +77,10 @@ export const PageFormEdit = ({
 
       <VendorBasicDetails />
 
-      <VendorAdditionalDetails form={form} />
+      <VendorAdditionalDetails
+        dynamicSelectOptions={dynamicSelectOptions}
+        onLocationChange={onLocationChange}
+      />
 
       <VendorAlbum />
     </Form>
