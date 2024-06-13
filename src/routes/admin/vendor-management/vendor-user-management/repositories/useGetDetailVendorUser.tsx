@@ -1,31 +1,31 @@
-import {
-  IUserVendorDetail,
-  type IUserVendorDetailJSON,
-} from '@/shared/models/userServicesInterface';
+import { IDetailVendorUser } from '@/shared/models/userServicesInterface';
 import { DashboardUserAPI } from '@/shared/repositories/userServices';
 import { FormInstance } from 'antd';
-import dayjs from 'dayjs';
 import { useQuery } from 'react-query';
+import { IVendorLocation } from '../view/container/Create/VendorUserCreate';
 
-const useQueryVendorUserDetail = (id: string, form?: FormInstance) => {
+const useQueryVendorUserDetail = (
+  id: string,
+  form: FormInstance,
+  setLocationState: React.Dispatch<React.SetStateAction<IVendorLocation>>
+) => {
   const getDetail = async () => {
-    const { data } = await DashboardUserAPI.getUserById(id as string);
-
-    const vendorDetail: IUserVendorDetail = data.detail;
-    const vendorDetailJSON: IUserVendorDetailJSON = vendorDetail.json_text
-      ? JSON.parse(vendorDetail.json_text)
+    const { data } = await DashboardUserAPI.getUserById<IDetailVendorUser>(
+      id as string
+    );
+    setLocationState(data.detail.location);
+    const vendorDetailJSON = data.detail.json_text
+      ? JSON.parse(data.detail.json_text)
       : {
           vendor_description: '',
           vendor_album: [],
         };
+
     form!.setFieldsValue({
       ...data,
-      date_of_birth: dayjs(data.date_of_birth),
-      location: vendorDetail.location,
-      vendor_type_id: vendorDetail.vendor_type_id,
-      vendor_description: vendorDetailJSON.vendor_description,
-      vendor_album: vendorDetailJSON.vendor_album,
+      ...vendorDetailJSON,
     });
+
     return data;
   };
 
@@ -33,6 +33,7 @@ const useQueryVendorUserDetail = (id: string, form?: FormInstance) => {
     queryKey: ['vendor-detail', id],
     queryFn: getDetail,
     enabled: id ? true : false,
+    refetchOnWindowFocus: false,
   });
 
   return { data, error, isLoading, refetch };

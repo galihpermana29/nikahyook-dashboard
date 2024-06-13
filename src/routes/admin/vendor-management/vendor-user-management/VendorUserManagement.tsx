@@ -44,7 +44,7 @@ export const VendorUserManagementContainer = () => {
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <PageTitle title="Vendor User Management" />
+      <PageTitle title="Vendor Account" />
 
       <DashboardTable<IDetailUserData>
         columns={columns}

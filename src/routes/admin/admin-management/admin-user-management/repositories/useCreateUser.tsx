@@ -1,44 +1,42 @@
-import { ICreateUserPayloadRoot } from '@/shared/models/userServicesInterface';
+import { ICreateUserAdminPayload } from '@/shared/models/userServicesInterface';
 import { DashboardUserAPI } from '@/shared/repositories/userServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
 import { useMutation } from 'react-query';
 
 const useMutateCreateAdmins = (
-	closeModal?: () => void,
-	refetch?: () => void
+  closeModal?: () => void,
+  refetch?: () => void
 ) => {
-	const { generateErrorMsg, showPopError } = useErrorAxios();
-	const { showSuccessMessage } = useSuccessAxios();
+  const { generateErrorMsg, showPopError } = useErrorAxios();
+  const { showSuccessMessage } = useSuccessAxios();
 
-	const createAdmins = async (payload: ICreateUserPayloadRoot) => {
-		const newPayload: ICreateUserPayloadRoot = {
-			...payload,
-			type: 'admin',
-			date_of_birth: dayjs(payload.date_of_birth).format('YYYY-MM-DD'),
-		};
-		const data = await DashboardUserAPI.createUser(newPayload);
+  const createAdmins = async (payload: ICreateUserAdminPayload) => {
+    const data = await DashboardUserAPI.createUser({
+      ...payload,
+      type: 'admin',
+      phone_number: (payload.phone_number as unknown as number).toString(),
+    });
 
-		return data;
-	};
+    return data;
+  };
 
-	const handleError = (error: AxiosError) => {
-		const msg = generateErrorMsg(error);
-		showPopError(msg);
-	};
+  const handleError = (error: AxiosError) => {
+    const msg = generateErrorMsg(error);
+    showPopError(msg);
+  };
 
-	const { mutate, error, isLoading } = useMutation({
-		mutationFn: (payload: ICreateUserPayloadRoot) => createAdmins(payload),
-		onError: handleError,
-		onSuccess: () => {
-			closeModal!();
-			refetch!();
-			showSuccessMessage('Admin successfully added!');
-		},
-	});
-	return { mutate, error, isLoading };
+  const { mutate, error, isLoading } = useMutation({
+    mutationFn: (payload: ICreateUserAdminPayload) => createAdmins(payload),
+    onError: handleError,
+    onSuccess: () => {
+      closeModal!();
+      refetch!();
+      showSuccessMessage('Admin successfully added!');
+    },
+  });
+  return { mutate, error, isLoading };
 };
 
 export default useMutateCreateAdmins;

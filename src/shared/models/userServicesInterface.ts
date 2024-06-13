@@ -44,21 +44,55 @@ export interface IDetailUserResponseRoot {
 // Get all user
 
 // Response
-export interface IAllUserResponseRoot {
-  data: IDetailUserData[];
+export type TGeneralSelectOptions = {
+  value: string;
+  label: string;
+};
+
+export interface IProvinceLocation {
+  province: TGeneralSelectOptions;
+  city: TGeneralSelectOptions;
+  district: TGeneralSelectOptions;
+  village: TGeneralSelectOptions;
+  postal_code: number;
+}
+export interface IAllUserResponseRoot<GenericDetail> {
+  data: GenericDetail[];
   meta_data: Metadata;
 }
 
 // Create user
 
-export interface ICreateUserPayloadRoot {
+export interface IDetailAdminUser {
+  role_id: number;
+  json_text?: string;
+}
+
+export interface IDetailVendorUser {
+  json_text: string;
+  location: IProvinceLocation;
+  vendor_type_id: number;
+  vendor_type_name?: string;
+  avg_rating?: number;
+  lowest_price?: number;
+}
+
+export interface IDetailClientUser {
+  json_text: string;
+  location: TGeneralSelectOptions;
+  date_of_birth: string;
+  gender: string;
+  wedding_date: string;
+}
+
+export interface ICreateUserPayloadRoot<GenericDetail> {
   name: string;
   email: string;
-  password: string;
-  date_of_birth: string;
+  password?: string;
   type: string;
   profile_image_uri: string;
-  role_id: number;
+  phone_number: string;
+  detail: GenericDetail;
 }
 
 export interface IUserVendorDetail {
@@ -67,22 +101,20 @@ export interface IUserVendorDetail {
   json_text?: string;
 }
 
-export type IUserVendorDetailPayload = IUserVendorDetailJSON & {
-  vendor_type_id?: number;
-  location?: string;
-};
-
 export interface IUserVendorDetailJSON {
   vendor_description?: string;
   vendor_album?: string | string[];
 }
 
-export type ICreateUserVendorInput = ICreateUserPayloadRoot &
-  IUserVendorDetailPayload;
+export type ICreateUserVendorInput = ICreateUserPayloadRoot<IDetailVendorUser>;
+export type ICreateUserAdminInput = ICreateUserPayloadRoot<IDetailAdminUser>;
+export type ICreateUserClientInput = ICreateUserPayloadRoot<IDetailClientUser>;
 
-export interface ICreateUserVendorPayload extends ICreateUserPayloadRoot {
-  detail: IUserVendorDetail;
-}
+export interface ICreateUserVendorPayload
+  extends ICreateUserPayloadRoot<IDetailVendorUser> {}
+
+export interface ICreateUserAdminPayload
+  extends ICreateUserPayloadRoot<IDetailAdminUser> {}
 
 // Response
 export interface ICreateUserResponseRoot {
@@ -90,25 +122,15 @@ export interface ICreateUserResponseRoot {
 }
 
 // Update User
-export interface IUpdateUserPayloadRoot {
-  id?: string;
-  name?: string;
-  email?: string;
-  date_of_birth?: string;
-  type?: string;
-  role_id?: number;
-  role_name?: string;
-  status?: string;
-  profile_image_uri?: string;
+export interface IUpdateUserVendorPayload extends ICreateUserVendorInput {}
+export interface IGetDetailUserVendorResponse extends ICreateUserVendorInput {}
+export interface IUpdateUserAdminPayload extends ICreateUserAdminInput {
+  status: string;
 }
 
-export type IUpdateUserVendorInput = IUpdateUserPayloadRoot &
-  IUserVendorDetailPayload;
-
-export interface IUpdateUserVendorPayload extends IUpdateUserPayloadRoot {
-  detail: IUserVendorDetail;
+export interface IUpdateUserClientPayload extends ICreateUserClientInput {
+  status: string;
 }
-
 export interface IUpdateUserResponseRoot {
   data: string;
 }
@@ -126,28 +148,40 @@ export interface IUpdatePasswordResponseRoot {
   data: string;
 }
 
-export interface IUserClientDetail {
-	wedding_date?: string;
-	location?: string;
-	gender?: string;
+export interface IUserClientFormValues {
+  bride_name: string;
+  city: string;
+  date_of_birth: string;
+  email: string;
+  groom_name: string;
+  id: string;
+  name: string;
+  phone_number: string;
+  plan_for: number;
+  profile_image_uri: string;
+  province: string;
+  status: string;
+  type: string;
+  wedding_date: string;
+  wedding_role: number;
+  gender: string;
+  wedding_theme: number;
 }
+
+// export interface IUserClientDetail {
+//   wedding_date?: string;
+//   location?: string;
+//   gender?: string;
+// }
 
 export interface IUserClientDetailExtra {
-	wedding_role?: number;
-	groom_name?: string;
-	bride_name?: string;
-	plan_for?: number;
-	wedding_theme?: number;
+  wedding_role?: number;
+  groom_name?: string;
+  bride_name?: string;
+  plan_for?: number;
+  wedding_theme?: number;
 }
 
-export interface IUserClientDetailPayload extends IUserClientDetail {
-	json_text?: string;
-}
-
-export type IUpdateUserClientInput = IUpdateUserPayloadRoot &
-	IUserClientDetail &
-	IUserClientDetailExtra;
-
-export interface IUpdateUserClientPayload extends IUpdateUserPayloadRoot {
-	detail?: IUserClientDetailPayload;
-}
+// export interface IUserClientDetailPayload extends IUserClientDetail {
+//   json_text?: string;
+// }

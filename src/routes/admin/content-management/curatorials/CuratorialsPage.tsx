@@ -10,7 +10,6 @@ import DashboardTable from '@/shared/view/presentations/dashboard-table/Dashboar
 import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import addIcon from '@/assets/icon/add.png';
-import type { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
 import useQueryCuratorials from './repositories/useQueryCuratorials';
 
 export default function CuratorialsPage() {
@@ -30,7 +29,6 @@ export default function CuratorialsPage() {
     refetch,
     handleFilter,
     clearFilter,
-    roles,
   } = useQueryCuratorials(form);
 
   const { mutate: mutateEdit } = useMutateUpdateCuratorial(refetch);
@@ -83,13 +81,6 @@ export default function CuratorialsPage() {
                       { value: 'active', label: 'Active' },
                       { value: 'inactive', label: 'Inactive' },
                     ]}
-                  />
-                </Form.Item>
-                <Form.Item name={'role_id'} label="Role">
-                  <Select
-                    placeholder="Enter your detail here"
-                    options={roles as TGeneralSelectOptions[]}
-                    className="h-[40px] rounded-[8px]"
                   />
                 </Form.Item>
               </>

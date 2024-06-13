@@ -12,12 +12,23 @@ import useModalReducer from '@/shared/usecase/useModalReducer';
 import { PageFormEdit } from './view/presentations/Form/PageFormEdit';
 import type { ILoginData } from '@/shared/models/userServicesInterface';
 import profileCover from '@/assets/vendor-profile-cover.jpeg';
+import {
+  IVendorLocation,
+  initialState,
+} from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
+import { useState } from 'react';
+import useQueryProvince from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllProvince';
+import useQueryCity from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllCity';
+import useQueryDistrict from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllDistrict';
+import useQueryVillage from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllVillage';
 
 export default function VendorProfileContainer() {
   const [form] = Form.useForm();
   const [formModal] = Form.useForm();
 
   const { modalState, closeModal, openModal } = useModalReducer(formModal);
+  const [locationState, setLocationState] =
+    useState<IVendorLocation>(initialState);
 
   const navigate = useNavigate();
 
@@ -33,13 +44,22 @@ export default function VendorProfileContainer() {
     isLoading: loadingGetDetail,
     refetch,
     error,
-  } = useQueryVendorUserDetail(userId as string, form);
-  const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+  } = useQueryVendorUserDetail(userId as string, form, setLocationState);
+
+  const { mutate: mutateEdit } = useMutateEditVendorUser(
+    refetch,
+    locationState
+  );
 
   const { mutate: mutateEditPassword } = useMutateEditPassword(
     closeModal,
     refetch
   );
+
+  const { result: provinceTypes, error: errorEmsifa } = useQueryProvince();
+  const { result: cityTypes } = useQueryCity(locationState.province?.value);
+  const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
+  const { result: villageId } = useQueryVillage(locationState.district?.value);
 
   const modalType = {
     password: (
@@ -63,7 +83,9 @@ export default function VendorProfileContainer() {
 
   return (
     <div>
-      <ErrorBoundary error={error as AxiosError} refetch={refetch}>
+      <ErrorBoundary
+        error={(error || errorEmsifa) as AxiosError}
+        refetch={refetch}>
         <Modal
           title={
             <div className="capitalize">
@@ -86,6 +108,13 @@ export default function VendorProfileContainer() {
           <div className="p-[20px]">
             <LoadingHandler isLoading={loadingGetDetail} fullscreen={true}>
               <PageFormEdit
+                onLocationChange={setLocationState}
+                dynamicSelectOptions={{
+                  provinceTypes: provinceTypes ?? [],
+                  cityTypes: cityTypes ?? [],
+                  districtTypes: districtTypes ?? [],
+                  villageTypes: villageId ?? [],
+                }}
                 form={form}
                 onSave={mutateEdit}
                 onChangePasswordClick={() => openModal!('password', userId)}

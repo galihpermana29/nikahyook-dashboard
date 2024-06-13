@@ -170,7 +170,7 @@ const AdminUserManagementContainer = () => {
     <div>
       <ErrorBoundary error={error as AxiosError} refetch={refetch}>
         <>
-          <PageTitle title="Admin User Management" />
+          <PageTitle title="Admin Account" />
           <Modal
             title={
               <div className="capitalize">

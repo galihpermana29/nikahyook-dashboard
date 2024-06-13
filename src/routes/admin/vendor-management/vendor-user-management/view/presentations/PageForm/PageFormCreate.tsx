@@ -1,20 +1,27 @@
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
-import { DatePicker, Form, Input, Select } from 'antd';
+import { Form, Input, InputNumber, Select } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import TextArea from 'antd/es/input/TextArea';
 import useFilterVendorTypes from '../../../repositories/useFilterVendorTypes';
-import { Geocoder } from '@mapbox/search-js-react';
+// import { Geocoder } from '@mapbox/search-js-react';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
+import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
+import { IVendorLocation } from '../../container/Create/VendorUserCreate';
 
 interface IFormCreate {
   form: FormInstance;
   onSave: any;
   onCancel: any;
   dynamicSelectOptions: {
-    vendorTypes: { label: string; value: number }[];
+    vendorTypes: TGeneralSelectOptions[];
+    provinceTypes: TGeneralSelectOptions[];
+    cityTypes: TGeneralSelectOptions[];
+    districtTypes: TGeneralSelectOptions[];
+    villageTypes: TGeneralSelectOptions[];
   };
+  onLocationChange: React.Dispatch<React.SetStateAction<IVendorLocation>>;
 }
 
 export const PageFormCreate = ({
@@ -22,6 +29,7 @@ export const PageFormCreate = ({
   onSave,
   onCancel,
   dynamicSelectOptions,
+  onLocationChange,
 }: IFormCreate) => {
   return (
     <Form
@@ -118,17 +126,17 @@ export const PageFormCreate = ({
         </Form.Item>
         <Form.Item
           className="my-[8px]"
-          name={'date_of_birth'}
-          label="Date of Birth"
+          name={'phone_number'}
+          label="Phone Number"
           rules={[
             {
               required: true,
-              message: 'Please input your date of birth!',
+              message: 'Please input your phone number!',
             },
           ]}>
-          <DatePicker
-            placeholder="Enter your detail here!"
-            className="text-caption-1 w-full"
+          <InputNumber
+            placeholder="Enter your detail here"
+            className="w-full rounded-[8px] text-caption-1 font-[400] "
           />
         </Form.Item>
       </FormRow>
@@ -156,24 +164,7 @@ export const PageFormCreate = ({
           <div className="flex w-full gap-2">
             <Form.Item
               className="my-[8px] w-full"
-              name={'location'}
-              label="Vendor Location"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select vendor location!',
-                },
-              ]}>
-              <Geocoder
-                onRetrieve={(res) => {
-                  form.setFieldValue('location', res.properties.full_address);
-                }}
-                accessToken={import.meta.env.VITE_MAPBOX_KEY}
-              />
-            </Form.Item>
-            <Form.Item
-              className="my-[8px] w-full"
-              name={'vendor_type_id'}
+              name={['detail', 'vendor_type_id']}
               label="Vendor Type"
               rules={[
                 {
@@ -192,6 +183,117 @@ export const PageFormCreate = ({
               />
             </Form.Item>
           </div>
+          <div className="flex w-full gap-2">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select province!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={['detail', 'location', 'province']}
+              label="Province">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, province: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.provinceTypes}
+                placeholder="Enter your detail here!"
+                className="text-caption-1"
+              />
+            </Form.Item>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select city!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={['detail', 'location', 'city']}
+              label="City">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, city: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.cityTypes}
+                placeholder="Enter your detail here!"
+                className="text-caption-1"
+              />
+            </Form.Item>
+          </div>
+          <div className="flex w-full gap-2">
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select district!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={['detail', 'location', 'district']}
+              label="District">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, district: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.districtTypes}
+                placeholder="Enter your detail here!"
+                className="text-caption-1"
+              />
+            </Form.Item>
+            <Form.Item
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select village!',
+                },
+              ]}
+              className="my-[8px] w-full"
+              name={['detail', 'location', 'village']}
+              label="Village">
+              <Select
+                onChange={(_, opt: any) =>
+                  onLocationChange((dx) => ({ ...dx, village: opt }))
+                }
+                showSearch
+                optionFilterProp="children"
+                filterOption={useFilterVendorTypes}
+                filterSort={useSortSelectOptions}
+                options={dynamicSelectOptions.villageTypes}
+                placeholder="Enter your detail here!"
+                className="text-caption-1"
+              />
+            </Form.Item>
+          </div>
+          <Form.Item
+            rules={[
+              {
+                required: true,
+                message: 'Please select postal code!',
+              },
+            ]}
+            className="my-[8px]"
+            name={['detail', 'location', 'postal_code']}
+            label="Postal Code">
+            <InputNumber
+              placeholder="Enter your detail here"
+              className="w-full rounded-[8px] text-caption-1 font-[400] "
+            />
+          </Form.Item>
         </div>
       </FormRow>
 

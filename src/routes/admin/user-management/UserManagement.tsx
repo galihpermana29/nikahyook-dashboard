@@ -30,7 +30,7 @@ export const UserManagementContainer = () => {
   const { permissions } = useLoaderData() as ILoaderData;
   const { view, edit, remove } = permissions;
 
-  const { mutate: mutateEdit } = useMutateEditClientUser(refetch);
+  const { mutate: mutateEdit } = useMutateEditClientUser(refetch, null);
 
   const { columns } = useGenerateColumn(
     remove,
@@ -41,7 +41,7 @@ export const UserManagementContainer = () => {
   );
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>
-      <PageTitle title="User Management" />
+      <PageTitle title="User Account" />
       <DashboardTable
         columns={columns}
         data={data?.data}

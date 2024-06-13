@@ -1,8 +1,4 @@
-import {
-  IDetailUserData,
-  ILoginData,
-} from '@/shared/models/userServicesInterface';
-import { DashboardUserAPI } from '@/shared/repositories/userServices';
+import { ILoginData } from '@/shared/models/userServicesInterface';
 /**
  * This loader will load permission before pages rendered
  * Get the data with useLoaderData()
@@ -17,20 +13,21 @@ interface IPermissionsData {
 }
 
 export interface ILoaderData {
-  data: IDetailUserData;
   permissions: IPermissionsData;
 }
 
 export async function PermissionLoader(): Promise<ILoaderData> {
   const admin: ILoginData = JSON.parse(localStorage.getItem('admin')!);
-  const { data } = await DashboardUserAPI.getUserById(admin.user_id);
+
   const currentRoute = window.location.pathname
     .split('/')[1]
     .split('-')
     .join(' ');
   const parsedPermissions = admin.permissions
-    .map((dx) => JSON.parse(dx))
-    .filter((dy) => dy['feature_permission'] === currentRoute)[0];
+    ? admin.permissions
+        .map((dx) => JSON.parse(dx))
+        .filter((dy) => dy['feature_permission'] === currentRoute)[0]
+    : null;
 
   const permissions: IPermissionsData = parsedPermissions
     ? {
@@ -46,5 +43,5 @@ export async function PermissionLoader(): Promise<ILoaderData> {
         view: false,
       };
 
-  return { data, permissions };
+  return { permissions };
 }

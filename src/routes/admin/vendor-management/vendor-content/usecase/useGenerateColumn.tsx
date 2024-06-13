@@ -3,7 +3,7 @@ import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { UseMutateFunction } from 'react-query';
 import { AxiosError } from 'axios';
 import {
-  IUpdateProductPayloadRoot,
+  ICreateProductFormValues,
   IUpdateProductResponseRoot,
 } from '@/shared/models/productServicesInterface';
 import { NavigateFunction } from 'react-router-dom';
@@ -12,11 +12,11 @@ const useGenerateColumnVendorProduct = (
   onNavigate?: NavigateFunction,
   onChangeStatus?: UseMutateFunction<
     IUpdateProductResponseRoot,
-    AxiosError,
+    AxiosError<unknown, any>,
     {
-      payload: IUpdateProductPayloadRoot;
+      payload: ICreateProductFormValues;
       id: string;
-      type: 'update' | 'delete';
+      type: 'delete' | 'update';
     },
     unknown
   >
@@ -42,11 +42,17 @@ const useGenerateColumnVendorProduct = (
       ),
     },
     {
-      title: 'Vendor',
-      dataIndex: 'vendor_name',
-      key: 'vendor_name',
+      title: 'Product Type',
+      dataIndex: 'product_type_name',
+      key: 'product_type_name',
       render: (text) => <a className="capitalize">{text}</a>,
     },
+    // {
+    //   title: 'Vendor',
+    //   dataIndex: 'vendor_name',
+    //   key: 'vendor_name',
+    //   render: (text) => <a className="capitalize">{text}</a>,
+    // },
     {
       title: 'Tag',
       dataIndex: 'tags',
@@ -99,7 +105,7 @@ const useGenerateColumnVendorProduct = (
                     onChangeStatus!({
                       payload: {
                         status: status === 'active' ? 'inactive' : 'active',
-                      },
+                      } as unknown as ICreateProductFormValues,
                       id,
                       type: 'delete',
                     }),

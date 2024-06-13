@@ -1,25 +1,24 @@
 import {
   ICreateUserVendorInput,
   ICreateUserVendorPayload,
-  IUserVendorDetail,
 } from '@/shared/models/userServicesInterface';
 import { DashboardUserAPI } from '@/shared/repositories/userServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { AxiosError } from 'axios';
-import dayjs from 'dayjs';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import useParseVendorDetail from './useParseVendorDetail';
+import { IVendorLocation } from '../view/container/Create/VendorUserCreate';
 
-const useMutateCreateVendorUser = () => {
+const useMutateCreateVendorUser = (vendorLocation: IVendorLocation) => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
   const navigate = useNavigate();
 
   const createAdmins = async (payload: ICreateUserVendorInput) => {
-    const detail: IUserVendorDetail = useParseVendorDetail(payload);
+    const json_text = useParseVendorDetail(payload);
 
     const newPayload: ICreateUserVendorPayload = {
       name: payload.name,
@@ -27,9 +26,15 @@ const useMutateCreateVendorUser = () => {
       password: payload.password,
       profile_image_uri: payload.profile_image_uri ?? '',
       type: 'vendor',
-      role_id: 2,
-      date_of_birth: dayjs(payload.date_of_birth).format('YYYY-MM-DD'),
-      detail,
+      phone_number: payload.phone_number.toString(),
+      detail: {
+        json_text,
+        location: {
+          ...vendorLocation,
+          postal_code: payload.detail.location.postal_code,
+        },
+        vendor_type_id: payload.detail.vendor_type_id,
+      },
     };
 
     const data = await DashboardUserAPI.createUser(newPayload);
