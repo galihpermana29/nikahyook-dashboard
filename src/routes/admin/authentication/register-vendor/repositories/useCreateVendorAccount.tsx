@@ -29,7 +29,7 @@ const useRegisterVendorUserAccount = (
   };
 
   const handleSubmit = (value: ICreateUserVendorInput) => {
-    createAdmins(value);
+    mutate(value);
   };
 
   const createAdmins = async (payload: ICreateUserVendorInput) => {
