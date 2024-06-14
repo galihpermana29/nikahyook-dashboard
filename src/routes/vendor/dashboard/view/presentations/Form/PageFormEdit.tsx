@@ -9,6 +9,7 @@ import VendorAdditionalDetails from '../VendorAdditionalDetails';
 import VendorAlbum from '../VendorAlbum';
 import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
 import { IVendorLocation } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
+import VendorSosmedDetails from '../VendorSosmedDetails';
 
 interface IFormCreate {
   form: FormInstance;
@@ -76,6 +77,8 @@ export const PageFormEdit = ({
       <VendorProfilePicture />
 
       <VendorBasicDetails />
+
+      <VendorSosmedDetails />
 
       <VendorAdditionalDetails
         dynamicSelectOptions={dynamicSelectOptions}

@@ -305,28 +305,28 @@ export const PageFormCreate = ({
         description="Let them know your social media, so they can connect with you">
         <Form.Item className="my-[8px]" name={'website'} label="Website">
           <Input
-            addonBefore={<img src={website} alt="website" />}
+            prefix={<img src={website} alt="website" />}
             placeholder="https://website.com"
             className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item className="my-[8px]" name={'tiktok'} label="Tiktok">
           <Input
-            addonBefore={<img src={tiktok} alt="website" />}
+            prefix={<img src={tiktok} alt="website" />}
             placeholder="https://www.tiktok.com/@test"
             className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item className="my-[8px]" name={'instagram'} label="Instagram">
           <Input
-            addonBefore={<img src={ig} alt="website" />}
+            prefix={<img src={ig} alt="website" />}
             placeholder="https://www.instagram.com/@test"
             className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item className="my-[8px]" name={'facebook'} label="Facebook">
           <Input
-            addonBefore={<img src={fb} alt="website" />}
+            prefix={<img src={fb} alt="website" />}
             placeholder="https://www.facebook.com/@test"
             className="text-caption-1 h-[40px]"
           />
