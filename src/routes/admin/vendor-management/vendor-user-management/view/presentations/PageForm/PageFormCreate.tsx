@@ -5,10 +5,14 @@ import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import TextArea from 'antd/es/input/TextArea';
 import useFilterVendorTypes from '../../../repositories/useFilterVendorTypes';
-// import { Geocoder } from '@mapbox/search-js-react';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
 import { IVendorLocation } from '../../container/Create/VendorUserCreate';
+
+import fb from '@/assets/icon/fb.png';
+import tiktok from '@/assets/icon/tiktok.png';
+import ig from '@/assets/icon/ig.png';
+import website from '@/assets/icon/website.png';
 
 interface IFormCreate {
   form: FormInstance;
@@ -66,7 +70,7 @@ export const PageFormCreate = ({
           ]}>
           <Input
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -81,7 +85,7 @@ export const PageFormCreate = ({
           ]}>
           <Input
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -96,7 +100,7 @@ export const PageFormCreate = ({
           ]}>
           <Input.Password
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -121,7 +125,7 @@ export const PageFormCreate = ({
           ]}>
           <Input.Password
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -136,7 +140,7 @@ export const PageFormCreate = ({
           ]}>
           <InputNumber
             placeholder="Enter your detail here"
-            className="w-full rounded-[8px] text-caption-1 font-[400] "
+            className="w-full rounded-[8px] text-caption-1 font-[400] h-[40px]"
           />
         </Form.Item>
       </FormRow>
@@ -179,7 +183,7 @@ export const PageFormCreate = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.vendorTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
           </div>
@@ -204,7 +208,7 @@ export const PageFormCreate = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.provinceTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
             <Form.Item
@@ -227,7 +231,7 @@ export const PageFormCreate = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.cityTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
           </div>
@@ -252,7 +256,7 @@ export const PageFormCreate = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.districtTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
             <Form.Item
@@ -275,7 +279,7 @@ export const PageFormCreate = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.villageTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
           </div>
@@ -291,12 +295,43 @@ export const PageFormCreate = ({
             label="Postal Code">
             <InputNumber
               placeholder="Enter your detail here"
-              className="w-full rounded-[8px] text-caption-1 font-[400] "
+              className="w-full rounded-[8px] text-caption-1 font-[400] h-[40px] custom-input"
             />
           </Form.Item>
         </div>
       </FormRow>
-
+      <FormRow
+        title="Social Media"
+        description="Let them know your social media, so they can connect with you">
+        <Form.Item className="my-[8px]" name={'website'} label="Website">
+          <Input
+            addonBefore={<img src={website} alt="website" />}
+            placeholder="https://website.com"
+            className="text-caption-1 h-[40px]"
+          />
+        </Form.Item>
+        <Form.Item className="my-[8px]" name={'tiktok'} label="Tiktok">
+          <Input
+            addonBefore={<img src={tiktok} alt="website" />}
+            placeholder="https://www.tiktok.com/@test"
+            className="text-caption-1 h-[40px]"
+          />
+        </Form.Item>
+        <Form.Item className="my-[8px]" name={'instagram'} label="Instagram">
+          <Input
+            addonBefore={<img src={ig} alt="website" />}
+            placeholder="https://www.instagram.com/@test"
+            className="text-caption-1 h-[40px]"
+          />
+        </Form.Item>
+        <Form.Item className="my-[8px]" name={'facebook'} label="Facebook">
+          <Input
+            addonBefore={<img src={fb} alt="website" />}
+            placeholder="https://www.facebook.com/@test"
+            className="text-caption-1 h-[40px]"
+          />
+        </Form.Item>
+      </FormRow>
       <FormRow
         title="Album"
         description="Set your additional photo to your album">

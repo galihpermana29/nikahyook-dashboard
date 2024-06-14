@@ -107,7 +107,7 @@ const FormEdit = ({
             ]}>
             <Input
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
 
@@ -123,7 +123,7 @@ const FormEdit = ({
             ]}>
             <Input
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
 

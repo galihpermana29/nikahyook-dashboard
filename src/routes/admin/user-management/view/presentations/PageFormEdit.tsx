@@ -98,7 +98,7 @@ export const PageFormEdit = ({
           <Input
             disabled
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -113,7 +113,7 @@ export const PageFormEdit = ({
           ]}>
           <Input
             placeholder="Enter your detail here!"
-            className="text-caption-1"
+            className="text-caption-1 h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -128,7 +128,7 @@ export const PageFormEdit = ({
           ]}>
           <DatePicker
             placeholder="Enter your detail here!"
-            className="text-caption-1 w-full"
+            className="text-caption-1 w-full h-[40px]"
           />
         </Form.Item>
         <Form.Item
@@ -172,7 +172,7 @@ export const PageFormEdit = ({
             <Select
               options={weddingRoleOptions}
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
           <Form.Item
@@ -187,7 +187,7 @@ export const PageFormEdit = ({
             ]}>
             <Input
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
           <Form.Item
@@ -202,7 +202,7 @@ export const PageFormEdit = ({
             ]}>
             <Input
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
           <Form.Item
@@ -218,7 +218,7 @@ export const PageFormEdit = ({
             <Select
               options={planOptions}
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
           <Form.Item
@@ -234,7 +234,7 @@ export const PageFormEdit = ({
             <Select
               options={themeOptions}
               placeholder="Enter your detail here!"
-              className="text-caption-1"
+              className="text-caption-1 h-[40px]"
             />
           </Form.Item>
           <div className="flex w-full gap-2">
@@ -258,7 +258,7 @@ export const PageFormEdit = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.provinceTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
             <Form.Item
@@ -281,7 +281,7 @@ export const PageFormEdit = ({
                 filterSort={useSortSelectOptions}
                 options={dynamicSelectOptions.cityTypes}
                 placeholder="Enter your detail here!"
-                className="text-caption-1"
+                className="text-caption-1 h-[40px]"
               />
             </Form.Item>
           </div>
@@ -297,7 +297,7 @@ export const PageFormEdit = ({
             ]}>
             <DatePicker
               placeholder="Enter your detail here!"
-              className="text-caption-1 w-full"
+              className="text-caption-1 w-full h-[40px]"
             />
           </Form.Item>
         </div>

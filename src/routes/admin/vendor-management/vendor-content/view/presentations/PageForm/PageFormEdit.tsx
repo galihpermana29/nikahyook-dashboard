@@ -221,7 +221,7 @@ const PageFormEdit = ({
                   filterSort={useSortSelectOptions}
                   options={dynamicSelectOptions.provinceTypes}
                   placeholder="Enter your detail here!"
-                  className="text-caption-1"
+                  className="text-caption-1 h-[40px]"
                 />
               </Form.Item>
               <Form.Item
@@ -244,7 +244,7 @@ const PageFormEdit = ({
                   filterSort={useSortSelectOptions}
                   options={dynamicSelectOptions.cityTypes}
                   placeholder="Enter your detail here!"
-                  className="text-caption-1"
+                  className="text-caption-1 h-[40px]"
                 />
               </Form.Item>
             </div>
@@ -269,7 +269,7 @@ const PageFormEdit = ({
                   filterSort={useSortSelectOptions}
                   options={dynamicSelectOptions.districtTypes}
                   placeholder="Enter your detail here!"
-                  className="text-caption-1"
+                  className="text-caption-1 h-[40px]"
                 />
               </Form.Item>
               <Form.Item
@@ -292,7 +292,7 @@ const PageFormEdit = ({
                   filterSort={useSortSelectOptions}
                   options={dynamicSelectOptions.villageTypes}
                   placeholder="Enter your detail here!"
-                  className="text-caption-1"
+                  className="text-caption-1 h-[40px]"
                 />
               </Form.Item>
             </div>
@@ -308,7 +308,7 @@ const PageFormEdit = ({
               label="Postal Code">
               <InputNumber
                 placeholder="Enter your detail here"
-                className="w-full rounded-[8px] text-caption-1 font-[400] "
+                className="w-full rounded-[8px] text-caption-1 font-[400] h-[40px] custom-input"
               />
             </Form.Item>
           </div>
