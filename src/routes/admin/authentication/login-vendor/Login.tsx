@@ -22,7 +22,8 @@ const LoginVendorContainer = () => {
           <div className="mb-[28px]">
             <h1 className="text-heading-5 font-[600] text-black">Masuk</h1>
             <p className="text-caption-1 text-ny-gray-600 font-[400]">
-              Silakan masuk menggunakan email dan password yang telah diberikan
+              Silakan masuk menggunakan email dan password yang telah kamu
+              daftarkan
             </p>
           </div>
           <LoadingHandler isLoading={isLoading} classname="h-[150px]">
@@ -55,10 +56,16 @@ const LoginVendorContainer = () => {
                 ]}>
                 <Input.Password placeholder="Enter your password" />
               </Form.Item>
+              <div className="mt-[28px] text-right">
+                Daftar sebagai{' '}
+                <a href="/register-vendor" className="text-ny-primary-500">
+                  Vendor
+                </a>
+              </div>
               <Form.Item className="my-[10px]">
                 <Button
                   htmlType="submit"
-                  className="!bg-[#E60B6A] h-[40px] text-white text-body-2 w-full mt-[28px]">
+                  className="!bg-[#E60B6A] h-[40px] text-white text-body-2 w-full ">
                   Masuk
                 </Button>
               </Form.Item>
