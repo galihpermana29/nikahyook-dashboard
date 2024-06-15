@@ -47,14 +47,23 @@ const RegisterVendorContainer = () => {
               ) : (
                 <RegistrationFormTwo />
               )}
-
               {!currentFormValue && (
-                <Button
-                  onClick={handleFormNext}
-                  htmlType="button"
-                  className="!bg-[#E60B6A] h-[40px] text-white text-body-2 w-full mt-[28px]">
-                  Next
-                </Button>
+                <div className="flex gap-[20px]">
+                  <a href="/login-vendor" className="inline-block w-full">
+                    <Button
+                      onClick={handleFormNext}
+                      htmlType="button"
+                      className="!bg-[#fff] h-[40px] text-black text-body-2 w-full mt-[28px]">
+                      Back
+                    </Button>
+                  </a>
+                  <Button
+                    onClick={handleFormNext}
+                    htmlType="button"
+                    className="!bg-[#E60B6A] h-[40px] text-white text-body-2 w-full mt-[28px]">
+                    Next
+                  </Button>
+                </div>
               )}
               <Form.Item className="my-[10px]">
                 {currentFormValue && (
