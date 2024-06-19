@@ -9,7 +9,7 @@ import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
 import { FormInstance } from 'antd';
 import { AxiosError } from 'axios';
 import { useMutation } from 'react-query';
-import useMutateLogin from './useMutateLogin';
+import useMutateLogin from '../../login/repositories/useMutateLogin';
 
 const useRegisterVendorUserAccount = (
   form: FormInstance<any>,

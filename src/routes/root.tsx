@@ -12,13 +12,15 @@ interface IPermissionsData {
   view: boolean;
 }
 
+export type UserStatus = 'pending' | 'active' | 'inactive';
+
 export interface ILoaderData {
   permissions: IPermissionsData;
+  status: UserStatus;
 }
 
 export async function PermissionLoader(): Promise<ILoaderData> {
   const admin: ILoginData = JSON.parse(localStorage.getItem('admin')!);
-
   const currentRoute = window.location.pathname
     .split('/')[1]
     .split('-')
@@ -43,5 +45,5 @@ export async function PermissionLoader(): Promise<ILoaderData> {
         view: false,
       };
 
-  return { permissions };
+  return { permissions, status: admin.status as UserStatus };
 }

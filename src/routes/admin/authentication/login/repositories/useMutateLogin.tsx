@@ -21,12 +21,15 @@ const useMutateLogin = () => {
     mutationFn: (payload: ILoginPayloadRoot) => login(payload),
     onError: handleError,
     onSuccess: (response) => {
-      const { token, user_id, email, permissions, type } = response.data;
+      const { token, user_id, email, permissions, type, status } =
+        response.data;
+
       localStorage.setItem('token', JSON.stringify(token));
       localStorage.setItem(
         'admin',
-        JSON.stringify({ user_id, email, permissions, type })
+        JSON.stringify({ user_id, email, permissions, type, status })
       );
+
       setTimeout(() => {
         window.location.replace(
           `/home?type=${response.data.type === 'admin' ? 'admin' : 'vendor'}`

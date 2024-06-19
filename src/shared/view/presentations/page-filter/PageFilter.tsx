@@ -22,7 +22,7 @@ const PageFilter = ({
   buttonComponents,
 }: IPageFilter) => {
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-between items-center gap-[10px]">
       <Input
         value={query.keyword}
         onChange={(e) => onSearch((dx) => ({ ...dx, keyword: e.target.value }))}
@@ -38,7 +38,7 @@ const PageFilter = ({
           onApplyFilter={onApplyFilter}
         />
 
-        {buttonComponents}
+        <div>{buttonComponents}</div>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import loginImg from '@/assets/login-image.png';
 import logo from '@/assets/primary-logo.svg';
 import { Button, Form, Input } from 'antd';
-import useMutateLogin from './repositories/useMutateLogin';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
+import useMutateLogin from '../login/repositories/useMutateLogin';
 
 const LoginVendorContainer = () => {
   const { mutate, isLoading } = useMutateLogin();

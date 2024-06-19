@@ -145,9 +145,9 @@ export const VendorTypeContainer = () => {
                 <Button
                   disabled={!create}
                   onClick={() => openModal!('create')}
-                  className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
+                  className="enabled:hover:!bg-ny-primary-500 enabled:hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer min-w-max">
                   <img src={addIcon} alt="add-icon" />
-                  Create Vendor Type
+                  <div className="hidden md:block"> Create Vendor Type</div>
                 </Button>
               }
             />

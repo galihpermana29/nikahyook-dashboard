@@ -12,6 +12,7 @@ export interface ILoginData {
   token: string;
   permissions: any[];
   type: string;
+  status?: string;
 }
 
 // Response

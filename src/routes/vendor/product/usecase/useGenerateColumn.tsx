@@ -6,7 +6,8 @@ import {
   ICreateProductFormValues,
   IUpdateProductResponseRoot,
 } from '@/shared/models/productServicesInterface';
-import { NavigateFunction } from 'react-router-dom';
+import { NavigateFunction, useLoaderData } from 'react-router-dom';
+import { ILoaderData } from '@/routes/root';
 
 const useGenerateColumnVendorProduct = (
   onNavigate?: NavigateFunction,
@@ -21,6 +22,9 @@ const useGenerateColumnVendorProduct = (
     unknown
   >
 ) => {
+  const { status } = useLoaderData() as ILoaderData;
+  const isOnlyRead = status === 'pending';
+
   const columns: TableProps<any>['columns'] = [
     {
       title: 'Product',
@@ -50,15 +54,6 @@ const useGenerateColumnVendorProduct = (
         return <a className="capitalize">{text}</a>;
       },
     },
-    // {
-    //   title: 'Vendor',
-    //   dataIndex: '',
-    //   key: 'vendor_name',
-    //   render: (text) => {
-    //     console.log(text);
-    //     return <a className="capitalize">{text?.name}</a>;
-    //   },
-    // },
     {
       title: 'Tag',
       dataIndex: 'tags',
@@ -96,6 +91,7 @@ const useGenerateColumnVendorProduct = (
                   label: 'Edit',
                   key: '1',
                   onClick: () => onNavigate!(`/vendor-product/edit/${id}`),
+                  disabled: isOnlyRead,
                 },
                 {
                   label: 'View Detail',
@@ -113,6 +109,7 @@ const useGenerateColumnVendorProduct = (
                       id,
                       type: 'delete',
                     }),
+                  disabled: isOnlyRead,
                 },
               ],
             }}>

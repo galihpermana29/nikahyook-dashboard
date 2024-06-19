@@ -62,9 +62,9 @@ export default function CuratorialsPage() {
               <Button
                 disabled={!create}
                 href="curatorial/create-curatorial"
-                className="hover:!bg-ny-primary-500 hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer">
+                className="hover:!bg-ny-primary-500 hover:!text-white h-[40px] bg-ny-primary-500 text-white text-body-2  font-[400] rounded-[8px] flex items-center gap-[8px] cursor-pointer min-w-max">
                 <img src={addIcon} alt="add-icon" />
-                Create Curatorial
+                <div className="hidden md:block"> Create Curatorial</div>
               </Button>
             }
             filterComponents={
