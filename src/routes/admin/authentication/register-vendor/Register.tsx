@@ -20,7 +20,7 @@ const RegisterVendorContainer = () => {
 
   return (
     <div className="h-screen flex">
-      <div className="flex-1 h-screen">
+      <div className="flex-1 h-screen hidden md:block">
         <img
           src={loginImg}
           alt="login-image"
@@ -28,8 +28,12 @@ const RegisterVendorContainer = () => {
         />
       </div>
       <div className="flex-1 flex justify-center items-center ">
-        <div className="max-w-[550px] w-full">
-          <img src={logo} alt="logo" className="w-[280px] m-auto mb-[40px]" />
+        <div className="max-w-[550px] w-full p-[15px] mt-[30px]">
+          <img
+            src={logo}
+            alt="logo"
+            className="w-[280px] m-auto mb-[40px] hidden"
+          />
           <div className="mb-[28px]">
             <h1 className="text-heading-5 font-[600] text-black">Daftar</h1>
             <p className="text-caption-1 text-ny-gray-600 font-[400]">

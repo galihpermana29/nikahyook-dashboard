@@ -9,7 +9,7 @@ const LoginContainer = () => {
 
   return (
     <div className="h-screen flex">
-      <div className="flex-1 h-screen">
+      <div className="flex-1 h-screen hidden md:block">
         <img
           src={loginImg}
           alt="login-image"
@@ -17,7 +17,7 @@ const LoginContainer = () => {
         />
       </div>
       <div className="flex-1 flex justify-center items-center">
-        <div>
+        <div className="p-[15px]">
           <img src={logo} alt="logo" className="w-[280px] m-auto mb-[40px]" />
           <div className="mb-[28px]">
             <h1 className="text-heading-5 font-[600] text-black">Masuk</h1>
