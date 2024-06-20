@@ -37,9 +37,7 @@ import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/c
 export const vendorRoutes: ItemsDataI[] = [
   {
     label: (
-      <div className="text-caption-1 font-[400] text-ny-gray-300">
-        Dashboard
-      </div>
+      <div className="text-caption-1 font-[400] text-ny-gray-300">Profile</div>
     ),
     key: '/home',
     path: 'home',
@@ -95,19 +93,19 @@ export const vendorRoutes: ItemsDataI[] = [
 ];
 
 export const staffRoutes: ItemsDataI[] = [
-  {
-    label: (
-      <div className="text-caption-1 font-[400] text-ny-gray-300">
-        Dashboard
-      </div>
-    ),
-    key: '/home',
-    path: 'home',
-    children: [],
-    icon: <img src={dashboardIconGray} alt="icon" />,
-    components: <DashboardContainer />,
-    show: true,
-  },
+  // {
+  //   label: (
+  //     <div className="text-caption-1 font-[400] text-ny-gray-300">
+  //       Dashboard
+  //     </div>
+  //   ),
+  //   key: '/home',
+  //   path: 'home',
+  //   children: [],
+  //   icon: <img src={dashboardIconGray} alt="icon" />,
+  //   components: <DashboardContainer />,
+  //   show: true,
+  // },
   {
     label: (
       <div>

@@ -32,7 +32,9 @@ const useMutateLogin = () => {
 
       setTimeout(() => {
         window.location.replace(
-          `/home?type=${response.data.type === 'admin' ? 'admin' : 'vendor'}`
+          `/${
+            response.data.type === 'vendor' ? 'home' : 'admin-account'
+          }?type=${response.data.type === 'admin' ? 'admin' : 'vendor'}`
         );
       }, 300);
     },
