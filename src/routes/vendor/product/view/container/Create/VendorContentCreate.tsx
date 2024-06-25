@@ -17,6 +17,7 @@ import {
   initialState,
 } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 import { useState } from 'react';
+import useSetInitialLocationForProduct from '../../../usecase/useSetInitialLocationForProduct';
 
 const VendorProductCreateContainer = () => {
   const [form] = useForm();
@@ -31,8 +32,13 @@ const VendorProductCreateContainer = () => {
     province: [],
     city: [],
   });
-
   const [coverageState, setCoverageState] = useState([]);
+
+  const { setTheSameLoc, useTheSameLoc } = useSetInitialLocationForProduct(
+    userId as string,
+    setLocationState,
+    form
+  );
 
   const { mutate, isLoading } = useCreateProduct(locationState, coverageState);
 
@@ -58,6 +64,8 @@ const VendorProductCreateContainer = () => {
       <div className="p-[20px]">
         <LoadingHandler isLoading={isLoading} fullscreen={true}>
           <PageFormCreate
+            onSetLocationChange={setTheSameLoc}
+            useTheSameLoc={useTheSameLoc}
             onActiveCoverageChange={setActiveCoverage}
             onLocationChange={setLocationState}
             setCoverageState={setCoverageState}
