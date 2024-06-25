@@ -56,8 +56,8 @@ const LoginContainer = () => {
                 <Input.Password placeholder="Enter your password" />
               </Form.Item>
               <div className="mt-[28px] text-right">
-                Masuk sebagai{' '}
-                <a href="/login-vendor" className="text-ny-primary-500">
+                Daftar sebagai{' '}
+                <a href="/register-vendor" className="text-ny-primary-500">
                   Vendor
                 </a>
               </div>

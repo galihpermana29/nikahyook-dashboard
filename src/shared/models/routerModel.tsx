@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 import RootLayout from '../view/container/general-layout/view/RootLayout';
 import generateRoutesChild from '../usecase/useRenderRoutes';
 import LoginContainer from '@/routes/admin/authentication/login/Login';
-import LoginVendorContainer from '@/routes/admin/authentication/login-vendor/Login';
 import RegisterVendorContainer from '@/routes/admin/authentication/register-vendor/Register';
 
 export const router = createBrowserRouter([
@@ -18,10 +17,6 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginContainer />,
-  },
-  {
-    path: '/login-vendor',
-    element: <LoginVendorContainer />,
   },
   {
     path: '/register-vendor',

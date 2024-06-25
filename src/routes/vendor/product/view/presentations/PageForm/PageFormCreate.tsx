@@ -4,7 +4,7 @@ import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
-import { Form, FormInstance, Input, InputNumber, Select } from 'antd';
+import { Form, FormInstance, Input, InputNumber, Select, Switch } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 
 interface IPageFormCreate {
@@ -26,7 +26,10 @@ interface IPageFormCreate {
   onActiveCoverageChange: any;
   activeCoverage: any;
   setCoverageState: React.Dispatch<React.SetStateAction<never[]>>;
+  onSetLocationChange: React.Dispatch<React.SetStateAction<boolean>>;
+  useTheSameLoc: boolean;
 }
+
 const PageFormCreate = ({
   form,
   onSave,
@@ -38,6 +41,8 @@ const PageFormCreate = ({
   onActiveCoverageChange,
   activeCoverage,
   setCoverageState,
+  useTheSameLoc,
+  onSetLocationChange,
 }: IPageFormCreate) => {
   return (
     <div>
@@ -197,6 +202,24 @@ const PageFormCreate = ({
                 className="!h-[128px] rounded-[8px] text-caption-1 font-[400]"
               />
             </Form.Item>
+          </div>
+        </div>
+        <div className="flex">
+          <div className="w-full max-w-[300px] gap-[20px]">
+            <h1 className="text-[#262626] text-body-2">Product Location</h1>
+            <p className="text-[#949494] text-caption-1">
+              Product's city location
+            </p>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center gap-[10px] mb-[10px]">
+              <Switch
+                onChange={(val) => {
+                  onSetLocationChange(val);
+                }}
+              />
+              {!useTheSameLoc ? 'Use the same as in my profile' : 'Clear'}
+            </div>
             <div className="flex w-full gap-2">
               <Form.Item
                 rules={[
