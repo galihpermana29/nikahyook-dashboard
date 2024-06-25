@@ -53,7 +53,7 @@ const RegisterVendorContainer = () => {
               )}
               {!currentFormValue && (
                 <div className="flex gap-[20px]">
-                  <a href="/login-vendor" className="inline-block w-full">
+                  <a href="/login" className="inline-block w-full">
                     <Button
                       onClick={handleFormNext}
                       htmlType="button"
