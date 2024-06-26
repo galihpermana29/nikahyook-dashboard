@@ -39,13 +39,12 @@ function useGenerateColumnVendorTransaction(onNavigate: NavigateFunction) {
                 {
                   label: 'Advance Progress',
                   key: '1',
-                  onClick: () =>
-                    onNavigate(`/vendor-transaction/${id}/advance-progress`),
+                  onClick: () => onNavigate(`${id}/advance-progress`),
                 },
                 {
                   label: 'View Detail',
                   key: '2',
-                  onClick: () => onNavigate(`/vendor-transaction/${id}`),
+                  onClick: () => onNavigate(`${id}`),
                 },
                 {
                   label: 'Decline',

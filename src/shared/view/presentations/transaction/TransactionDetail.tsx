@@ -1,9 +1,8 @@
-import declineIcon from '@/assets/icon/decline-icon.svg';
-import editIcon from '@/assets/icon/edit-2-white.svg';
 import { TTransasactionStatus } from '@/shared/models/transactionServiceInterfaces';
 import getTransactionStatusChipColor from '@/shared/usecase/getTransactionStatusChipColor';
 import useGenerateTransactionDetailColumn from '@/shared/usecase/useGenerateTransactionDetailColumn';
-import { Button, Table, Tag } from 'antd';
+import { Table, Tag } from 'antd';
+import { ReactNode } from 'react';
 
 interface IOrderInformation {
   order_date: string;
@@ -24,42 +23,28 @@ interface IVendorDetail {
 
 interface ITransactionDetail {
   id: string;
-  order_information: IOrderInformation;
-  buyer_detail: IBuyerDetail;
-  vendor_detail: IVendorDetail;
-  product_list: any[];
-  onDeclineClick: () => void;
-  onAdvanceClick: () => void;
+  orderInformation: IOrderInformation;
+  buyerDetail: IBuyerDetail;
+  vendorDetail: IVendorDetail;
+  productList: any[];
+  buttonComponents?: ReactNode;
+  invoiceComponents?: ReactNode;
 }
 
 function TransactionDetail({
   id,
-  buyer_detail,
-  order_information,
-  vendor_detail,
-  product_list,
-  onDeclineClick,
-  onAdvanceClick,
+  buyerDetail,
+  orderInformation,
+  vendorDetail,
+  productList,
+  buttonComponents,
+  invoiceComponents,
 }: ITransactionDetail) {
   const { columns } = useGenerateTransactionDetailColumn();
 
   return (
     <div className="space-y-5">
-      <section className="flex justify-end gap-2">
-        <Button
-          onClick={onDeclineClick}
-          className="border-ny-error-700 text-ny-error-700 flex items-center gap-2">
-          <img src={declineIcon} alt="Icon" />
-          <span>Decline</span>
-        </Button>
-        <Button
-          onClick={onAdvanceClick}
-          type="primary"
-          className="flex items-center gap-2">
-          <img src={editIcon} alt="Icon" className="h-5 w-5" />
-          <span>Advance Progress</span>
-        </Button>
-      </section>
+      <section className="flex justify-end gap-2">{buttonComponents}</section>
 
       <section className="grid grid-cols-3 gap-5">
         <div className="border text-sm p-5">
@@ -70,14 +55,14 @@ function TransactionDetail({
           <div className="space-y-3 divide-y [&>div:not(:first-child)]:pt-4">
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Order date</h3>
-              <p className="text-end">{order_information.order_date}</p>
+              <p className="text-end">{orderInformation.order_date}</p>
             </div>
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Status</h3>
               <Tag
                 className="capitalize m-0"
-                color={getTransactionStatusChipColor(order_information.status)}>
-                {order_information.status.split('-').join(' ')}
+                color={getTransactionStatusChipColor(orderInformation.status)}>
+                {orderInformation.status.split('-').join(' ')}
               </Tag>
             </div>
           </div>
@@ -89,19 +74,19 @@ function TransactionDetail({
           <div className="space-y-3 divide-y [&>div:not(:first-child)]:pt-4">
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Name</h3>
-              <p className="text-end">{buyer_detail.name}</p>
+              <p className="text-end">{buyerDetail.name}</p>
             </div>
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Email</h3>
-              <p className="text-end">{buyer_detail.email}</p>
+              <p className="text-end">{buyerDetail.email}</p>
             </div>
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Phone</h3>
-              <p className="text-end">{buyer_detail.phone}</p>
+              <p className="text-end">{buyerDetail.phone}</p>
             </div>
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Address</h3>
-              <p className="text-end">{buyer_detail.address}</p>
+              <p className="text-end">{buyerDetail.address}</p>
             </div>
           </div>
         </div>
@@ -114,43 +99,20 @@ function TransactionDetail({
           <div className="space-y-3 divide-y [&>div:not(:first-child)]:pt-4">
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Name</h3>
-              <p className="text-end">{vendor_detail.name}</p>
+              <p className="text-end">{vendorDetail.name}</p>
             </div>
             <div className="flex justify-between items-center gap-5">
               <h3 className="text-ny-gray-400">Email</h3>
-              <p className="text-end">{vendor_detail.email}</p>
+              <p className="text-end">{vendorDetail.email}</p>
             </div>
-            {(order_information.status === 'waiting-for-payment' ||
-              order_information.status === 'waiting-for-approval' ||
-              order_information.status === 'order-rejected') && (
-              <div className="flex justify-end">
-                <Button disabled>Invoice</Button>
-              </div>
-            )}
-            {(order_information.status === 'payment-in-review' ||
-              order_information.status === 'payment-done') && (
-              <>
-                <div className="flex justify-between items-center gap-5">
-                  <h3 className="text-ny-gray-400">Invoice</h3>
-                  <Button
-                    type="primary"
-                    disabled={order_information.status !== 'payment-done'}>
-                    Detail
-                  </Button>
-                </div>
-                <div className="flex justify-between items-center gap-5">
-                  <h3 className="text-ny-gray-400">Detail</h3>
-                  <Button type="primary">Detail</Button>
-                </div>
-              </>
-            )}
+            {invoiceComponents}
           </div>
         </div>
       </section>
 
       <section>
         <h2 className="text-xl font-medium mb-5">Product List</h2>
-        <Table columns={columns} dataSource={product_list} pagination={false} />
+        <Table columns={columns} dataSource={productList} pagination={false} />
       </section>
     </div>
   );
