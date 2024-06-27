@@ -33,6 +33,8 @@ import CuratorialsPage from '@/routes/admin/content-management/curatorials/Curat
 import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
 import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
 import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
+import VendorChatContainer from '@/routes/vendor/chat/VendorChatContainer';
+import ChatIcon from '@/assets/icon/message-text.svg';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -46,6 +48,17 @@ export const vendorRoutes: ItemsDataI[] = [
     children: [],
     icon: <img src={dashboardIconGray} alt="icon" />,
     components: <VendorDashboardContainer />,
+    show: true,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">Chat</div>
+    ),
+    key: '/chat',
+    path: 'chat',
+    children: [],
+    icon: <img src={ChatIcon} alt="chat-icon" />,
+    components: <VendorChatContainer />,
     show: true,
   },
   {

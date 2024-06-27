@@ -17,11 +17,13 @@
 		"antd": "^5.16.5",
 		"axios": "^1.6.8",
 		"dayjs": "^1.11.11",
+		"firebase": "^10.9.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-query": "^3.39.3",
 		"react-router-dom": "^6.23.0",
-		"sass": "^1.75.0"
+		"sass": "^1.75.0",
+		"uuid": "^10.0.0"
 	},
 	"devDependencies": {
 		"@types/react": "^18.3.3",
