@@ -46,3 +46,10 @@
 .ant-layout-content {
 	margin: 0 0 !important;
 }
+
+@media screen and (max-width: 1024px) {
+	.ant-layout-header {
+	  padding: 0 16px !important;
+	}
+}
+  

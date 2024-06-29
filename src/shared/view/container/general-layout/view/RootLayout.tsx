@@ -35,12 +35,14 @@ const RootLayout: React.FC = () => {
               token: {
                 colorPrimary: '#E60B6A',
               },
-            }}>
+            }}
+          >
             <Layout style={{ height: '100vh', overflow: 'hidden' }}>
               <Sider
                 theme="light"
                 className="border-r-[1px] border-ny-gray-200 h-screen hidden lg:block"
-                collapsed={false}>
+                collapsed={false}
+              >
                 {/*
 					    INFO: this is logo sidebar
           */}
@@ -58,7 +60,11 @@ const RootLayout: React.FC = () => {
                 {/* 
             INFO: This is the header/navigation bar
           */}
-                <CustomHeader data={data!} />
+                <CustomHeader
+                  data={data!}
+                  item={items}
+                  handleClickMenu={handleClickMenu}
+                />
                 <Content style={{ margin: '0 16px', overflow: 'auto' }}>
                   <div
                     className="p-[15px] lg:[30px]"
@@ -66,12 +72,14 @@ const RootLayout: React.FC = () => {
                       minHeight: '100vh',
                       borderRadius: borderRadiusLG,
                       backgroundColor: 'white',
-                    }}>
+                    }}
+                  >
                     <Outlet />
                   </div>
                 </Content>
                 <Footer
-                  style={{ textAlign: 'center', background: colorBgContainer }}>
+                  style={{ textAlign: 'center', background: colorBgContainer }}
+                >
                   Nikahyook Dashboard
                 </Footer>
               </Layout>
