@@ -74,14 +74,9 @@ const DashboardContainer = () => {
             onOpenChange={onOpenChange}
           />
         }
-        span={2}
+        size='large'
       >
-        <div>
-          <p className="text-heading-6 font-medium text-ny-primary-500 mb-5">
-            909 Transaction This Month
-          </p>
-          <LineChart dateRange={dateRange} />
-        </div>
+        <LineChart dateRange={dateRange} />
       </DashboardCard>
       <DashboardCard
         title="Product"
