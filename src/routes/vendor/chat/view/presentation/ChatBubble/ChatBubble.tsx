@@ -19,13 +19,13 @@ export default function ChatBubble({ chat }: { chat: TMessages }) {
       </div>
 
       <div
-        className={`flex items-end max-w-64 p-3 gap-[10px] ${
+        className={`flex items-end max-w-64 p-3 gap-[10px] rounded-lg text-caption-2 ${
           chat.senderId === clientSession.user_id
-            ? 'ml-auto bg-ny-primary-100 rounded-lg'
-            : 'mr-auto bg-ny-gray-100 rounded-lg'
+            ? 'ml-auto bg-ny-primary-100'
+            : 'mr-auto bg-ny-gray-100'
         }`}>
-        <span className="text-caption-2">{chat.text}</span>
-        <span className="text-caption-2 text-ny-gray-400">
+        <span>{chat.text}</span>
+        <span className="text-ny-gray-400">
           {dayjs(chat.timeStamp).format('HH.mm')}
         </span>
       </div>

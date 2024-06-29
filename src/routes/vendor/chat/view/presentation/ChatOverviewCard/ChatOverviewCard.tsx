@@ -4,17 +4,23 @@ import dayjs from 'dayjs';
 
 interface IChatOverviewCardProps {
   chat: TListChats;
+  selected: string | null;
   setSelected: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export default function ChatOverviewCard({
   chat,
+  selected,
   setSelected,
 }: IChatOverviewCardProps) {
+  const isSelected = selected ? chat.userInfo.uid === selected : false;
+
   return (
     <div
       onClick={() => setSelected(chat.userInfo.uid)}
-      className="flex items-center gap-3 hover:cursor-pointer">
+      className={`flex items-center gap-3 hover:cursor-pointer p-3 rounded-xl ${
+        isSelected && 'bg-ny-gray-100/35'
+      }`}>
       <Avatar
         shape="circle"
         src={chat.userInfo.displayPicture}

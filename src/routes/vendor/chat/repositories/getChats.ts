@@ -10,16 +10,18 @@ type TGetChatsParams = {
 };
 
 export default function getChats(params: TGetChatsParams) {
-  const userSession = useClientSession();
-  if (!userSession) return;
+  const session = useClientSession();
+  if (!session) return;
 
-  const unsub = onSnapshot(doc(db, 'userChats', userSession.user_id), (doc) => {
+  // take chats received for current session's user
+  const unsub = onSnapshot(doc(db, 'userChats', session.user_id), (doc) => {
     const allListChats = doc.data()
       ? (doc.data() as Record<string, Record<string, TListChats>>)
       : null;
 
     const listAllChat = allListChats
       ? Object.values(allListChats)
+          // get the actual chat informations
           .flatMap(Object.values)
           .sort(
             (a: TListChats, b: TListChats) =>

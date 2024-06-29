@@ -11,11 +11,13 @@ export default function VendorChatContainer() {
     <>
       <PageTitle title="Vendor Chat" />
 
-      <div className="grid grid-cols-[30%_70%] gap-8">
-        <ChatSidebar setSelectedChat={setSelectedChat} />
-        <div className="flex flex-col">
-          <ChatRoom selectedChat={selectedChat} />
-        </div>
+      <div className="flex items-start gap-10">
+        <ChatSidebar
+          selected={selectedChat}
+          setSelectedChat={setSelectedChat}
+        />
+
+        <ChatRoom selectedChat={selectedChat} />
       </div>
     </>
   );

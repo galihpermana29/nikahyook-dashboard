@@ -13,19 +13,21 @@ export default function ChatRoom({
 }: {
   selectedChat: string | null;
 }) {
+  // TODO: maybe provide a custom view when there's no selected chat
   if (!selectedChat) return null;
 
   const {
     data,
     isLoading: userIsLoading,
     error: userError,
+    refetch,
   } = useQueryDetailUser(selectedChat);
   const { allChat } = useQueryBubbleChats(selectedChat);
   const chats = groupChatMessagesByDate(allChat);
 
   return (
-    <div className="flex flex-col gap-2 w-full">
-      <ErrorBoundary error={userError as AxiosError}>
+    <div className="flex flex-col gap-2 w-full overflow-y-scroll">
+      <ErrorBoundary refetch={refetch} error={userError as AxiosError}>
         <UserInformationLoading isLoading={userIsLoading}>
           <UserInformation user={data} />
         </UserInformationLoading>
