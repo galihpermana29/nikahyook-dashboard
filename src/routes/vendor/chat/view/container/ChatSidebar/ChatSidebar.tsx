@@ -13,7 +13,7 @@ export default function ChatSidebar({
   const { listAllChat, searchChats } = useQueryChats(selected);
 
   return (
-    <aside className="flex flex-col gap-2 overflow-y-scroll w-full max-w-80">
+    <aside className="flex flex-col gap-2 overflow-y-scroll w-full max-w-80 sticky top-4">
       <Input
         onChange={(e) => searchChats(e.currentTarget.value)}
         placeholder="Search by username..."

@@ -11,7 +11,7 @@ export default function VendorChatContainer() {
     <>
       <PageTitle title="Vendor Chat" />
 
-      <div className="flex items-start gap-10">
+      <div className="flex items-start gap-6">
         <ChatSidebar
           selected={selectedChat}
           setSelectedChat={setSelectedChat}

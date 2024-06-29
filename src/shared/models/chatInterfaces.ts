@@ -27,7 +27,5 @@ export type TFirebaseChats = {
 };
 
 export interface ISendMessagePayload {
-  vendorId: string;
-  sentAt: string;
   message: string;
 }
