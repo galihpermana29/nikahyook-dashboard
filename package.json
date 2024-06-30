@@ -13,6 +13,7 @@
 	"dependencies": {
 		"@ant-design/icons": "^5.3.7",
 		"@mapbox/search-js-react": "^1.0.0-beta.21",
+		"@react-pdf/renderer": "^3.4.4",
 		"@uidotdev/usehooks": "^2.4.1",
 		"antd": "^5.16.5",
 		"axios": "^1.6.8",
