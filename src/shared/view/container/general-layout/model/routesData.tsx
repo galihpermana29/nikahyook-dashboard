@@ -33,6 +33,13 @@ import CuratorialsPage from '@/routes/admin/content-management/curatorials/Curat
 import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
 import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
 import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
+import cartIcon from '@/assets/icon/cart-icon.svg';
+import VendorTransactionContainer from '@/routes/vendor/transaction/VendorTransaction';
+import VendorTransactionDetailContainer from '@/routes/vendor/transaction/view/container/Detail/VendorTransactionDetail';
+import VendorTransactionAdvanceProgressContainer from '@/routes/vendor/transaction/view/container/AdvanceProgress/VendorTransactionAdvanceProgress';
+import AdminTransactionContainer from '@/routes/admin/transaction/AdminTransaction';
+import AdminTransactionDetailContainer from '@/routes/admin/transaction/view/container/Detail/AdminTransactionDetail';
+import AdminTransactionInvoiceContainer from '@/routes/admin/transaction/view/container/Invoice/AdminTransactionInvoice';
 import VendorChatContainer from '@/routes/vendor/chat/VendorChatContainer';
 import ChatIcon from '@/assets/icon/message-text.svg';
 
@@ -60,6 +67,45 @@ export const vendorRoutes: ItemsDataI[] = [
     icon: <img src={ChatIcon} alt="chat-icon" />,
     components: <VendorChatContainer />,
     show: true,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">
+        Transaction
+      </div>
+    ),
+    key: '/vendor-transaction',
+    path: 'vendor-transaction',
+    children: [],
+    icon: <img src={cartIcon} alt="icon" />,
+    components: <VendorTransactionContainer />,
+    show: true,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">
+        Transaction
+      </div>
+    ),
+    key: '/vendor-transaction/:id',
+    path: 'vendor-transaction/:id',
+    children: [],
+    icon: undefined,
+    components: <VendorTransactionDetailContainer />,
+    show: false,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">
+        Transaction
+      </div>
+    ),
+    key: '/vendor-transaction/:id/advance-progress',
+    path: 'vendor-transaction/:id/advance-progress',
+    children: [],
+    icon: undefined,
+    components: <VendorTransactionAdvanceProgressContainer />,
+    show: false,
   },
   {
     label: (
@@ -231,7 +277,13 @@ export const staffRoutes: ItemsDataI[] = [
         key: '/vendor-product',
         path: 'vendor-product',
         children: null,
-        icon: <img src={vendorContentIconGray} alt="icon" />,
+        icon: (
+          <img
+            src={vendorContentIconGray}
+            alt="icon"
+            className="fill-red-500"
+          />
+        ),
         components: <VendorContentContainer />,
         show: true,
       },
@@ -386,6 +438,55 @@ export const staffRoutes: ItemsDataI[] = [
         children: null,
         icon: <img src={userManagIconGray} alt="icon" />,
         components: <CuratorialCreate />,
+        show: false,
+      },
+    ],
+    icon: null,
+    components: <DashboardContainer />,
+    show: true,
+  },
+  {
+    label: undefined,
+    key: '/admin-transaction',
+    path: 'admin-transaction',
+    children: [
+      {
+        label: (
+          <div className="text-caption-1 font-[400] text-ny-gray-300">
+            Transaction
+          </div>
+        ),
+        key: '/admin-transaction',
+        path: 'admin-transaction',
+        children: null,
+        icon: <img src={cartIcon} alt="icon" />,
+        components: <AdminTransactionContainer />,
+        show: true,
+      },
+      {
+        label: (
+          <div className="text-caption-1 font-[400] text-ny-gray-300">
+            Transaction
+          </div>
+        ),
+        key: '/admin-transaction/:id',
+        path: 'admin-transaction/:id',
+        children: [],
+        icon: undefined,
+        components: <AdminTransactionDetailContainer />,
+        show: false,
+      },
+      {
+        label: (
+          <div className="text-caption-1 font-[400] text-ny-gray-300">
+            Transaction
+          </div>
+        ),
+        key: '/admin-transaction/:id/invoice',
+        path: 'admin-transaction/:id/invoice',
+        children: [],
+        icon: undefined,
+        components: <AdminTransactionInvoiceContainer />,
         show: false,
       },
     ],
