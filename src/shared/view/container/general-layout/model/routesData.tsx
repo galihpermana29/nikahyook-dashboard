@@ -40,6 +40,8 @@ import VendorTransactionAdvanceProgressContainer from '@/routes/vendor/transacti
 import AdminTransactionContainer from '@/routes/admin/transaction/AdminTransaction';
 import AdminTransactionDetailContainer from '@/routes/admin/transaction/view/container/Detail/AdminTransactionDetail';
 import AdminTransactionInvoiceContainer from '@/routes/admin/transaction/view/container/Invoice/AdminTransactionInvoice';
+import VendorChatContainer from '@/routes/vendor/chat/VendorChatContainer';
+import ChatIcon from '@/assets/icon/message-text.svg';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -53,6 +55,17 @@ export const vendorRoutes: ItemsDataI[] = [
     children: [],
     icon: <img src={dashboardIconGray} alt="icon" />,
     components: <VendorDashboardContainer />,
+    show: true,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">Chat</div>
+    ),
+    key: '/chat',
+    path: 'chat',
+    children: [],
+    icon: <img src={ChatIcon} alt="chat-icon" />,
+    components: <VendorChatContainer />,
     show: true,
   },
   {

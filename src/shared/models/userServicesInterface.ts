@@ -6,6 +6,10 @@ export interface ILoginPayloadRoot {
   password: string;
 }
 
+export interface ISessionData extends ILoginData {
+  user_detail: IDetailUserData;
+}
+
 export interface ILoginData {
   user_id: string;
   email: string;
