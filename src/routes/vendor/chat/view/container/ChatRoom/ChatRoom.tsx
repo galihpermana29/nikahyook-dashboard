@@ -11,27 +11,25 @@ import SendChatArea from '../SendChatArea/SendChatArea';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
 import SendChatAreaLoading from '../SendChatArea/SendChatAreaLoading';
 import EmptyChatRoom from '../../presentation/EmptyChatRoom/EmptyChatRoom';
+import useChatRecipientId from '../../../usecase/useChatRecipientId';
 
-export default function ChatRoom({
-  selectedChat,
-}: {
-  selectedChat: string | null;
-}) {
-  // TODO: maybe provide a custom view when there's no selected chat
-  if (!selectedChat) return <EmptyChatRoom />;
+export default function ChatRoom() {
+  const { recipientId } = useChatRecipientId();
 
   const {
     data,
     isLoading: userIsLoading,
     error: userError,
     refetch,
-  } = useQueryDetailUser(selectedChat);
-  const { allChat } = useQueryBubbleChats(selectedChat);
+  } = useQueryDetailUser(recipientId ?? '');
+  const { allChat } = useQueryBubbleChats(recipientId);
   const chats = groupChatMessagesByDate(allChat);
+
+  if (!recipientId) return <EmptyChatRoom />;
 
   return (
     <div className="w-full px-5 min-h-screen relative flex flex-col">
-      <div className="flex flex-col gap-2 w-full overflow-y-scroll flex-grow">
+      <div className="flex flex-col first:gap-0 gap-2 w-full flex-grow first:-mt-4">
         <ErrorBoundary refetch={refetch} error={userError as AxiosError}>
           <LoadingHandler
             loadingComponent={<UserInformationLoading />}
@@ -57,7 +55,7 @@ export default function ChatRoom({
         <LoadingHandler
           loadingComponent={<SendChatAreaLoading />}
           isLoading={userIsLoading}>
-          <SendChatArea recipientId={selectedChat} />
+          <SendChatArea />
         </LoadingHandler>
       </ErrorBoundary>
     </div>

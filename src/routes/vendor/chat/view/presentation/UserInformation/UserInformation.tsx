@@ -15,7 +15,7 @@ export default function UserInformation({
   if (!user) return null;
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 sticky top-0 bg-white py-4 z-10">
       <Avatar className="size-14" src={user.profile_image_uri} />
 
       <div className="flex flex-col gap-[2px]">

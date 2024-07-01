@@ -9,6 +9,15 @@ export type TMessages = {
   timeStamp: string;
 };
 
+export type TChatDate = {
+  seconds: number;
+  nanoseconds: number;
+};
+
+export interface TListChatsQueryData extends Omit<TListChats, 'date'> {
+  date: TChatDate;
+}
+
 export type TListChats = {
   date: Timestamp;
   lastMessage: {

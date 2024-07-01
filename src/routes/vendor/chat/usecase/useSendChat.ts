@@ -6,19 +6,18 @@ import useClientSession from '@/shared/usecase/useClientSession';
 import useQueryDetailUser from '@/shared/view/container/general-layout/repositories/useQueryDetailUser';
 
 type TUseSendChatParams = {
-  recipientId: string;
+  recipientId: string | null;
   form: FormInstance<ISendMessagePayload>;
 };
 
 export default function useSendChat(params: TUseSendChatParams) {
   const session = useClientSession();
-  const { data: recipient } = useQueryDetailUser(params.recipientId);
+  const { data: recipient } = useQueryDetailUser(params.recipientId ?? '');
   const { data: sender } = useQueryDetailUser(session?.user_id ?? '');
 
-  if (!recipient || !session || !sender)
-    throw new Error('No recipient or session detected!');
-
   const sendChat = async (input: ISendMessagePayload) => {
+    if (!params.recipientId || !session || !sender || !recipient) return;
+
     const sentChat = await sendChatToUser(params.recipientId, input.message);
     await updateChatList({
       senderId: session.user_id,

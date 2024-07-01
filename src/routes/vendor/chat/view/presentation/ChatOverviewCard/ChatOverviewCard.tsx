@@ -1,23 +1,19 @@
 import type { TListChats } from '@/shared/models/chatInterfaces';
 import { Avatar } from 'antd';
 import dayjs from 'dayjs';
+import useChatRecipientId from '../../../usecase/useChatRecipientId';
 
 interface IChatOverviewCardProps {
   chat: TListChats;
-  selected: string | null;
-  setSelected: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
-export default function ChatOverviewCard({
-  chat,
-  selected,
-  setSelected,
-}: IChatOverviewCardProps) {
-  const isSelected = selected ? chat.userInfo.uid === selected : false;
+export default function ChatOverviewCard({ chat }: IChatOverviewCardProps) {
+  const { recipientId, setIds } = useChatRecipientId();
+  const isSelected = recipientId ? chat.userInfo.uid === recipientId : false;
 
   return (
     <div
-      onClick={() => setSelected(chat.userInfo.uid)}
+      onClick={() => setIds({ recipientId: chat.userInfo.uid })}
       className={`flex items-center gap-3 hover:cursor-pointer p-3 rounded-xl ${
         isSelected && 'bg-ny-gray-100/35'
       }`}>

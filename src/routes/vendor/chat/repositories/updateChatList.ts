@@ -1,4 +1,4 @@
-import { doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { Timestamp, doc, updateDoc } from 'firebase/firestore';
 import { db } from '../../../../../firebase-config';
 import type {
   ICreateUserPayloadRoot,
@@ -23,7 +23,7 @@ export default async function updateChatList(params: TUpdateChatListParams) {
       displayName: params.sender.name,
       displayPicture: params.sender.profile_image_uri,
     },
-    [combinedId + '.date']: serverTimestamp(),
+    [combinedId + '.date']: Timestamp.now(),
     [combinedId + '.lastMessage']: {
       text: params.text,
       isRead: false,
@@ -36,7 +36,7 @@ export default async function updateChatList(params: TUpdateChatListParams) {
       displayName: params.recipient.name,
       displayPicture: params.recipient.profile_image_uri,
     },
-    [combinedId + '.date']: serverTimestamp(),
+    [combinedId + '.date']: Timestamp.now(),
     [combinedId + '.lastMessage']: {
       text: params.text,
       isRead: true,

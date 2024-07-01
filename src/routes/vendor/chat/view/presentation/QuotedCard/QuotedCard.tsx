@@ -16,10 +16,7 @@ export default function QuotedCard({
   closeComponent: React.ReactNode;
 }) {
   return (
-    <div
-      className={`py-[12px] px-[8px] bg-white flex box-border rounded-[8px] h-[100px] gap-[12px] ${
-        closeComponent ? 'shadow-sm' : 'shadow-md'
-      }`}>
+    <div className="py-3 px-4 bg-white max-w-fit flex box-border rounded-lg h-[100px] gap-3 border">
       <Avatar
         className="size-20 shrink-0"
         shape="square"
