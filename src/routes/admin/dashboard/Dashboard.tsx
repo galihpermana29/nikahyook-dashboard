@@ -75,6 +75,7 @@ const DashboardContainer = () => {
           />
         }
         size='large'
+        responsive
       >
         <LineChart dateRange={dateRange} />
       </DashboardCard>
@@ -89,13 +90,13 @@ const DashboardContainer = () => {
           </Link>
         }
       >
-        <div className="flex flex-col items-center justify-between h-[90%]">
+        <div className="flex flex-col items-center justify-between h-[70%] sm:h-[90%]">
           <div className="flex items-center justify-center h-full">
-            <h3 className="text-display-1 font-bold text-center leading-[86px] bg-gradient-to-br from-[#850362] from-5% to-[#E60B6A] text-transparent bg-clip-text">
+            <h3 className="text-heading-1 sm:text-heading-2 lg:text-display-1 font-bold text-center leading-tight lg:leading-[86px] bg-gradient-to-br from-[#850362] from-5% to-[#E60B6A] text-transparent bg-clip-text">
               70 <br /> Product
             </h3>
           </div>
-          <p className="text-heading-4 font-medium text-ny-gray-400 text-center">
+          <p className="text-heading-6 md:text-heading-4 font-medium text-ny-gray-400 text-center">
             +3 Today
           </p>
         </div>
