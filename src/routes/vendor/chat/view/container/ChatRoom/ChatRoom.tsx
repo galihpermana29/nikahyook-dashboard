@@ -12,9 +12,11 @@ import LoadingHandler from '@/shared/view/container/loading/Loading';
 import SendChatAreaLoading from '../SendChatArea/SendChatAreaLoading';
 import EmptyChatRoom from '../../presentation/EmptyChatRoom/EmptyChatRoom';
 import useChatRecipientId from '../../../usecase/useChatRecipientId';
+import { useEffect, useRef } from 'react';
 
 export default function ChatRoom() {
   const { recipientId } = useChatRecipientId();
+  const ref: any = useRef();
 
   const {
     data,
@@ -24,6 +26,14 @@ export default function ChatRoom() {
   } = useQueryDetailUser(recipientId ?? '');
   const { allChat } = useQueryBubbleChats(recipientId);
   const chats = groupChatMessagesByDate(allChat);
+
+  useEffect(() => {
+    if (ref?.current) {
+      ref.current!.scrollIntoView({
+        behavior: 'smooth',
+      });
+    }
+  }, [chats]);
 
   if (!recipientId) return <EmptyChatRoom />;
 
@@ -44,7 +54,9 @@ export default function ChatRoom() {
 
             <div className="flex flex-col gap-5">
               {chats[date].map((chat) => (
-                <ChatBubble key={chat.id} chat={chat} />
+                <div key={chat.id} ref={ref}>
+                  <ChatBubble chat={chat} />
+                </div>
               ))}
             </div>
           </div>
