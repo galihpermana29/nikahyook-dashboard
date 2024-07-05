@@ -45,8 +45,8 @@ const FormEdit = ({
           handleMutate!({ payload: value, id: id!, type: 'update' });
         }}
         disabled={disable}>
-        <div className="flex gap-[20px]">
-          <div className="w-full max-w-[187px] flex-1">
+        <div className="flex flex-col sm:flex-row items-center gap-[20px]">
+          <div className="w-full sm:max-w-[187px] flex-1">
             <Form.Item noStyle name={'profile_image_uri'}>
               <DraggerUpload
                 profileImageURL={form.getFieldValue('profile_image_uri')}
@@ -56,7 +56,7 @@ const FormEdit = ({
             </Form.Item>
           </div>
 
-          <div className="flex-1">
+          <div className="w-full sm:w-fit flex-1">
             <Form.Item
               className="my-[8px]"
               name={'email'}

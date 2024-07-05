@@ -89,7 +89,7 @@ const DraggerUpload = ({
   }, [profileImageURL, limit]);
 
   return (
-    <div>
+    <div className='flex flex-col items-center'>
       <LoadingHandler isLoading={loadingUpload} classname="h-[169px]">
         <Upload
           accept="image/*"
