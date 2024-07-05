@@ -1,7 +1,7 @@
+import './style.scss'
 import type { FormInstance, UploadProps } from 'antd';
 import { Upload, message } from 'antd';
 import { useEffect, useState } from 'react';
-
 import docIcon from '@/assets/icon/document-upload.png';
 import LoadingHandler from '../../container/loading/Loading';
 import { DashboardUploadAPI } from '@/shared/repositories/uploadDocumentService';
@@ -104,7 +104,7 @@ const DraggerUpload = ({
               );
             }
           }}
-          className="dragger-upload !bg-white"
+          className="dragger-upload !bg-white sm:flex sm:flex-col sm:items-center"
           beforeUpload={async (file) => {
             const data = await beforeUpload(file);
             if (data) {

@@ -58,9 +58,7 @@ const VendorUserCreateContainer = () => {
   const { result: cityTypes } = useQueryCity(locationState.province?.value);
   const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
   const { result: villageId } = useQueryVillage(locationState.district?.value);
-  // const { error: errorPostalCode, result } = useQueryPostalCode(
-  //   locationState.villageName
-  // );
+  
   return (
     <div>
       <ErrorBoundary
