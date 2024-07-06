@@ -83,7 +83,7 @@ export default function ProductModal({
                 filterOption={useFilterSelectOptions}
                 filterSort={useSortSelectOptions}
                 mode="multiple"
-                className="w-full max-w-[224px] min-h-[40px]"
+                className="w-full sm:max-w-[224px] min-h-[40px]"
                 placeholder="Tag"
                 options={tags?.selectOptions}
               />
@@ -95,6 +95,7 @@ export default function ProductModal({
           {/* make sure selected items are always shown first in the list */}
           {[...items.selected, ...items.not_selected].map((product) => (
             <button
+              className='col-span-4 sm:col-span-2 md:col-span-1'
               key={product.id}
               onClick={() =>
                 useToggleSelect({

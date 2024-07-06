@@ -34,8 +34,8 @@ export default function FormEdit({
   return (
     <LoadingHandler classname="h-80" isLoading={isLoading}>
       <Form form={form} onFinish={handleMutate} layout="vertical">
-        <div className="flex gap-[20px]">
-          <div className="w-full max-w-[187px] flex-1">
+        <div className="flex flex-col sm:flex-row gap-[10px] sm:gap-[20px]">
+          <div className="w-full sm:max-w-[187px] flex-1">
             <Form.Item
               className="my-[8px]"
               name={'image'}
