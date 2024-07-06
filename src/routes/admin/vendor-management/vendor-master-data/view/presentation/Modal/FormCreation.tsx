@@ -35,7 +35,6 @@ const FormCreation = ({ form, handleMutate, footer, type }: IFormCreation) => {
         form={form}
         layout="vertical"
         onFinish={handleMutate}
-        className="w-[30rem]"
       >
         <div className="flex gap-[20px]">
           <div className="flex-1">

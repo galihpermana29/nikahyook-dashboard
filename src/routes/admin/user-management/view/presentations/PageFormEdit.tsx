@@ -237,7 +237,7 @@ export const PageFormEdit = ({
               className="text-caption-1 h-[40px]"
             />
           </Form.Item>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col md:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               rules={[
                 {
