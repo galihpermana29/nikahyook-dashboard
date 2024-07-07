@@ -187,7 +187,7 @@ export const PageFormCreate = ({
               />
             </Form.Item>
           </div>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               rules={[
                 {
@@ -235,7 +235,7 @@ export const PageFormCreate = ({
               />
             </Form.Item>
           </div>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               rules={[
                 {

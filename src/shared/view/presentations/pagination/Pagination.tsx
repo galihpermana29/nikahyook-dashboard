@@ -24,11 +24,7 @@ export default function Pagination({
   };
 
   if (!metadata)
-    return (
-      <Row justify="end">
-        <PaginationAntd {...paginationProps} />
-      </Row>
-    );
+    return null;
 
   const { current_page, limit, total_items } = metadata;
   const numberOfItems = (current_page - 1) * limit + 1;
@@ -36,12 +32,13 @@ export default function Pagination({
     current_page * limit < total_items ? current_page * limit : total_items;
 
   return (
-    <div className="flex justify-between items-center mt-7">
-      <p>
+    <Row
+      className={`flex ${metadata ? 'flex-col-reverse sm:flex-row' : 'flex-row'} items-center justify-between gap-2 sm:gap-0`}
+    >
+      <div className={`${metadata ? 'mt-2 sm:mt-0' : ''}`}>
         Showing {numberOfItems} to {upperNumberofItems} of {total_items} entries
-      </p>
-
-      <PaginationAntd className="my-0" {...paginationProps} />
-    </div>
+      </div>
+      <PaginationAntd {...paginationProps} />
+    </Row>
   );
 }

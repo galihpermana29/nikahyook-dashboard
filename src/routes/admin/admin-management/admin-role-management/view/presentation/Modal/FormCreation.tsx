@@ -29,8 +29,7 @@ const FormCreation = ({ form, handleMutate, footer }: IFormCreation) => {
       <Form
         form={form}
         layout="vertical"
-        onFinish={(value) => handleMutate(transformToPayload(value))}
-        className="w-[30rem]">
+        onFinish={(value) => handleMutate(transformToPayload(value))}>
         <div className="flex gap-[20px]">
           <div className="flex-1">
             <Form.Item

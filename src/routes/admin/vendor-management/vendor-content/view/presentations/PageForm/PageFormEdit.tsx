@@ -50,7 +50,7 @@ const PageFormEdit = ({
         className="flex flex-col gap-[20px]"
         onFinish={(val) => onSave({ payload: val, type: 'edit', id })}>
         <PageHeader title="Product Detail" onCancel={onCancel} />
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row">
           <div className="w-full max-w-[300px] gap-[20px]">
             <h1 className="text-[#262626] text-body-2">Product Photo</h1>
             <p className="text-[#949494] text-caption-1">
@@ -68,7 +68,7 @@ const PageFormEdit = ({
             </Form.Item>
           </div>
         </div>
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row">
           <div className="w-full max-w-[300px] gap-[20px]">
             <h1 className="text-[#262626] text-body-2">Basic Details</h1>
             <p className="text-[#949494] text-caption-1">
@@ -146,9 +146,9 @@ const PageFormEdit = ({
                 options={dynamicSelectOptions.tags}
               />
             </Form.Item>
-            <div className="flex gap-[10px]">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-[10px]">
               <Form.Item
-                className="my-[8px] flex-1"
+                className="my-0 sm:my-[8px] flex-1"
                 name={'price'}
                 label="Price"
                 rules={[
@@ -169,7 +169,7 @@ const PageFormEdit = ({
                 />
               </Form.Item>
               <Form.Item
-                className="my-[8px] flex-1"
+                className="my-0 sm:my-[8px] flex-1"
                 name={'quantity_label'}
                 label="Quantity Label "
                 rules={[
@@ -200,7 +200,7 @@ const PageFormEdit = ({
                 className="!h-[128px] rounded-[8px] text-caption-1 font-[400]"
               />
             </Form.Item>
-            <div className="flex w-full gap-2">
+            <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
               <Form.Item
                 rules={[
                   {
@@ -248,7 +248,7 @@ const PageFormEdit = ({
                 />
               </Form.Item>
             </div>
-            <div className="flex w-full gap-2">
+            <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
               <Form.Item
                 rules={[
                   {
@@ -313,7 +313,7 @@ const PageFormEdit = ({
             </Form.Item>
           </div>
         </div>
-        <div className="flex">
+        <div className="flex flex-col sm:flex-row">
           <div className="w-full max-w-[300px] gap-[20px]">
             <h1 className="text-[#262626] text-body-2">Additonal Details</h1>
             <p className="text-[#949494] text-caption-1">
@@ -321,7 +321,7 @@ const PageFormEdit = ({
             </p>
           </div>
           <div className="flex-1">
-            <div className="flex w-full gap-2">
+            <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
               <Form.Item
                 className="my-[8px] w-full"
                 name={'coverage_province'}

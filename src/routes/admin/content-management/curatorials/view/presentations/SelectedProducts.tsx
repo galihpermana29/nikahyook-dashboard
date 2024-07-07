@@ -20,9 +20,9 @@ export default function SelectedProducts({
     return emptyComponent;
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-4 lg:grid-cols-3 gap-2">
       {selectedItems.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard gridResponsive key={product.id} product={product} />
       ))}
     </div>
   );
