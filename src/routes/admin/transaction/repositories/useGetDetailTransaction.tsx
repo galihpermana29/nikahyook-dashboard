@@ -1,9 +1,9 @@
 import { DashboardTransactionAPI } from '@/shared/repositories/transactionServices';
 import { useQuery } from 'react-query';
 
-const useQueryVendorTransactionDetail = (id: string) => {
+const useQueryAdminTransactionDetail = (id: string) => {
   const getDetail = async () => {
-    const data = await DashboardTransactionAPI.getVendorTransactionDetail(
+    const data = await DashboardTransactionAPI.getAdminTransactionDetail(
       id as string
     );
 
@@ -16,7 +16,7 @@ const useQueryVendorTransactionDetail = (id: string) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['vendor-transaction-detail', id],
+    queryKey: ['admin-transaction-detail', id],
     queryFn: getDetail,
     enabled: id ? true : false,
     refetchOnWindowFocus: false,
@@ -25,4 +25,4 @@ const useQueryVendorTransactionDetail = (id: string) => {
   return { result, error, isLoading, refetch };
 };
 
-export default useQueryVendorTransactionDetail;
+export default useQueryAdminTransactionDetail;

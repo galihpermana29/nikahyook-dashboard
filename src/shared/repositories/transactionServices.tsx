@@ -1,5 +1,7 @@
 import {
+  IAllAdminVendorOrderResponseRoot,
   IAllVendorOrderResponseRoot,
+  IDetailAdminVendorOrderResponseRoot,
   IDetailVendorOrderResponseRoot,
   IUpdateOrderStatusPayload,
   IUpdateOrderStatusResponseRoot,
@@ -13,6 +15,19 @@ class DashboardTransactionServices extends ApiClass {
 
   public async getAllTransactions(
     query?: string
+  ): Promise<IAllAdminVendorOrderResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } =
+      await this.axiosInstance.get<IAllAdminVendorOrderResponseRoot>(
+        `orders/cms?${query ? `?${query}` : ''}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    return data;
+  }
+
+  public async getTransactionsByVendorId(
+    query?: string
   ): Promise<IAllVendorOrderResponseRoot> {
     const token = JSON.parse(localStorage.getItem('token')!);
 
@@ -23,7 +38,23 @@ class DashboardTransactionServices extends ApiClass {
     return data;
   }
 
-  public async getTransactionDetail(
+  public async getAdminTransactionDetail(
+    id: string
+  ): Promise<{ data: IDetailAdminVendorOrderResponseRoot }> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } = await this.axiosInstance.get<{
+      data: IDetailAdminVendorOrderResponseRoot;
+    }>(`/orders/cms/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  }
+
+  public async getVendorTransactionDetail(
     id: string
   ): Promise<{ data: IDetailVendorOrderResponseRoot }> {
     const token = JSON.parse(localStorage.getItem('token')!);

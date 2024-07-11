@@ -17,8 +17,21 @@ export interface VendorOrder {
   order_time: string;
 }
 
+export interface IAdminVendorOrder extends VendorOrder {
+  vendor: {
+    id: string;
+    name: string;
+  };
+  key: number;
+}
+
 export interface IAllVendorOrderResponseRoot {
   data: VendorOrder[];
+  meta_data: Metadata;
+}
+
+export interface IAllAdminVendorOrderResponseRoot {
+  data: IAdminVendorOrder[];
   meta_data: Metadata;
 }
 
@@ -54,8 +67,20 @@ export interface IVendorOrderDetail {
   order_details: IOrderDetail[];
 }
 
+export interface IAdminVendorOrderDetail extends IVendorOrderDetail {
+  vendor: {
+    id: string;
+    name: string;
+    email: string;
+  };
+}
+
 export interface IDetailVendorOrderResponseRoot {
   data: IVendorOrderDetail;
+}
+
+export interface IDetailAdminVendorOrderResponseRoot {
+  data: IAdminVendorOrderDetail;
 }
 
 export interface IUpdateOrderStatusPayload {

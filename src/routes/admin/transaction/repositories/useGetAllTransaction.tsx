@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSearchParams } from 'react-router-dom';
 
-const useQueryVendorTransaction = (form: FormInstance<any>) => {
+const useQueryAdminTransaction = (form: FormInstance<any>) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const limit = searchParams.get('limit');
@@ -21,27 +21,25 @@ const useQueryVendorTransaction = (form: FormInstance<any>) => {
     page: 1,
     keyword: '',
     status: 'default',
-    vendor_id: '',
   };
 
-  const [queryVendorTransaction, setQueryVendorTransaction] =
+  const [queryAdminTransaction, setQueryAdminTransaction] =
     useState<TGeneralFilter>({
       limit: limit ? parseInt(limit) : initialFilterState.limit,
       page: page ? parseInt(page) : initialFilterState.page,
-      keyword: keyword ? keyword : '',
-      status: status ? status : 'default',
-      vendor_id: JSON.parse(localStorage.getItem('admin')!).user_id,
+      keyword: keyword ? keyword : initialFilterState.keyword,
+      status: status ? status : initialFilterState.status,
     });
 
   const { objectToQueryParams } = useConvertQuery();
   const { addIndexToData } = useSuccessAxios();
-  const queries = useDebounce(queryVendorTransaction, 1000);
+  const queries = useDebounce(queryAdminTransaction, 1000);
 
   const getVendorContent = async () => {
-    const queryParams = objectToQueryParams(queryVendorTransaction);
+    const queryParams = objectToQueryParams(queryAdminTransaction);
     setSearchParams(queryParams);
     const { data, meta_data } =
-      await DashboardTransactionAPI.getTransactionsByVendorId(queryParams);
+      await DashboardTransactionAPI.getAllTransactions(queryParams);
     return { data: addIndexToData(data), meta_data };
   };
 
@@ -51,14 +49,14 @@ const useQueryVendorTransaction = (form: FormInstance<any>) => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['vendor-transaction', { ...queries }],
+    queryKey: ['admin-transaction', { ...queries }],
     queryFn: getVendorContent,
   });
 
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryVendorTransaction((val) => ({ ...val, [x]: value[x] }));
+        setQueryAdminTransaction((val) => ({ ...val, [x]: value[x] }));
       }
     }
   };
@@ -71,7 +69,7 @@ const useQueryVendorTransaction = (form: FormInstance<any>) => {
     };
     form.setFieldsValue(clearFilterQuery);
 
-    setQueryVendorTransaction(() => ({
+    setQueryAdminTransaction(() => ({
       ...clearFilterQuery,
     }));
   };
@@ -81,11 +79,11 @@ const useQueryVendorTransaction = (form: FormInstance<any>) => {
     error,
     isLoading,
     refetch,
-    setQueryVendorTransaction,
-    queryVendorTransaction,
+    setQueryAdminTransaction,
+    queryAdminTransaction,
     handleFilter,
     clearFilter,
   };
 };
 
-export default useQueryVendorTransaction;
+export default useQueryAdminTransaction;

@@ -2,6 +2,7 @@ import getTransactionStatusChipColor from '@/shared/usecase/getTransactionStatus
 import { Button, Space, TableProps, Tag } from 'antd';
 import { NavigateFunction } from 'react-router-dom';
 import FolderIcon from '@/assets/icon/folder-icon.svg';
+import formatDateString from '@/shared/usecase/formatDateString';
 
 function useGenerateColumnAdminTransaction(onNavigate: NavigateFunction) {
   const columns: TableProps['columns'] = [
@@ -9,19 +10,19 @@ function useGenerateColumnAdminTransaction(onNavigate: NavigateFunction) {
       title: 'Buyer',
       dataIndex: 'buyer',
       key: 'buyer',
-      render: (text) => text,
+      render: (buyer) => buyer.name,
     },
     {
       title: 'Vendor',
       dataIndex: 'vendor',
       key: 'vendor',
-      render: (text) => text,
+      render: (vendor) => vendor.name,
     },
     {
       title: 'Order Date',
-      dataIndex: 'order_date',
-      key: 'order_date',
-      render: (text) => text,
+      dataIndex: 'order_time',
+      key: 'order_time',
+      render: (text) => formatDateString(text),
     },
     {
       title: 'Status',
