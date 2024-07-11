@@ -19,7 +19,7 @@ const PageHeader = ({
         <h1 className="text-[#323232] text-body-1 sm:text-heading-6 font-medium w-full sm:w-auto">
           {title}
         </h1>
-        <div className="flex flex-wrap gap-[15px] w-full sm:w-auto">
+        <div className="flex items-center flex-wrap gap-[15px] w-full sm:w-auto">
           {buttonsBefore}
           <Button
             onClick={onCancel}

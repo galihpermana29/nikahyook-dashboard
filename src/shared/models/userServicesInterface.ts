@@ -187,6 +187,16 @@ export interface IUserClientDetailExtra {
   wedding_theme?: number;
 }
 
+export interface IResetPasswordPayloadRoot {
+  user_id: string;
+  new_password: string;
+}
+
+export interface IResetPasswordResponseRoot {
+  data: string;
+  status: string
+}
+
 // export interface IUserClientDetailPayload extends IUserClientDetail {
 //   json_text?: string;
 // }

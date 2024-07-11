@@ -19,11 +19,13 @@ import useQueryProvince from '../../../repositories/useGetAllProvince';
 import useQueryCity from '../../../repositories/useGetAllCity';
 import useQueryDistrict from '../../../repositories/useGetAllDistrict';
 import useQueryVillage from '../../../repositories/useGetAllVillage';
+import useMutateResetPassword from '@/shared/repositories/useResetPassword';
+import FormResetPassword from '@/shared/view/presentations/modal/ResetPasswordModal';
 
 const VendorUserEditContainer = () => {
   const [form] = useForm();
   const [formModal] = useForm();
-
+  
   const { modalState, closeModal, openModal } = useModalReducer(formModal);
 
   const navigate = useNavigate();
@@ -48,6 +50,12 @@ const VendorUserEditContainer = () => {
     closeModal,
     refetch
   );
+
+  const { mutate: mutateResetPassword } = useMutateResetPassword(
+    closeModal,
+    refetch
+  );
+
   const { result: provinceTypes, error: errorEmsifa } = useQueryProvince();
   const { result: cityTypes } = useQueryCity(locationState.province?.value);
   const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
@@ -59,6 +67,23 @@ const VendorUserEditContainer = () => {
         id={modalState?.id}
         form={formModal}
         handleMutate={mutateEditPassword}
+        footer={
+          <FormFooter
+            secondaryText="Cancel"
+            secondaryProps={{
+              onClick: () => closeModal!(),
+            }}
+            primaryText="Save"
+            primaryProps={{ type: 'submit' }}
+          />
+        }
+      />
+    ),
+    reset: (
+      <FormResetPassword
+        id={modalState?.id}
+        form={formModal}
+        handleMutate={mutateResetPassword}
         footer={
           <FormFooter
             secondaryText="Cancel"
@@ -108,6 +133,7 @@ const VendorUserEditContainer = () => {
                 form={form}
                 onSave={mutateEdit}
                 onChangePasswordClick={() => openModal!('password', id)}
+                onResetPasswordClick={() => openModal!('reset', id)}
                 onCancel={() => {
                   navigate(-1);
                 }}
