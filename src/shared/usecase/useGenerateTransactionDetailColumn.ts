@@ -5,21 +5,21 @@ function useGenerateTransactionDetailColumn() {
   const columns: TableProps['columns'] = [
     {
       title: 'Product',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'product_title',
+      key: 'product_title',
       render: (text) => text,
     },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      render: (text) => text ?? '-',
+      render: (text) => (text?.length > 0 ? text : '-'),
     },
     {
       title: 'Qty',
-      dataIndex: 'qty',
+      dataIndex: '',
       key: 'qty',
-      render: (text) => text,
+      render: ({ quantity, quantity_label }) => `${quantity} ${quantity_label}`,
     },
     {
       title: 'Price',

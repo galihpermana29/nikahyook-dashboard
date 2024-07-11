@@ -1,4 +1,7 @@
-import { TTransasactionStatus } from '@/shared/models/transactionServiceInterfaces';
+import {
+  IOrderDetail,
+  TTransasactionStatus,
+} from '@/shared/models/transactionServiceInterfaces';
 import getTransactionStatusChipColor from '@/shared/usecase/getTransactionStatusChipColor';
 import useGenerateTransactionDetailColumn from '@/shared/usecase/useGenerateTransactionDetailColumn';
 import { Table, Tag } from 'antd';
@@ -26,7 +29,7 @@ interface ITransactionDetail {
   orderInformation: IOrderInformation;
   buyerDetail: IBuyerDetail;
   vendorDetail: IVendorDetail;
-  productList: any[];
+  productList: IOrderDetail[];
   buttonComponents?: ReactNode;
   invoiceComponents?: ReactNode;
 }
