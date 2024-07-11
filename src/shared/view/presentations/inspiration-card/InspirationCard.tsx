@@ -5,14 +5,16 @@ import { Tag } from 'antd';
 interface IInspirationCardProps {
   inspiration: IDetailInspirationData;
   miscButton?: React.ReactNode;
+  gridResponsive?: boolean;
 }
 
 export default function InspirationCard({
   inspiration,
   miscButton,
+  gridResponsive = false
 }: IInspirationCardProps) {
   return (
-    <div className="flex rounded-md border-2 flex-col overflow-hidden">
+    <div className={`${gridResponsive ? 'col-span-4 sm:col-span-2 lg:col-span-1' : ''} flex rounded-md border-2 flex-col overflow-hidden`}>
       <div className="aspect-square">
         <img
           className="bg-cover object-cover aspect-square size-full"

@@ -164,7 +164,7 @@ export const PageFormEdit = ({
               style={{ height: 120, resize: 'none' }}
             />
           </Form.Item>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               className="my-[8px] w-full"
               name={['detail', 'vendor_type_id']}
@@ -186,7 +186,7 @@ export const PageFormEdit = ({
               />
             </Form.Item>
           </div>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               rules={[
                 {
@@ -234,7 +234,7 @@ export const PageFormEdit = ({
               />
             </Form.Item>
           </div>
-          <div className="flex w-full gap-2">
+          <div className="flex flex-col sm:flex-row w-full gap-0 sm:gap-2">
             <Form.Item
               rules={[
                 {

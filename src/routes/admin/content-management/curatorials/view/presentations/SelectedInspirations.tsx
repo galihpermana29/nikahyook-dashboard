@@ -20,9 +20,9 @@ export default function SelectedInspirations({
     return emptyComponent;
 
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-4 lg:grid-cols-3 gap-2">
       {selectedItems.map((inspiration) => (
-        <InspirationCard key={inspiration.id} inspiration={inspiration} />
+        <InspirationCard gridResponsive key={inspiration.id} inspiration={inspiration} />
       ))}
     </div>
   );

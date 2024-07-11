@@ -5,14 +5,16 @@ import { Tag } from 'antd';
 interface IProductCardProps {
   product: IDetailProductData;
   miscButton?: React.ReactNode;
+  gridResponsive?: boolean;
 }
 
 export default function ProductCard({
   product,
   miscButton,
+  gridResponsive = false
 }: IProductCardProps) {
   return (
-    <div className="flex rounded-md border-2 h-full flex-col">
+    <div className={`${gridResponsive ? 'col-span-4 sm:col-span-2 lg:col-span-1' : ''} flex rounded-md border-2 h-full flex-col`}>
       <div className="aspect-square">
         <img
           className="bg-cover object-cover aspect-square size-full"

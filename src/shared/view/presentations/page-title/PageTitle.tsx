@@ -11,7 +11,10 @@ const PageTitle = ({ title, withArrow = false }: IPageTitle) => {
   return (
     <div className="mb-[20px] flex items-center gap-[20px]">
       {withArrow && (
-        <div className="cursor-pointer" onClick={() => navigate(-1)}>
+        <div
+          className="min-w-[36px] cursor-pointer"
+          onClick={() => navigate(-1)}
+        >
           <img src={arrowBack} alt="arrow-back" />
         </div>
       )}

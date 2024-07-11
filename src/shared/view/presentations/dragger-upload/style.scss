@@ -1,0 +1,15 @@
+@media (max-width: 639px) {
+ .ant-upload-wrapper {
+    &.ant-upload-picture-card-wrapper,
+    &.ant-upload-picture-circle-wrapper {
+     .ant-upload-list {
+         &.ant-upload-list-picture-card,
+         &.ant-upload-list-picture-circle {
+          display: flex !important;
+          flex-direction: column !important;
+          align-items: center !important;
+        }
+      }
+    }
+ }
+}

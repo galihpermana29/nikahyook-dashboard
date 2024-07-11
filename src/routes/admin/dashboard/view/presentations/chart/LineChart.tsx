@@ -47,8 +47,8 @@ const LineChart = ({
 
   return (
     <div>
-      <div className='flex items-center justify-between mb-5'>
-        <p className="text-heading-6 font-medium text-ny-primary-500">
+      <div className='flex items-center justify-between v gap-4 mb-5'>
+        <p className="text-body-2 sm:text-heading-6 font-medium text-ny-primary-500">
           909 Transaction This Month
         </p>
         <div className='flex items-center gap-1'>
