@@ -35,6 +35,10 @@ export const ResetPasswordForm = ({
         label="Konfirmasi password"
         className="my-[10px]"
         rules={[
+          {
+            required: true,
+            message: 'Please confirm your password',
+          },
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || getFieldValue('new_password') === value) {
