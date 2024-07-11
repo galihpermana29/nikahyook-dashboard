@@ -25,7 +25,7 @@ import FormResetPassword from '@/shared/view/presentations/modal/ResetPasswordMo
 const VendorUserEditContainer = () => {
   const [form] = useForm();
   const [formModal] = useForm();
-  
+
   const { modalState, closeModal, openModal } = useModalReducer(formModal);
 
   const navigate = useNavigate();
@@ -108,7 +108,9 @@ const VendorUserEditContainer = () => {
             <div className="capitalize">
               {modalState?.type === 'password'
                 ? 'Change Password'
-                : `${modalState?.type} User`}
+                : modalState?.type === 'reset'
+                  ? 'Reset Password'
+                  : `${modalState?.type} User`}
             </div>
           }
           open={modalState?.isOpen}

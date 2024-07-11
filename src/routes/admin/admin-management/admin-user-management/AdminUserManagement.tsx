@@ -207,7 +207,9 @@ const AdminUserManagementContainer = () => {
               <div className="capitalize">
                 {modalState?.type === 'password'
                   ? 'Change Password'
-                  : `${modalState?.type} User`}
+                  : modalState?.type === 'reset'
+                    ? 'Reset Password'
+                    : `${modalState?.type} User`}
               </div>
             }
             open={modalState?.isOpen}
