@@ -3,6 +3,7 @@ import RootLayout from '../view/container/general-layout/view/RootLayout';
 import generateRoutesChild from '../usecase/useRenderRoutes';
 import LoginContainer from '@/routes/admin/authentication/login/Login';
 import RegisterVendorContainer from '@/routes/admin/authentication/register-vendor/Register';
+import { ResetPasswordContainer } from '@/routes/vendor/reset-password/ResetPasswordContainer';
 
 export const router = createBrowserRouter([
   {
@@ -15,11 +16,11 @@ export const router = createBrowserRouter([
     element: <LoginContainer />,
   },
   {
-    path: '/login',
-    element: <LoginContainer />,
-  },
-  {
     path: '/register-vendor',
     element: <RegisterVendorContainer />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ResetPasswordContainer />,
   },
 ]);

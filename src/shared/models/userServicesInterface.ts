@@ -25,6 +25,36 @@ export interface ILoginResponseRoot {
   data: ILoginData;
 }
 
+// Request reset password email
+export interface IRequestResetEmailPayloadRoot {
+  email: string;
+}
+
+// Request reset password email response
+export interface IRequestResetEmailResponseRoot {
+  data: string; // email
+}
+
+// Validate reset token
+export interface IValidateResetTokenPayloadRoot {
+  token: string | null;
+}
+
+// Validate reset token response
+export interface IValidateResetTokenResponseRoot {
+  data: string; // id
+}
+
+// Reset password
+export interface IResetPasswordPayloadRoot {
+  new_password: string;
+}
+
+// Reset password response
+export interface IResetPasswordResponseRoot {
+  data: string; // id
+}
+
 // Get user detail
 
 export interface IDetailUserData {
