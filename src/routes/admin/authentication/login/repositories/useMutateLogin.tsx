@@ -18,7 +18,16 @@ const useMutateLogin = () => {
   };
 
   const { mutate, error, isLoading } = useMutation({
-    mutationFn: (payload: ILoginPayloadRoot) => login(payload),
+    mutationFn: (payload: ILoginPayloadRoot) =>
+      login(payload).then((res) => {
+        const { type } = res.data;
+        if (type === 'user') {
+          // disallow account with type user to login.
+          throw new AxiosError('USER_TYPE_NOT_ALLOWED');
+        } else {
+          return res;
+        }
+      }),
     onError: handleError,
     onSuccess: (response) => {
       const { token, user_id, email, permissions, type, status } =
