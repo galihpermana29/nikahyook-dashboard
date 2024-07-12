@@ -4,7 +4,7 @@ import { FormInstance } from 'antd';
 const OPEN_MODAL = 'OPEN_MODAL';
 const CLOSE_MODAL = 'CLOSE_MODAL';
 
-export type TModalType = 'edit' | 'create' | 'password' | 'detail';
+export type TModalType = 'edit' | 'create' | 'password' | 'detail' | 'reset';
 
 export interface IModalReducerReturn {
   modalState?: TModalState;

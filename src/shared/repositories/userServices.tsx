@@ -181,6 +181,24 @@ class DashboardUserServices extends ApiClass {
     });
     return data;
   }
+
+  public async resetUserPassword(
+    payload: IResetPasswordPayloadRoot
+  ): Promise<IResetPasswordResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } =
+      await this.axiosInstance.put<IResetPasswordResponseRoot>(
+        `/users/password`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    return data;
+  }
 }
 
 export const DashboardUserAPI = new DashboardUserServices();
