@@ -38,7 +38,7 @@ const useMutateUpdateVendorTransaction = () => {
     },
     onError: handleError,
     onSuccess: (_, { onSuccess }) => {
-      showSuccessMessage('Order status updated successfully!');
+      showSuccessMessage('Order updated successfully!');
       if (onSuccess) onSuccess();
     },
   });

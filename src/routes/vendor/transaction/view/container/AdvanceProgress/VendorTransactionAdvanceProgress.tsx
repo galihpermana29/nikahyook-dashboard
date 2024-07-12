@@ -11,6 +11,7 @@ import useQueryVendorTransactionDetail from '../../../repositories/useGetDetailT
 import useMutateUpdateVendorTransaction from '../../../repositories/useUpdateTransactionStatus';
 import AdvanceAfterPayment from '../../presentation/AdvanceAfterPayment';
 import AdvanceBeforePayment from '../../presentation/AdvanceBeforePayment';
+import TransactionError from '@/shared/view/presentations/transaction/TransactionError';
 
 function VendorTransactionAdvanceProgressContainer() {
   const { id } = useParams();
@@ -33,7 +34,7 @@ function VendorTransactionAdvanceProgressContainer() {
 
   if (detailLoading || mutateLoading) return <TransactionLoading />;
 
-  if (!detailData || detailError) throw new Error();
+  if (!detailData || detailError) return <TransactionError />;
 
   const { order_details, status, payments_file_uri } =
     detailData.data as unknown as IVendorOrderDetail;
@@ -51,9 +52,8 @@ function VendorTransactionAdvanceProgressContainer() {
     mutate({
       id: parseInt(id!),
       payload: { status: status, payment_file_uri: receipts },
+      onSuccess: () => detailRefetch(),
     });
-
-    detailRefetch();
   };
 
   return (
