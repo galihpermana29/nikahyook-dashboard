@@ -23,6 +23,8 @@ import FormFooter from '@/shared/view/presentations/form-footer/FormFooter';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import useModalReducer from '@/shared/usecase/useModalReducer';
+import useMutateResetPassword from '@/shared/repositories/useResetPassword';
+import FormResetPassword from '@/shared/view/presentations/modal/ResetPasswordModal';
 
 const AdminUserManagementContainer = () => {
   const [form] = useForm();
@@ -65,6 +67,11 @@ const AdminUserManagementContainer = () => {
     refetch
   );
 
+  const { mutate: mutateResetPassword } = useMutateResetPassword(
+    closeModal,
+    refetch
+  );
+
   const modalType = {
     create: (
       <FormCreation
@@ -94,6 +101,7 @@ const AdminUserManagementContainer = () => {
           form={formModal}
           handleMutate={undefined}
           onChangePasswordClick={() => openModal!('password', modalState?.id)}
+          onResetPasswordClick={() => openModal!('reset', modalState?.id)}
           disable={true}
           footer={
             <FormFooter
@@ -127,6 +135,7 @@ const AdminUserManagementContainer = () => {
           form={formModal}
           disable={false}
           onChangePasswordClick={() => openModal!('password', modalState?.id)}
+          onResetPasswordClick={() => openModal!('reset', modalState?.id)}
           footer={
             <FormFooter
               secondaryText="Cancel"
@@ -164,6 +173,28 @@ const AdminUserManagementContainer = () => {
         />
       </LoadingHandler>
     ),
+    reset: (
+      <LoadingHandler
+        isLoading={loadingGetDetail}
+        fullscreen={false}
+        classname="h-[500px]">
+        <FormResetPassword
+          id={modalState?.id}
+          form={formModal}
+          handleMutate={mutateResetPassword}
+          footer={
+            <FormFooter
+              secondaryText="Cancel"
+              secondaryProps={{
+                onClick: () => closeModal!(),
+              }}
+              primaryText="Save"
+              primaryProps={{ type: 'submit' }}
+            />
+          }
+        />
+      </LoadingHandler>
+    ),
   };
 
   return (
@@ -176,7 +207,9 @@ const AdminUserManagementContainer = () => {
               <div className="capitalize">
                 {modalState?.type === 'password'
                   ? 'Change Password'
-                  : `${modalState?.type} User`}
+                  : modalState?.type === 'reset'
+                    ? 'Reset Password'
+                    : `${modalState?.type} User`}
               </div>
             }
             open={modalState?.isOpen}

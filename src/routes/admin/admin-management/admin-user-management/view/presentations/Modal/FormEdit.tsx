@@ -5,7 +5,8 @@ import {
 } from '@/shared/models/userServicesInterface';
 
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
-import { Button, Form, FormInstance, Input, InputNumber, Select } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Form, FormInstance, Input, InputNumber, Select, Space } from 'antd';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
@@ -26,6 +27,7 @@ interface IFormEdit {
   disable: boolean;
   id?: string;
   onChangePasswordClick: () => void;
+  onResetPasswordClick: () => void;
 }
 const FormEdit = ({
   form,
@@ -35,6 +37,7 @@ const FormEdit = ({
   disable,
   id,
   onChangePasswordClick,
+  onResetPasswordClick
 }: IFormEdit) => {
   return (
     <div>
@@ -122,13 +125,30 @@ const FormEdit = ({
               />
             </Form.Item>
             <div className="flex justify-end">
-              <Button
-                type="text"
+              <Dropdown
+                menu={{
+                  items: [
+                    {
+                      label: "Change Password",
+                      key: '1',
+                      onClick: onChangePasswordClick
+                    },
+                    {
+                      label: "Reset Password",
+                      key: '2',
+                      onClick: onResetPasswordClick
+                    }
+                  ]
+                }}
                 disabled={disable}
-                onClick={onChangePasswordClick}
-                className="text-ny-primary-500">
-                Change Password
-              </Button>
+              >
+                <Button type='text' className={`${disable ? '' : 'hover:!bg-white hover:!text-ny-primary-500'} text-ny-primary-500`}>
+                  <Space>
+                    Actions
+                    <DownOutlined />
+                  </Space>
+                </Button>
+              </Dropdown>
             </div>
           </div>
         </div>

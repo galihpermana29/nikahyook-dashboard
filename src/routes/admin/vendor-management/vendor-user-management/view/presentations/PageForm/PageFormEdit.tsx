@@ -1,7 +1,7 @@
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
-import { Button, Form, Input, InputNumber, Select } from 'antd';
+import { Button, Dropdown, Form, Input, InputNumber, Select, Space } from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import TextArea from 'antd/es/input/TextArea';
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +14,7 @@ import fb from '@/assets/icon/fb.png';
 import tiktok from '@/assets/icon/tiktok.png';
 import ig from '@/assets/icon/ig.png';
 import website from '@/assets/icon/website.png';
+import { DownOutlined } from '@ant-design/icons';
 
 interface IFormCreate {
   form: FormInstance;
@@ -22,6 +23,7 @@ interface IFormCreate {
   id: string;
   disabled: boolean;
   onChangePasswordClick?: () => void;
+  onResetPasswordClick?: () => void;
   showEditButton?: boolean;
   dynamicSelectOptions: {
     vendorTypes: TGeneralSelectOptions[];
@@ -41,6 +43,7 @@ export const PageFormEdit = ({
   showEditButton = false,
   id,
   onChangePasswordClick,
+  onResetPasswordClick,
   dynamicSelectOptions,
   onLocationChange,
 }: IFormCreate) => {
@@ -58,15 +61,35 @@ export const PageFormEdit = ({
         onCancel={onCancel}
         id={id}
         buttonsBefore={
-          <Button
-            onClick={onChangePasswordClick}
-            type="text"
-            className="text-ny-primary-500">
-            Change Password
-          </Button>
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  label: "Change Password",
+                  key: '1',
+                  onClick: onChangePasswordClick
+                },
+                {
+                  label: "Reset Password",
+                  key: '2',
+                  onClick: onResetPasswordClick
+                }
+              ]
+            }}
+            disabled={disabled}
+          >
+            <Button
+              className={`${disabled ? '' : 'hover:!bg-ny-primary-100 hover:!text-ny-primary-500'} bg-ny-primary-100 text-body-2 text-ny-primary-500 h-[40px]`}
+            >
+              <Space>
+                Actions
+                <DownOutlined />
+              </Space>
+            </Button>
+          </Dropdown>
         }
         buttonsAfter={
-          showEditButton && (
+          showEditButton && ( 
             <Button
               disabled={false}
               onClick={() => navigate(`/vendor-account/edit-user/${id}`)}

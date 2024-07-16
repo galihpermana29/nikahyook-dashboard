@@ -64,7 +64,7 @@ class DashboardUserServices extends ApiClass {
   public async resetPassword(
     payload: IResetPasswordPayloadRoot,
     token: string
-  ): Promise<IRequestResetEmailResponseRoot> {
+  ): Promise<IResetPasswordResponseRoot> {
     const { data } = await this.axiosInstance.post<IResetPasswordResponseRoot>(
       '/auth/reset-password',
       payload,
@@ -179,6 +179,23 @@ class DashboardUserServices extends ApiClass {
     >(`/users?type=user${query ? `&${query}` : ''}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
+    return data;
+  }
+
+  public async resetUserPassword(
+    payload: IResetPasswordPayloadRoot
+  ): Promise<IResetPasswordResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } = await this.axiosInstance.put<IResetPasswordResponseRoot>(
+      `/users/password`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   }
 }
