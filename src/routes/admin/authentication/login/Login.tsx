@@ -3,6 +3,7 @@ import logo from '@/assets/primary-logo.svg';
 import { Button, Form, Input } from 'antd';
 import useMutateLogin from './repositories/useMutateLogin';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
+import { Link } from 'react-router-dom';
 
 const LoginContainer = () => {
   const { mutate, isLoading } = useMutateLogin();
@@ -43,18 +44,25 @@ const LoginContainer = () => {
                 ]}>
                 <Input placeholder="Enter your email" />
               </Form.Item>
-              <Form.Item
-                name={'password'}
-                label="Password"
-                className="my-[10px]"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input your password',
-                  },
-                ]}>
-                <Input.Password placeholder="Enter your password" />
-              </Form.Item>
+              <div className="relative">
+                <Link
+                  to="/forgot-password"
+                  className="absolute right-0 text-caption-1 text-ny-primary-500 z-[1]">
+                  Lupa password?
+                </Link>
+                <Form.Item
+                  name={'password'}
+                  label="Password"
+                  className="my-[10px]"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Please input your password',
+                    },
+                  ]}>
+                  <Input.Password placeholder="Enter your password" />
+                </Form.Item>
+              </div>
               <div className="mt-[28px] text-right">
                 Daftar sebagai{' '}
                 <a href="/register-vendor" className="text-ny-primary-500">

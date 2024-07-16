@@ -7,11 +7,15 @@ import {
   IDetailVendorUser,
   ILoginPayloadRoot,
   ILoginResponseRoot,
-  IResetPasswordPayloadRoot,
   IResetPasswordResponseRoot,
   IUpdatePasswordPayloadRoot,
   IUpdatePasswordResponseRoot,
   IUpdateUserResponseRoot,
+  type IRequestResetEmailPayloadRoot,
+  type IRequestResetEmailResponseRoot,
+  type IResetPasswordPayloadRoot,
+  type IValidateResetTokenPayloadRoot,
+  type IValidateResetTokenResponseRoot,
 } from '../models/userServicesInterface';
 import { ApiClass } from './generalApi';
 
@@ -19,11 +23,58 @@ class DashboardUserServices extends ApiClass {
   constructor(baseURL?: string, config?: Record<string, any>) {
     super(baseURL, config);
   }
+
   public async login(payload: ILoginPayloadRoot): Promise<ILoginResponseRoot> {
     const { data } = await this.axiosInstance.post<ILoginResponseRoot>(
       '/auth/login',
       payload
     );
+
+    return data;
+  }
+
+  public async requestResetEmail(
+    payload: IRequestResetEmailPayloadRoot
+  ): Promise<IRequestResetEmailResponseRoot> {
+    const { data } =
+      await this.axiosInstance.post<IRequestResetEmailResponseRoot>(
+        '/auth/forgot-password',
+        payload
+      );
+
+    return data;
+  }
+
+  public async validateResetToken(
+    payload: IValidateResetTokenPayloadRoot
+  ): Promise<IValidateResetTokenResponseRoot> {
+    const { data } =
+      await this.axiosInstance.get<IValidateResetTokenResponseRoot>(
+        '/auth/validate-reset-token',
+        {
+          headers: {
+            Authorization: `Bearer ${payload.token}`,
+          },
+        }
+      );
+
+    return data;
+  }
+
+  public async resetPassword(
+    payload: IResetPasswordPayloadRoot,
+    token: string
+  ): Promise<IResetPasswordResponseRoot> {
+    const { data } = await this.axiosInstance.post<IResetPasswordResponseRoot>(
+      '/auth/reset-password',
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
     return data;
   }
 
@@ -136,16 +187,15 @@ class DashboardUserServices extends ApiClass {
   ): Promise<IResetPasswordResponseRoot> {
     const token = JSON.parse(localStorage.getItem('token')!);
 
-    const { data } =
-      await this.axiosInstance.put<IResetPasswordResponseRoot>(
-        `/users/password`,
-        payload,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    const { data } = await this.axiosInstance.put<IResetPasswordResponseRoot>(
+      `/users/password`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     return data;
   }
 }
