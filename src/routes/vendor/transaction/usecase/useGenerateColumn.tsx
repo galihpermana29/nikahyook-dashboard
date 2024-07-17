@@ -1,21 +1,58 @@
+import {
+  IUpdateOrderStatusPayload,
+  IUpdateOrderStatusResponseRoot,
+  TTransasactionStatus,
+} from '@/shared/models/transactionServiceInterfaces';
+import formatDateString from '@/shared/usecase/formatDateString';
 import getTransactionStatusChipColor from '@/shared/usecase/getTransactionStatusChipColor';
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
+import { AxiosError } from 'axios';
+import { UseMutateFunction } from 'react-query';
 import { NavigateFunction } from 'react-router-dom';
 
-function useGenerateColumnVendorTransaction(onNavigate: NavigateFunction) {
+function useGenerateColumnVendorTransaction(
+  refetch: () => void,
+  onNavigate: NavigateFunction,
+  onDecline: UseMutateFunction<
+    IUpdateOrderStatusResponseRoot,
+    AxiosError<unknown, any>,
+    {
+      payload: IUpdateOrderStatusPayload;
+      id: number;
+      onSuccess?: () => void;
+    },
+    unknown
+  >
+) {
+  const disabledAdvanceStatuses: TTransasactionStatus[] = [
+    'waiting for payment',
+    'payment done',
+    'order failed',
+  ];
+  const disabledDeclineStatuses: TTransasactionStatus[] = [
+    'payment done',
+    'order failed',
+  ];
+
   const columns: TableProps['columns'] = [
     {
       title: 'Buyer',
       dataIndex: 'buyer',
       key: 'buyer',
-      render: (text) => text,
+      render: ({ name }) => name,
+    },
+    {
+      title: 'Products',
+      dataIndex: 'product_names',
+      key: 'product_names',
+      render: (products) => products.join(', '),
     },
     {
       title: 'Order Date',
-      dataIndex: 'order_date',
-      key: 'order_date',
-      render: (text) => text,
+      dataIndex: 'order_time',
+      key: 'order_time',
+      render: (text) => formatDateString(text),
     },
     {
       title: 'Status',
@@ -31,7 +68,7 @@ function useGenerateColumnVendorTransaction(onNavigate: NavigateFunction) {
       title: 'Actions',
       dataIndex: '',
       key: 'actions',
-      render: ({ id }) => (
+      render: ({ id, status }) => (
         <Row gutter={[12, 12]}>
           <Dropdown
             menu={{
@@ -40,6 +77,7 @@ function useGenerateColumnVendorTransaction(onNavigate: NavigateFunction) {
                   label: 'Advance Progress',
                   key: '1',
                   onClick: () => onNavigate(`${id}/advance-progress`),
+                  disabled: disabledAdvanceStatuses.includes(status),
                 },
                 {
                   label: 'View Detail',
@@ -48,9 +86,14 @@ function useGenerateColumnVendorTransaction(onNavigate: NavigateFunction) {
                 },
                 {
                   label: 'Decline',
-                  className: '!text-ny-error-600',
                   key: '3',
-                  onClick: () => {},
+                  onClick: () =>
+                    onDecline({
+                      id: id,
+                      payload: { status: 'order failed' },
+                      onSuccess: () => refetch(),
+                    }),
+                  disabled: disabledDeclineStatuses.includes(status),
                 },
               ],
             }}>
