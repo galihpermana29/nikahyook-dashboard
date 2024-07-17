@@ -15,6 +15,7 @@ export interface VendorOrder {
   };
   status: TTransasactionStatus;
   order_time: string;
+  product_names: string[];
 }
 
 export interface IAdminVendorOrder extends VendorOrder {

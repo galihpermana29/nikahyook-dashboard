@@ -43,6 +43,12 @@ function useGenerateColumnVendorTransaction(
       render: ({ name }) => name,
     },
     {
+      title: 'Products',
+      dataIndex: 'product_names',
+      key: 'product_names',
+      render: (products) => products.join(', '),
+    },
+    {
       title: 'Order Date',
       dataIndex: 'order_time',
       key: 'order_time',
