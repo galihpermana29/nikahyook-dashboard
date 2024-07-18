@@ -317,16 +317,11 @@ const PageFormCreate = ({
               </Form.Item>
             </div>
             <Form.Item
-              rules={[
-                {
-                  required: true,
-                  message: 'Please select postal code!',
-                },
-              ]}
               className="my-[8px]"
               name={'postal_code'}
               label="Postal Code">
               <InputNumber
+                min={0}
                 placeholder="Enter your detail here"
                 className="w-full rounded-[8px] text-caption-1 font-[400] "
               />
