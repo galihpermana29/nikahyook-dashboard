@@ -40,7 +40,7 @@ const RootLayout: React.FC = () => {
             <Layout style={{ height: '100vh', overflow: 'hidden' }}>
               <Sider
                 theme="light"
-                className="border-r-[1px] border-ny-gray-200 h-screen hidden lg:block"
+                className="border-r-[1px] border-ny-gray-200 h-screen hidden lg:block overflow-auto"
                 collapsed={false}
               >
                 {/*
