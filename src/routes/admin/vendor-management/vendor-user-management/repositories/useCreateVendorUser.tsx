@@ -31,7 +31,7 @@ const useMutateCreateVendorUser = (vendorLocation: IVendorLocation) => {
         json_text,
         location: {
           ...vendorLocation,
-          postal_code: payload.detail.location.postal_code,
+          postal_code: payload.detail.location.postal_code ?? 0,
         },
         vendor_type_id: payload.detail.vendor_type_id,
       },
