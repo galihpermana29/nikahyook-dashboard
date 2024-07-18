@@ -1,7 +1,15 @@
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
-import { Button, Dropdown, Form, Input, InputNumber, Select, Space } from 'antd';
+import {
+  Button,
+  Dropdown,
+  Form,
+  Input,
+  InputNumber,
+  Select,
+  Space,
+} from 'antd';
 import { FormInstance } from 'antd/es/form/Form';
 import TextArea from 'antd/es/input/TextArea';
 import { useNavigate } from 'react-router-dom';
@@ -65,22 +73,24 @@ export const PageFormEdit = ({
             menu={{
               items: [
                 {
-                  label: "Change Password",
+                  label: 'Change Password',
                   key: '1',
-                  onClick: onChangePasswordClick
+                  onClick: onChangePasswordClick,
                 },
                 {
-                  label: "Reset Password",
+                  label: 'Reset Password',
                   key: '2',
-                  onClick: onResetPasswordClick
-                }
-              ]
+                  onClick: onResetPasswordClick,
+                },
+              ],
             }}
-            disabled={disabled}
-          >
+            disabled={disabled}>
             <Button
-              className={`${disabled ? '' : 'hover:!bg-ny-primary-100 hover:!text-ny-primary-500'} bg-ny-primary-100 text-body-2 text-ny-primary-500 h-[40px]`}
-            >
+              className={`${
+                disabled
+                  ? ''
+                  : 'hover:!bg-ny-primary-100 hover:!text-ny-primary-500'
+              } bg-ny-primary-100 text-body-2 text-ny-primary-500 h-[40px]`}>
               <Space>
                 Actions
                 <DownOutlined />
@@ -89,7 +99,7 @@ export const PageFormEdit = ({
           </Dropdown>
         }
         buttonsAfter={
-          showEditButton && ( 
+          showEditButton && (
             <Button
               disabled={false}
               onClick={() => navigate(`/vendor-account/edit-user/${id}`)}
@@ -306,16 +316,11 @@ export const PageFormEdit = ({
             </Form.Item>
           </div>
           <Form.Item
-            rules={[
-              {
-                required: true,
-                message: 'Please select postal code!',
-              },
-            ]}
             className="my-[8px]"
             name={['detail', 'location', 'postal_code']}
             label="Postal Code">
             <InputNumber
+              min={0}
               placeholder="Enter your detail here"
               className="w-full rounded-[8px] text-caption-1 font-[400] custom-input h-[40px] "
             />

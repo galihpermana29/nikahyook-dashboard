@@ -22,7 +22,7 @@ const useCreateProduct = (
       tags: payload.tags!.map((dx) => ({ id: dx })),
       location: {
         ...locationState,
-        postal_code: payload.postal_code,
+        postal_code: payload?.postal_code ?? 0,
       },
       coverage_area: coverageLocation,
     };

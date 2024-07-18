@@ -8,7 +8,7 @@ export interface Metadata {
 }
 
 export type TGeneralFilter = {
-  limit: number;
+  limit: number;  
   page: number;
   keyword?: string;
   status?: string;
