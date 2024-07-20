@@ -9,11 +9,11 @@ interface IDashboardTable {
   metadata?: Metadata;
   onPaginationChanges: React.Dispatch<
     React.SetStateAction<{
-      limit: number;
-      page: number;
+      limit?: number;
+      page?: number;
       search?: string;
     }>
-  >;
+  > | null;
   loading?: boolean;
   filterComponents: ReactNode;
 }
@@ -30,14 +30,15 @@ const DashboardTable = <T extends object>({
   loading,
   filterComponents,
 }: DashboardTableProps<T>) => {
-  const paginationProps = {
-    total: metadata ? metadata.total_items : 10,
-    pageSize: metadata ? metadata.limit : 10,
-    onChange(page) {
-      onPaginationChanges((state) => ({ ...state, page }));
+
+  const customPaginationProps = {
+    total: metadata?.total_items ?? 0,
+    pageSize: metadata?.limit ?? 10,
+    onChange: (page: number) => {
+      onPaginationChanges?.((state) => ({ ...state, page }));
     },
-    current: metadata ? metadata.current_page : 1,
-  };
+    current: metadata?.current_page ?? 1,
+  }
 
   return (
     <div>
@@ -48,13 +49,17 @@ const DashboardTable = <T extends object>({
           loading={loading}
           columns={columns}
           dataSource={data}
-          pagination={false}
-          footer={() => (
-            <DashboardTableFooter
-              paginationProps={paginationProps}
-              metadata={metadata}
-            />
-          )}
+          pagination={onPaginationChanges ? false : undefined}
+          footer={
+            onPaginationChanges
+              ? () => (
+                <DashboardTableFooter
+                  paginationProps={customPaginationProps!}
+                  metadata={metadata}
+                />
+              )
+              : undefined
+          }
         />
       </div>
     </div>

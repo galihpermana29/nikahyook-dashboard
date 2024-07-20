@@ -7,12 +7,25 @@ import { VendorProductContainer } from '@/routes/vendor/product/VendorProduct';
 import { VendorUserManagementContainer } from '@/routes/admin/vendor-management/vendor-user-management/VendorUserManagement';
 import adminManagIconGray from '@/assets/icon/admin-manag-icon-gray.svg';
 import adminRoleManagIconGray from '@/assets/icon/admin-role-manag-icon-gray.svg';
+import AdminTransactionContainer from '@/routes/admin/transaction/AdminTransaction';
+import AdminTransactionDetailContainer from '@/routes/admin/transaction/view/container/Detail/AdminTransactionDetail';
+import AdminTransactionInvoiceContainer from '@/routes/admin/transaction/view/container/Invoice/AdminTransactionInvoice';
 import AdminUserManagementContainer from '@/routes/admin/admin-management/admin-user-management/AdminUserManagement';
+import cartIcon from '@/assets/icon/cart-icon.svg';
+import ChatIcon from '@/assets/icon/message-text.svg';
 import ClientUserDetailContainer from '@/routes/admin/user-management/view/container/Detail/ClientUserDetail';
 import ClientUserEditContainer from '@/routes/admin/user-management/view/container/Edit/ClientUserEdit';
+import ContentInspiration from '@/routes/admin/content-management/inspirations/ContentInspiration';
+import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
+import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
+import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
+import CuratorialsPage from '@/routes/admin/content-management/curatorials/CuratorialsPage';
 import DashboardContainer from '../../../../../routes/admin/dashboard/Dashboard';
 import dashboardIconGray from '@/assets/icon/dashboard-icon-gray.svg';
+import EditIcon from '@/assets/icon/edit-2.svg';
+import GalleryIcon from '@/assets/icon/gallery.svg';
 import userManagIconGray from '@/assets/icon/user-manag-gray-icon.svg';
+import VendorChatContainer from '@/routes/vendor/chat/VendorChatContainer';
 import VendorContentDetailContainer from '@/routes/admin/vendor-management/vendor-content/view/container/Detail/VendorContentDetail';
 import VendorContentEditContainer from '@/routes/admin/vendor-management/vendor-content/view/container/Edit/VendorContentEdit';
 import vendorContentIconGray from '@/assets/icon/vendor-content-icon-gray.svg';
@@ -22,26 +35,15 @@ import VendorProductCreateContainer from '@/routes/vendor/product/view/container
 import VendorProductDetailContainer from '@/routes/vendor/product/view/container/Detail/VendorContentDetail';
 import VendorProductEditContainer from '@/routes/vendor/product/view/container/Edit/VendorContentEdit';
 import vendorProductIconGray from '@/assets/icon/product-icon-gray.svg';
+import VendorReviewContainer from '@/routes/vendor/review/VendorReview';
+import VendorReviewIconGray from '@/assets/icon/vendor-review-icon.svg';
+import VendorTransactionAdvanceProgressContainer from '@/routes/vendor/transaction/view/container/AdvanceProgress/VendorTransactionAdvanceProgress';
+import VendorTransactionContainer from '@/routes/vendor/transaction/VendorTransaction';
+import VendorTransactionDetailContainer from '@/routes/vendor/transaction/view/container/Detail/VendorTransactionDetail';
 import VendorUserCreateContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 import VendorUserDetailContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Detail/VendorUserDetail';
 import VendorUserEditContainer from '@/routes/admin/vendor-management/vendor-user-management/view/container/Edit/VendorUserEdit';
 import vendorUserManagIconGray from '@/assets/icon/vendor-user-manag-icon-gray.svg';
-import ContentInspiration from '@/routes/admin/content-management/inspirations/ContentInspiration';
-import GalleryIcon from '@/assets/icon/gallery.svg';
-import EditIcon from '@/assets/icon/edit-2.svg';
-import CuratorialsPage from '@/routes/admin/content-management/curatorials/CuratorialsPage';
-import CuratorialCreate from '@/routes/admin/content-management/curatorials/view/container/Create/CuratorialCreate';
-import CuratorialDetail from '@/routes/admin/content-management/curatorials/view/container/Detail/CuratorialDetail';
-import CuratorialEdit from '@/routes/admin/content-management/curatorials/view/container/Edit/CuratorialEdit';
-import cartIcon from '@/assets/icon/cart-icon.svg';
-import VendorTransactionContainer from '@/routes/vendor/transaction/VendorTransaction';
-import VendorTransactionDetailContainer from '@/routes/vendor/transaction/view/container/Detail/VendorTransactionDetail';
-import VendorTransactionAdvanceProgressContainer from '@/routes/vendor/transaction/view/container/AdvanceProgress/VendorTransactionAdvanceProgress';
-import AdminTransactionContainer from '@/routes/admin/transaction/AdminTransaction';
-import AdminTransactionDetailContainer from '@/routes/admin/transaction/view/container/Detail/AdminTransactionDetail';
-import AdminTransactionInvoiceContainer from '@/routes/admin/transaction/view/container/Invoice/AdminTransactionInvoice';
-import VendorChatContainer from '@/routes/vendor/chat/VendorChatContainer';
-import ChatIcon from '@/assets/icon/message-text.svg';
 
 export const vendorRoutes: ItemsDataI[] = [
   {
@@ -150,6 +152,19 @@ export const vendorRoutes: ItemsDataI[] = [
     icon: <img src={vendorProductIconGray} alt="icon" />,
     components: <VendorProductDetailContainer />,
     show: false,
+  },
+  {
+    label: (
+      <div className="text-caption-1 font-[400] text-ny-gray-300">
+        Review
+      </div>
+    ),
+    key: '/vendor-review',
+    path: 'vendor-review',
+    children: [],
+    icon: <img src={VendorReviewIconGray} alt="icon" />,
+    components: <VendorReviewContainer />,
+    show: true,
   },
 ];
 
