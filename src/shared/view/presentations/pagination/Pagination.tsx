@@ -1,4 +1,4 @@
-import type { Metadata } from '@/shared/models/generalInterfaces';
+import type { Metadata, TGeneralFilter } from '@/shared/models/generalInterfaces';
 import { Pagination as PaginationAntd, Row } from 'antd';
 
 export default function Pagination({
@@ -7,11 +7,7 @@ export default function Pagination({
 }: {
   metadata: Metadata | undefined;
   onPaginationChanges: React.Dispatch<
-    React.SetStateAction<{
-      limit: number;
-      page: number;
-      search?: string;
-    }>
+    React.SetStateAction<TGeneralFilter>
   >;
 }) {
   const paginationProps = {

@@ -8,14 +8,15 @@ export interface Metadata {
 }
 
 export type TGeneralFilter = {
-  limit: number;  
-  page: number;
+  limit?: number;  
+  page?: number;
   keyword?: string;
   status?: string;
   tags?: string[];
   max_price?: string;
   min_price?: string;
   vendor_id?: string;
+  product_id?: number;
 };
 
 export type TGeneralSelectOptions = {
