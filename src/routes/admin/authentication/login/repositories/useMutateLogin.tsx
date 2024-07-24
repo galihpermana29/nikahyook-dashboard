@@ -3,6 +3,7 @@ import { AxiosError } from 'axios';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import { ILoginPayloadRoot } from '@/shared/models/userServicesInterface';
 import { DashboardUserAPI } from '@/shared/repositories/userServices';
+import useMutateCreateAdminNotification from '@/shared/repositories/useCreateAdminNotification';
 
 const useMutateLogin = () => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
@@ -16,6 +17,9 @@ const useMutateLogin = () => {
     const msg = generateErrorMsg(error);
     showPopError(msg);
   };
+
+  const { mutate: createAdminNotification } =
+    useMutateCreateAdminNotification();
 
   const { mutate, error, isLoading } = useMutation({
     mutationFn: (payload: ILoginPayloadRoot) =>
@@ -32,6 +36,17 @@ const useMutateLogin = () => {
     onSuccess: (response) => {
       const { token, user_id, email, permissions, type, status } =
         response.data;
+
+      const isFirstTime = localStorage.getItem('is_first_time');
+
+      if (isFirstTime) {
+        createAdminNotification({
+          title: 'New vendor is here!',
+          description: `${email} has registered a new vendor account`,
+        });
+
+        localStorage.removeItem('is_first_time');
+      }
 
       localStorage.setItem('token', JSON.stringify(token));
       localStorage.setItem(

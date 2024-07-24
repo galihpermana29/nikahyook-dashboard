@@ -1,8 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 import {
   IUpdateOrderStatusPayload,
   IUpdateOrderStatusResponseRoot,
   TTransasactionStatus,
 } from '@/shared/models/transactionServiceInterfaces';
+import {
+  ICreateUserPayloadRoot,
+  IDetailVendorUser,
+} from '@/shared/models/userServicesInterface';
 import formatDateString from '@/shared/usecase/formatDateString';
 import getTransactionStatusChipColor from '@/shared/usecase/getTransactionStatusChipColor';
 import { DownOutlined } from '@ant-design/icons';
@@ -23,7 +32,14 @@ function useGenerateColumnVendorTransaction(
       onSuccess?: () => void;
     },
     unknown
-  >
+  >,
+  onNotify: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >,
+  vendorDetail: ICreateUserPayloadRoot<IDetailVendorUser>
 ) {
   const disabledAdvanceStatuses: TTransasactionStatus[] = [
     'waiting for payment',
@@ -68,7 +84,7 @@ function useGenerateColumnVendorTransaction(
       title: 'Actions',
       dataIndex: '',
       key: 'actions',
-      render: ({ id, status }) => (
+      render: ({ id, status, buyer }) => (
         <Row gutter={[12, 12]}>
           <Dropdown
             menu={{
@@ -91,7 +107,14 @@ function useGenerateColumnVendorTransaction(
                     onDecline({
                       id: id,
                       payload: { status: 'order failed' },
-                      onSuccess: () => refetch(),
+                      onSuccess: () => {
+                        refetch();
+                        onNotify({
+                          title: 'Order declined!',
+                          description: `Your order #${id} has been declined by ${vendorDetail.name}`,
+                          user_id: buyer.id,
+                        });
+                      },
                     }),
                   disabled: disabledDeclineStatuses.includes(status),
                 },

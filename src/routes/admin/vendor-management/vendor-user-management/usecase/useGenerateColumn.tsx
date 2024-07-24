@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 import {
   ICreateUserVendorInput,
   IUpdateUserResponseRoot,
@@ -12,6 +17,12 @@ const useGenerateColumnVendorUser = (
   remove: boolean,
   edit: boolean,
   view: boolean,
+  onNotify?: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >,
   onNavigate?: NavigateFunction,
   onChangeStatus?: UseMutateFunction<
     IUpdateUserResponseRoot,
@@ -20,6 +31,7 @@ const useGenerateColumnVendorUser = (
       payload: ICreateUserVendorInput;
       id: string;
       type: 'delete' | 'update';
+      onSuccess?: () => void;
     },
     unknown
   >
@@ -70,6 +82,13 @@ const useGenerateColumnVendorUser = (
                     } as unknown as ICreateUserVendorInput,
                     id,
                     type: 'delete',
+                    onSuccess: () =>
+                      onNotify!({
+                        title: 'Registration rejected!',
+                        description:
+                          "Your account's registration has been rejected",
+                        user_id: id,
+                      }),
                   });
                 }}
                 htmlType="button"
@@ -84,6 +103,13 @@ const useGenerateColumnVendorUser = (
                     } as unknown as ICreateUserVendorInput,
                     id,
                     type: 'delete',
+                    onSuccess: () =>
+                      onNotify!({
+                        title: 'Registration approved!',
+                        description:
+                          "Congratulation! Your account's registration has been approved",
+                        user_id: id,
+                      }),
                   });
                 }}
                 htmlType="button"
@@ -122,6 +148,22 @@ const useGenerateColumnVendorUser = (
                           } as unknown as ICreateUserVendorInput,
                           id,
                           type: 'delete',
+                          onSuccess: () => {
+                            if (status === 'active') {
+                              onNotify!({
+                                title: 'Account deactivated!',
+                                description:
+                                  'Your account has been deactivated',
+                                user_id: id,
+                              });
+                            } else {
+                              onNotify!({
+                                title: 'Account activated!',
+                                description: 'Your account has been activated',
+                                user_id: id,
+                              });
+                            }
+                          },
                         }),
                       disabled: !remove,
                     }

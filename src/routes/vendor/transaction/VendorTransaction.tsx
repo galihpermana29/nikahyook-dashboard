@@ -1,4 +1,10 @@
+import {
+  ICreateUserPayloadRoot,
+  IDetailVendorUser,
+} from '@/shared/models/userServicesInterface';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
+import useQueryDetailUser from '@/shared/view/container/general-layout/repositories/useQueryDetailUser';
 import DashboardTable from '@/shared/view/presentations/dashboard-table/DashboardTable';
 import PageFilter from '@/shared/view/presentations/page-filter/PageFilter';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
@@ -15,6 +21,10 @@ function VendorTransactionContainer() {
 
   const navigate = useNavigate();
 
+  const userId = JSON.parse(localStorage.getItem('admin')!)?.user_id;
+  const { data: vendorDetail, isLoading: vendorDetailLoading } =
+    useQueryDetailUser(userId);
+
   const {
     result,
     error,
@@ -26,12 +36,15 @@ function VendorTransactionContainer() {
     clearFilter,
   } = useQueryVendorTransaction(form);
 
-  const { mutate } = useMutateUpdateVendorTransaction();
+  const { mutate: mutateTransaction } = useMutateUpdateVendorTransaction();
+  const { mutate: mutateNotification } = useMutateCreateNotification();
 
   const { columns } = useGenerateColumnVendorTransaction(
     refetch,
     navigate,
-    mutate
+    mutateTransaction,
+    mutateNotification,
+    vendorDetail as ICreateUserPayloadRoot<IDetailVendorUser>
   );
 
   return (
@@ -40,7 +53,7 @@ function VendorTransactionContainer() {
       <DashboardTable
         columns={columns}
         onPaginationChanges={setQueryVendorTransaction}
-        loading={isLoading}
+        loading={isLoading || vendorDetailLoading}
         data={result?.data}
         metadata={result?.meta_data}
         filterComponents={

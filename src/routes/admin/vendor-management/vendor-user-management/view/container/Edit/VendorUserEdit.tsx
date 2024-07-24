@@ -21,6 +21,7 @@ import useQueryDistrict from '../../../repositories/useGetAllDistrict';
 import useQueryVillage from '../../../repositories/useGetAllVillage';
 import useMutateResetPassword from '@/shared/repositories/useResetPassword';
 import FormResetPassword from '@/shared/view/presentations/modal/ResetPasswordModal';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 const VendorUserEditContainer = () => {
   const [form] = useForm();
@@ -39,6 +40,8 @@ const VendorUserEditContainer = () => {
     refetch,
     error,
   } = useQueryVendorUserDetail(id as string, form, setLocationState);
+
+  const { mutate: mutateCreateNotification } = useMutateCreateNotification();
 
   const { mutate: mutateEdit } = useMutateEditVendorUser(
     refetch,
@@ -109,8 +112,8 @@ const VendorUserEditContainer = () => {
               {modalState?.type === 'password'
                 ? 'Change Password'
                 : modalState?.type === 'reset'
-                  ? 'Reset Password'
-                  : `${modalState?.type} User`}
+                ? 'Reset Password'
+                : `${modalState?.type} User`}
             </div>
           }
           open={modalState?.isOpen}
@@ -134,6 +137,7 @@ const VendorUserEditContainer = () => {
                 }}
                 form={form}
                 onSave={mutateEdit}
+                onNotify={mutateCreateNotification}
                 onChangePasswordClick={() => openModal!('password', id)}
                 onResetPasswordClick={() => openModal!('reset', id)}
                 onCancel={() => {

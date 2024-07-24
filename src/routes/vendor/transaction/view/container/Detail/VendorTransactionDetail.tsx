@@ -18,6 +18,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import useQueryVendorTransactionDetail from '../../../repositories/useGetDetailTransaction';
 import useMutateUpdateVendorTransaction from '../../../repositories/useUpdateTransactionStatus';
 import formatToCapitalLetter from '@/shared/usecase/formatToCapitalLetter';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 function VendorTransactionDetailContainer() {
   const { id } = useParams();
@@ -34,12 +35,15 @@ function VendorTransactionDetailContainer() {
     'order failed',
   ];
 
-  const { mutate, isLoading: mutateLoading } =
+  const { mutate: mutateTransaction, isLoading: mutateLoading } =
     useMutateUpdateVendorTransaction();
+  const { mutate: mutateNotification } = useMutateCreateNotification();
 
-  const { data: userData, isLoading: userLoading } = useQueryDetailUser(
-    session?.user_id ?? ''
-  );
+  const {
+    data: userData,
+    isLoading: userLoading,
+    error: userDataError,
+  } = useQueryDetailUser(session?.user_id ?? '');
   const {
     result: detailData,
     error: detailError,
@@ -50,7 +54,7 @@ function VendorTransactionDetailContainer() {
   if (detailLoading || userLoading || mutateLoading)
     return <TransactionLoading />;
 
-  if (!detailData || detailError) return <TransactionError />;
+  if (!detailData || detailError || userDataError) return <TransactionError />;
 
   const { buyer, order_details, order_time, status, invoice_file_uri } =
     detailData.data as unknown as IVendorOrderDetail;
@@ -80,10 +84,17 @@ function VendorTransactionDetailContainer() {
             <>
               <Button
                 onClick={() =>
-                  mutate({
+                  mutateTransaction({
                     id: parseInt(id!),
                     payload: { status: 'order failed' },
-                    onSuccess: () => detailRefetch(),
+                    onSuccess: () => {
+                      detailRefetch();
+                      mutateNotification({
+                        title: 'Order declined!',
+                        description: `Your order #${id} has been declined by ${userData?.name}`,
+                        user_id: buyer.id,
+                      });
+                    },
                   })
                 }
                 className="border-ny-error-700 text-ny-error-700 h-fit pt-2">

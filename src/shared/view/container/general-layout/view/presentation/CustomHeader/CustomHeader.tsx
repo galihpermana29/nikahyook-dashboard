@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import HamburgerIcon from '@/assets/icon/hamburger-menu.svg';
 import {
   ICreateUserPayloadRoot,
@@ -43,11 +44,13 @@ export default function CustomHeader({
           <img src={HamburgerIcon} alt="Menu Icon" />
         </Button>
 
-        <DropdownNotification />
-        <DropdownProfile
-          profile_image_uri={profile_image_uri}
-          handleLogout={handleLogout}
-        />
+        <div className="flex items-center gap-6">
+          <DropdownNotification />
+          <DropdownProfile
+            profile_image_uri={profile_image_uri}
+            handleLogout={handleLogout}
+          />
+        </div>
       </Header>
       <Drawer
         title={<DrawerTitle handleClose={() => setIsOpenDrawer(false)} />}

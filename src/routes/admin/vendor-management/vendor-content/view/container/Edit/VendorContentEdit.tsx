@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFormEdit from '../../presentations/PageForm/PageFormEdit';
@@ -18,6 +19,7 @@ import useQueryProvince from '@/routes/admin/vendor-management/vendor-user-manag
 import useQueryCity from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllCity';
 import useQueryDistrict from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllDistrict';
 import useQueryVillage from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetAllVillage';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 const VendorContentEditContainer = () => {
   const [form] = useForm();
@@ -35,6 +37,7 @@ const VendorContentEditContainer = () => {
   const [coverageState, setCoverageState] = useState<any[]>([]);
 
   const {
+    data: result,
     isLoading: loadingGetDetail,
     refetch,
     error,
@@ -49,6 +52,7 @@ const VendorContentEditContainer = () => {
     useQueryProductTypes();
   const { result: resultTags, error: errorTags } = useQueryTags();
 
+  const { mutate: mutateCreateNotification } = useMutateCreateNotification();
   const { mutate: mutateEdit } = useMutateEditVendorContent(
     refetch,
     locationState,
@@ -94,6 +98,9 @@ const VendorContentEditContainer = () => {
               form={form}
               onSave={mutateEdit}
               onCancel={() => navigate(-1)}
+              onNotify={mutateCreateNotification}
+              vendor_id={result?.vendor_id ?? ''}
+              product_name={result?.title ?? ''}
             />
           </LoadingHandler>
         </div>

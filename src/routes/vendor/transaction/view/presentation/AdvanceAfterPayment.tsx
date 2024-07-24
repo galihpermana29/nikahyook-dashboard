@@ -1,6 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import checkIcon from '@/assets/icon/check-icon-white.svg';
 import rejectIcon from '@/assets/icon/close-red.svg';
 import uploadIcon from '@/assets/icon/document-upload.svg';
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 import {
   IUpdateOrderStatusPayload,
   IUpdateOrderStatusResponseRoot,
@@ -16,6 +21,8 @@ import { NavigateFunction } from 'react-router-dom';
 
 interface IAdvanceAfterPayment {
   id: number;
+  buyer_id: string;
+  vendor_name: string;
   payments_file_uri: string[];
   status: TTransasactionStatus;
   mutate: UseMutateFunction<
@@ -28,17 +35,26 @@ interface IAdvanceAfterPayment {
     },
     unknown
   >;
+  onNotify: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >;
   navigate: NavigateFunction;
   onUploadReceipt: (values: any) => void;
 }
 
 function AdvanceAfterPayment({
   id,
+  buyer_id,
+  vendor_name,
   payments_file_uri,
   status,
   mutate,
   navigate,
   onUploadReceipt,
+  onNotify,
 }: IAdvanceAfterPayment) {
   const enableAdvanceStatuses: TTransasactionStatus[] = [
     'payment done',
@@ -128,6 +144,11 @@ function AdvanceAfterPayment({
                 },
                 onSuccess: () => {
                   navigate(`/vendor-transaction/${id}`);
+                  onNotify({
+                    title: 'Receipt rejected!',
+                    description: `Your payment receipt for order #${id} has been rejected by ${vendor_name}. Please provide a valid receipt.`,
+                    user_id: buyer_id,
+                  });
                 },
               })
             }
@@ -142,6 +163,11 @@ function AdvanceAfterPayment({
                 payload: { status: 'payment done' },
                 onSuccess: () => {
                   navigate(`/vendor-transaction/${id}`);
+                  onNotify({
+                    title: 'Receipt approved!',
+                    description: `Your payment receipt for order #${id} has been approved by ${vendor_name}. Thank you for your purchase.`,
+                    user_id: buyer_id,
+                  });
                 },
               })
             }

@@ -5,18 +5,27 @@ import { useDebounce } from '@uidotdev/usehooks';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 
-const useQueryVendorNotification = () => {
+const useQueryNotification = () => {
   const [queryVendorNotification, setQueryVendorNotification] = useState({
-    // user_id: JSON.parse(localStorage.getItem('admin')!).user_id,
-    status: 'unread',
+    user_id: JSON.parse(localStorage.getItem('admin')!).user_id,
+    status: '',
   });
 
   const { objectToQueryParams } = useConvertQuery();
   const { addIndexToData } = useSuccessAxios();
   const queries = useDebounce(queryVendorNotification, 1000);
 
-  const getVendorContent = async () => {
+  const getNotifications = async () => {
     const queryParams = objectToQueryParams(queryVendorNotification);
+    const userType = JSON.parse(localStorage.getItem('admin')!).type;
+
+    if (userType === 'admin') {
+      const { data } = await DashboardNotificationAPI.getAllAdminNotifications(
+        queryParams
+      );
+      return { data: addIndexToData(data) };
+    }
+
     const { data } = await DashboardNotificationAPI.getAllVendorNotifications(
       queryParams
     );
@@ -29,8 +38,8 @@ const useQueryVendorNotification = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ['vendor-notification', { ...queries }],
-    queryFn: getVendorContent,
+    queryKey: ['admin-notification', { ...queries }],
+    queryFn: getNotifications,
   });
 
   return {
@@ -43,4 +52,4 @@ const useQueryVendorNotification = () => {
   };
 };
 
-export default useQueryVendorNotification;
+export default useQueryNotification;

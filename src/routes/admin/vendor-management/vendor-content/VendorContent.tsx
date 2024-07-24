@@ -11,6 +11,7 @@ import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { IDetailProductData } from '@/shared/models/productServicesInterface';
 import useQueryTags from './repositories/useGetAllTags';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 export const VendorContentContainer = () => {
   const [form] = useForm();
@@ -28,13 +29,18 @@ export const VendorContentContainer = () => {
   } = useQueryVendorContent(form);
 
   const { result: resultTags } = useQueryTags();
+  const { mutate: mutateCreateNotification } = useMutateCreateNotification();
   const { mutate: mutateEdit } = useMutateEditVendorContent(
     refetch,
     null,
     null
   );
 
-  const { columns } = useGenerateColumnVendorProduct(navigate, mutateEdit);
+  const { columns } = useGenerateColumnVendorProduct(
+    navigate,
+    mutateEdit,
+    mutateCreateNotification
+  );
 
   return (
     <ErrorBoundary error={error as AxiosError} refetch={refetch}>

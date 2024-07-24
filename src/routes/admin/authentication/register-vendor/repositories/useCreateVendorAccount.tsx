@@ -81,6 +81,9 @@ const useRegisterVendorUserAccount = (
     onError: handleError,
     onSuccess: () => {
       showSuccessMessage('Vendor successfully added!');
+
+      localStorage.setItem('is_first_time', 'true');
+
       mutateLogin({
         email: currentValue?.email as string,
         password: currentValue?.password as string,

@@ -24,14 +24,16 @@ function DropdownProfile({
       placement="bottomRight"
       trigger={['click']}>
       <Button className="rounded-full w-10 h-10 bg-ny-gray-100 outline outline-1 p-0 outline-ny-primary-500">
-        <Image
-          src={profile_image_uri}
-          alt="Profile Image"
-          width={'100%'}
-          height={'100%'}
-          preview={false}
-          className="rounded-full"
-        />
+        {profile_image_uri && (
+          <Image
+            src={profile_image_uri}
+            alt="Profile Image"
+            width={'100%'}
+            height={'100%'}
+            preview={false}
+            className="rounded-full"
+          />
+        )}
       </Button>
     </Dropdown>
   );

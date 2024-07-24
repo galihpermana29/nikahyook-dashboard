@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import LoadingHandler from '@/shared/view/container/loading/Loading';
 import PageTitle from '@/shared/view/presentations/page-title/PageTitle';
 import PageFormCreate from '../../presentations/PageForm/PageFormCreate';
@@ -18,6 +19,7 @@ import {
 } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 import { useState } from 'react';
 import useSetInitialLocationForProduct from '../../../usecase/useSetInitialLocationForProduct';
+import useQueryDetailUser from '@/shared/view/container/general-layout/repositories/useQueryDetailUser';
 
 const VendorProductCreateContainer = () => {
   const [form] = useForm();
@@ -40,7 +42,13 @@ const VendorProductCreateContainer = () => {
     form
   );
 
-  const { mutate, isLoading } = useCreateProduct(locationState, coverageState);
+  const { data: vendorDetail, isLoading: vendorDetailLoading } =
+    useQueryDetailUser(userId);
+  const { mutate, isLoading } = useCreateProduct(
+    locationState,
+    coverageState,
+    vendorDetail?.name ?? ''
+  );
 
   const { result: resultProductTypes, error: errorProductTypes } =
     useQueryProductTypes();
@@ -62,7 +70,9 @@ const VendorProductCreateContainer = () => {
       refetch={refetch}>
       <PageTitle title="Create Vendor Product" withArrow={true} />
       <div className="p-[20px]">
-        <LoadingHandler isLoading={isLoading} fullscreen={true}>
+        <LoadingHandler
+          isLoading={isLoading || vendorDetailLoading}
+          fullscreen={true}>
           <PageFormCreate
             onSetLocationChange={setTheSameLoc}
             useTheSameLoc={useTheSameLoc}
