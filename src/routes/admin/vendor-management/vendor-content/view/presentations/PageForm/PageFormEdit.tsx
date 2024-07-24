@@ -19,8 +19,8 @@ interface IPageFormEdit {
   onSave: any;
   onCancel: any;
   id: string;
-  vendor_id: string;
-  product_name: string;
+  vendor_id?: string;
+  product_name?: string;
   disabled: boolean;
 
   dynamicSelectOptions: {
@@ -37,7 +37,7 @@ interface IPageFormEdit {
   onActiveCoverageChange: any;
   activeCoverage: any;
   setCoverageState: React.Dispatch<React.SetStateAction<any[]>>;
-  onNotify: UseMutateFunction<
+  onNotify?: UseMutateFunction<
     ICreateNotificationResponseRoot,
     AxiosError<unknown, any>,
     ICreateNotificationPayload,
@@ -72,10 +72,10 @@ const PageFormEdit = ({
             type: 'edit',
             id,
             onSuccess: () =>
-              onNotify({
+              onNotify!({
                 title: 'Product edited!',
                 description: `${product_name} has been edited by admin`,
-                user_id: vendor_id,
+                user_id: vendor_id!,
               }),
           })
         }>

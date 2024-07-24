@@ -47,7 +47,7 @@ interface IFormCreate {
     villageTypes: TGeneralSelectOptions[];
   };
   onLocationChange: React.Dispatch<React.SetStateAction<IVendorLocation>>;
-  onNotify: UseMutateFunction<
+  onNotify?: UseMutateFunction<
     ICreateNotificationResponseRoot,
     AxiosError<unknown, any>,
     ICreateNotificationPayload,
@@ -79,7 +79,7 @@ export const PageFormEdit = ({
           type: 'edit',
           id,
           onSuccess: () =>
-            onNotify({
+            onNotify!({
               title: 'Profile edited!',
               description: "Your account's profile has been edited by admin",
               user_id: id,
