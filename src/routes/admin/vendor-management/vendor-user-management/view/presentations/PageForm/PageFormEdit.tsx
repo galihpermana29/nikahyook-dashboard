@@ -23,6 +23,12 @@ import tiktok from '@/assets/icon/tiktok.png';
 import ig from '@/assets/icon/ig.png';
 import website from '@/assets/icon/website.png';
 import { DownOutlined } from '@ant-design/icons';
+import { UseMutateFunction } from 'react-query';
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
+import { AxiosError } from 'axios';
 
 interface IFormCreate {
   form: FormInstance;
@@ -41,11 +47,18 @@ interface IFormCreate {
     villageTypes: TGeneralSelectOptions[];
   };
   onLocationChange: React.Dispatch<React.SetStateAction<IVendorLocation>>;
+  onNotify?: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >;
 }
 
 export const PageFormEdit = ({
   form,
   onSave,
+  onNotify,
   onCancel,
   disabled = false,
   showEditButton = false,
@@ -60,7 +73,19 @@ export const PageFormEdit = ({
   return (
     <Form
       form={form}
-      onFinish={(val) => onSave({ payload: val, type: 'edit', id })}
+      onFinish={(val) =>
+        onSave({
+          payload: val,
+          type: 'edit',
+          id,
+          onSuccess: () =>
+            onNotify!({
+              title: 'Profile edited!',
+              description: "Your account's profile has been edited by admin",
+              user_id: id,
+            }),
+        })
+      }
       layout="vertical"
       disabled={disabled}
       className="flex flex-col gap-5">

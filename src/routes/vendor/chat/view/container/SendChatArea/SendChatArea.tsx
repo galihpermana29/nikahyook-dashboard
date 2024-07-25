@@ -5,12 +5,15 @@ import FormItem from 'antd/es/form/FormItem';
 import useSendChat from '../../../usecase/useSendChat';
 import useChatRecipientId from '../../../usecase/useChatRecipientId';
 import TextArea from 'antd/es/input/TextArea';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 export default function SendChatArea() {
   const { recipientId } = useChatRecipientId();
 
+  const { mutate: onNotify } = useMutateCreateNotification();
+
   const [form] = useForm();
-  const { sendChat } = useSendChat({ form, recipientId });
+  const { sendChat } = useSendChat({ form, recipientId, onNotify });
 
   const onFinish = (values: ISendMessagePayload) => {
     sendChat(values);

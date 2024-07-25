@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import formatToIDR from '@/shared/usecase/formatToIDR';
 import { Button, Form, Image, InputNumber } from 'antd';
 import checkIcon from '@/assets/icon/check-icon-white.svg';
@@ -11,9 +12,15 @@ import { UseMutateFunction } from 'react-query';
 import { AxiosError } from 'axios';
 import { NavigateFunction } from 'react-router-dom';
 import transformCreateBilling from '@/shared/usecase/transformCreateBilling';
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 
 interface IAdvanceBeforePayment {
   id: number;
+  buyer_id: string;
+  vendor_name: string;
   calculatedTotal: number;
   order_details: IOrderDetail[];
   mutate: UseMutateFunction<
@@ -26,15 +33,24 @@ interface IAdvanceBeforePayment {
     },
     unknown
   >;
+  onNotify: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >;
   navigate: NavigateFunction;
 }
 
 function AdvanceBeforePayment({
   id,
+  buyer_id,
+  vendor_name,
   calculatedTotal,
   order_details,
   mutate,
   navigate,
+  onNotify,
 }: IAdvanceBeforePayment) {
   return (
     <section className="flex justify-center">
@@ -50,7 +66,14 @@ function AdvanceBeforePayment({
           mutate({
             id: id,
             payload: payload,
-            onSuccess: () => navigate(`/vendor-transaction/${id}`),
+            onSuccess: () => {
+              navigate(`/vendor-transaction/${id}`);
+              onNotify({
+                title: 'Order approved!',
+                description: `Your order #${id} has been approved by ${vendor_name}. Please proceed to the next step.`,
+                user_id: buyer_id,
+              });
+            },
           });
         }}
         layout="vertical"

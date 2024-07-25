@@ -50,6 +50,7 @@ const useMutateEditVendorContent = (
       payload: ICreateProductFormValues;
       id: string;
       type: 'delete' | 'update';
+      onSuccess?: () => void;
     }) => {
       if (type === 'delete') {
         return updateStatus(payload, id);
@@ -57,9 +58,10 @@ const useMutateEditVendorContent = (
       return editContent(payload, id);
     },
     onError: handleError,
-    onSuccess: () => {
+    onSuccess: (_, { onSuccess }) => {
       refetch!();
       showSuccessMessage('Content has successfully been edited!');
+      if (onSuccess) onSuccess();
     },
   });
 

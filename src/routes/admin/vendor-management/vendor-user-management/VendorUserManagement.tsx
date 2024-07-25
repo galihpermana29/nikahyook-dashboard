@@ -12,6 +12,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import useQueryVendorUser from './repositories/useGetAllVendorUser';
 import useMutateEditVendorUser from './repositories/useUpdateVendorUser';
 import useGenerateColumnVendorUser from './usecase/useGenerateColumn';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
 
 export const VendorUserManagementContainer = () => {
   const [form] = useForm();
@@ -33,11 +34,13 @@ export const VendorUserManagementContainer = () => {
   } = useQueryVendorUser(form);
 
   const { mutate: mutateEdit } = useMutateEditVendorUser(refetch);
+  const { mutate: mutateCreateNotification } = useMutateCreateNotification();
 
   const { columns } = useGenerateColumnVendorUser(
     remove,
     edit,
     view,
+    mutateCreateNotification,
     navigate,
     mutateEdit
   );

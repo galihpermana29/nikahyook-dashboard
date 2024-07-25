@@ -1,13 +1,13 @@
 import loginImg from '@/assets/login-image.png';
 import logo from '@/assets/primary-logo.svg';
-import { Button, Form } from 'antd';
-import LoadingHandler from '@/shared/view/container/loading/Loading';
-import RegistrationFormOne from './view/RegistrationFormOne';
-import { useForm } from 'antd/es/form/Form';
-import RegistrationFormTwo from './view/RegistrationFormTwo';
-import { useState } from 'react';
 import { ICreateUserVendorInput } from '@/shared/models/userServicesInterface';
+import LoadingHandler from '@/shared/view/container/loading/Loading';
+import { Button, Form } from 'antd';
+import { useForm } from 'antd/es/form/Form';
+import { useState } from 'react';
 import useRegisterVendorUserAccount from './repositories/useCreateVendorAccount';
+import RegistrationFormOne from './view/RegistrationFormOne';
+import RegistrationFormTwo from './view/RegistrationFormTwo';
 
 const RegisterVendorContainer = () => {
   const [form] = useForm();
@@ -27,8 +27,8 @@ const RegisterVendorContainer = () => {
           className="object-cover w-full h-screen"
         />
       </div>
-      <div className="flex-1 flex justify-center items-center ">
-        <div className="max-w-[550px] w-full p-[15px] mt-[30px]">
+      <div className="flex-1 overflow-y-auto  flex justify-center items-center ">
+        <div className="max-w-[550px]  w-full p-[15px] mt-[70px] max-h-screen">
           <img
             src={logo}
             alt="logo"

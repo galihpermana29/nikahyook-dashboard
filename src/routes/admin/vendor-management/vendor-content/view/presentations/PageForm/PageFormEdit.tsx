@@ -1,17 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import useFilterVendorTypes from '@/routes/admin/vendor-management/vendor-user-management/repositories/useFilterVendorTypes';
 import { IVendorLocation } from '@/routes/admin/vendor-management/vendor-user-management/view/container/Create/VendorUserCreate';
 import { TGeneralSelectOptions } from '@/shared/models/generalInterfaces';
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import PageHeader from '@/shared/view/presentations/page-header/PageHeader';
 import { Form, FormInstance, Input, InputNumber, Select } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
+import { AxiosError } from 'axios';
+import { UseMutateFunction } from 'react-query';
 
 interface IPageFormEdit {
   form: FormInstance<any>;
   onSave: any;
   onCancel: any;
   id: string;
+  vendor_id?: string;
+  product_name?: string;
   disabled: boolean;
 
   dynamicSelectOptions: {
@@ -28,12 +37,21 @@ interface IPageFormEdit {
   onActiveCoverageChange: any;
   activeCoverage: any;
   setCoverageState: React.Dispatch<React.SetStateAction<any[]>>;
+  onNotify?: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
+    unknown
+  >;
 }
 const PageFormEdit = ({
   form,
   onSave,
+  onNotify,
   onCancel,
   id,
+  vendor_id,
+  product_name,
   disabled = false,
   dynamicSelectOptions,
   onLocationChange,
@@ -48,7 +66,19 @@ const PageFormEdit = ({
         form={form}
         layout="vertical"
         className="flex flex-col gap-[20px]"
-        onFinish={(val) => onSave({ payload: val, type: 'edit', id })}>
+        onFinish={(val) =>
+          onSave({
+            payload: val,
+            type: 'edit',
+            id,
+            onSuccess: () =>
+              onNotify!({
+                title: 'Product edited!',
+                description: `${product_name} has been edited by admin`,
+                user_id: vendor_id!,
+              }),
+          })
+        }>
         <PageHeader title="Product Detail" onCancel={onCancel} />
         <div className="flex flex-col sm:flex-row">
           <div className="w-full max-w-[300px] gap-[20px]">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DownOutlined } from '@ant-design/icons';
 import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { UseMutateFunction } from 'react-query';
@@ -7,6 +8,10 @@ import {
   IUpdateProductResponseRoot,
 } from '@/shared/models/productServicesInterface';
 import { NavigateFunction } from 'react-router-dom';
+import {
+  ICreateNotificationPayload,
+  ICreateNotificationResponseRoot,
+} from '@/shared/models/notificationServiceInterfaces';
 
 const useGenerateColumnVendorProduct = (
   onNavigate?: NavigateFunction,
@@ -17,7 +22,14 @@ const useGenerateColumnVendorProduct = (
       payload: ICreateProductFormValues;
       id: string;
       type: 'delete' | 'update';
+      onSuccess?: () => void;
     },
+    unknown
+  >,
+  onNotify?: UseMutateFunction<
+    ICreateNotificationResponseRoot,
+    AxiosError<unknown, any>,
+    ICreateNotificationPayload,
     unknown
   >
 ) => {
@@ -81,7 +93,7 @@ const useGenerateColumnVendorProduct = (
       title: 'Actions',
       dataIndex: '',
       key: 'actions',
-      render: ({ id, status }) => (
+      render: ({ id, status, title, vendor_id }) => (
         <Row gutter={[12, 12]}>
           <Dropdown
             menu={{
@@ -108,6 +120,21 @@ const useGenerateColumnVendorProduct = (
                       } as unknown as ICreateProductFormValues,
                       id,
                       type: 'delete',
+                      onSuccess: () => {
+                        if (status === 'active') {
+                          onNotify!({
+                            title: 'Product deactivated!',
+                            description: `${title} has been deactivated from your account`,
+                            user_id: vendor_id,
+                          });
+                        } else {
+                          onNotify!({
+                            title: 'Product activated!',
+                            description: `${title} has been activated from your account`,
+                            user_id: vendor_id,
+                          });
+                        }
+                      },
                     }),
                 },
               ],

@@ -62,6 +62,7 @@ const useMutateEditVendorUser = (
       payload: ICreateUserVendorInput;
       id: string;
       type: 'delete' | 'update';
+      onSuccess?: () => void;
     }) => {
       if (type === 'delete') {
         return updateStatus(payload, id);
@@ -69,9 +70,10 @@ const useMutateEditVendorUser = (
       return editVendorUser(payload, id);
     },
     onError: handleError,
-    onSuccess: () => {
+    onSuccess: (_, { onSuccess }) => {
       refetch!();
       showSuccessMessage('Vendor has been successfully edited!');
+      if (onSuccess) onSuccess();
     },
   });
   return { mutate, error, isLoading };

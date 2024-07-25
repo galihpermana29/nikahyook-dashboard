@@ -3,7 +3,7 @@ import TextArea from 'antd/es/input/TextArea';
 
 const RegistrationFormOne = () => {
   return (
-    <>
+    <div>
       <Form.Item
         className="my-[8px]"
         name={'email'}
@@ -108,7 +108,7 @@ const RegistrationFormOne = () => {
           style={{ height: 50, resize: 'none' }}
         />
       </Form.Item>
-    </>
+    </div>
   );
 };
 

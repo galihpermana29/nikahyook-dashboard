@@ -12,19 +12,31 @@ import useMutateUpdateVendorTransaction from '../../../repositories/useUpdateTra
 import AdvanceAfterPayment from '../../presentation/AdvanceAfterPayment';
 import AdvanceBeforePayment from '../../presentation/AdvanceBeforePayment';
 import TransactionError from '@/shared/view/presentations/transaction/TransactionError';
+import useMutateCreateNotification from '@/shared/repositories/useCreateNotification';
+import useClientSession from '@/shared/usecase/useClientSession';
+import useQueryDetailUser from '@/shared/view/container/general-layout/repositories/useQueryDetailUser';
 
 function VendorTransactionAdvanceProgressContainer() {
   const { id } = useParams();
 
   const navigate = useNavigate();
+  const session = useClientSession();
 
   const afterPaymentStatuses: TTransasactionStatus[] = [
     'payment done',
     'payment in review',
   ];
 
-  const { mutate, isLoading: mutateLoading } =
+  const { mutate: mutateTransaction, isLoading: mutateLoading } =
     useMutateUpdateVendorTransaction();
+  const { mutate: mutateNotification } = useMutateCreateNotification();
+
+  const {
+    data: userData,
+    isLoading: userLoading,
+    error: userDataError,
+  } = useQueryDetailUser(session?.user_id ?? '');
+
   const {
     result: detailData,
     error: detailError,
@@ -32,11 +44,12 @@ function VendorTransactionAdvanceProgressContainer() {
     refetch: detailRefetch,
   } = useQueryVendorTransactionDetail(id!);
 
-  if (detailLoading || mutateLoading) return <TransactionLoading />;
+  if (detailLoading || mutateLoading || userLoading)
+    return <TransactionLoading />;
 
-  if (!detailData || detailError) return <TransactionError />;
+  if (!detailData || detailError || userDataError) return <TransactionError />;
 
-  const { order_details, status, payments_file_uri } =
+  const { order_details, status, payments_file_uri, buyer } =
     detailData.data as unknown as IVendorOrderDetail;
 
   let calculatedTotal = 0;
@@ -49,7 +62,7 @@ function VendorTransactionAdvanceProgressContainer() {
 
     receipts.push(values.receipt);
 
-    mutate({
+    mutateTransaction({
       id: parseInt(id!),
       payload: { status: status, payment_file_uri: receipts },
       onSuccess: () => detailRefetch(),
@@ -63,19 +76,25 @@ function VendorTransactionAdvanceProgressContainer() {
       {afterPaymentStatuses.includes(status) ? (
         <AdvanceAfterPayment
           id={parseInt(id!)}
+          buyer_id={buyer.id}
+          vendor_name={userData?.name ?? ''}
           payments_file_uri={payments_file_uri}
           status={status}
-          mutate={mutate}
+          mutate={mutateTransaction}
           navigate={navigate}
           onUploadReceipt={onUploadReceipt}
+          onNotify={mutateNotification}
         />
       ) : (
         <AdvanceBeforePayment
           id={parseInt(id!)}
+          buyer_id={buyer.id}
+          vendor_name={userData?.name ?? ''}
           calculatedTotal={calculatedTotal}
           order_details={order_details}
-          mutate={mutate}
+          mutate={mutateTransaction}
           navigate={navigate}
+          onNotify={mutateNotification}
         />
       )}
     </ErrorBoundary>
