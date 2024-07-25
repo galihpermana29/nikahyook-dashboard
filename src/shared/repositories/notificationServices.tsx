@@ -46,6 +46,24 @@ class DashboardNotificationServices extends ApiClass {
     const { data } =
       await this.axiosInstance.patch<IUpdateNotificationsResponseRoot>(
         `/notifications/mark-all-as-read`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+    return data;
+  }
+
+  public async readAllAdminNotifications(): Promise<IUpdateNotificationsResponseRoot> {
+    const token = JSON.parse(localStorage.getItem('token')!);
+
+    const { data } =
+      await this.axiosInstance.patch<IUpdateNotificationsResponseRoot>(
+        `/admin-notifications/mark-all-as-read`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,

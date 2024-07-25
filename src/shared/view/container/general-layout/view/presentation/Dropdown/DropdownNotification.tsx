@@ -46,13 +46,14 @@ function DropdownNotification() {
           <div className="min-w-72">
             <div className="flex justify-between items-center py-3 mb-3">
               <h3 className="font-semibold">Notifications</h3>
-              <Button
-                disabled={result?.data?.length === 0}
-                onClick={() => mutate()}
-                className="uppercase text-xs text-ny-primary-500 border-none"
-                size="small">
-                mark all as read
-              </Button>
+              {unreadNotifications?.length > 0 && (
+                <Button
+                  onClick={() => mutate()}
+                  className="uppercase text-xs text-ny-primary-500 border-none"
+                  size="small">
+                  mark all as read
+                </Button>
+              )}
             </div>
           </div>
           <NotificationContent

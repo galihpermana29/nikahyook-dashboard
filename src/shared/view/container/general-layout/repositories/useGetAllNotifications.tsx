@@ -15,9 +15,10 @@ const useQueryNotification = () => {
   const { addIndexToData } = useSuccessAxios();
   const queries = useDebounce(queryVendorNotification, 1000);
 
+  const userType = JSON.parse(localStorage.getItem('admin')!).type;
+
   const getNotifications = async () => {
     const queryParams = objectToQueryParams(queryVendorNotification);
-    const userType = JSON.parse(localStorage.getItem('admin')!).type;
 
     if (userType === 'admin') {
       const { data } = await DashboardNotificationAPI.getAllAdminNotifications(

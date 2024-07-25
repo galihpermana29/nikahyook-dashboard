@@ -29,7 +29,7 @@ function NotificationContent({
     );
 
   return (
-    <div className="overflow-y-auto -m-3 mb-1 p-3 max-h-44 max-w-[400px] space-y-16">
+    <div className="overflow-y-auto -m-3 mb-1 p-3 max-h-60 w-[500px] space-y-16">
       {unreadNotifications?.length > 0 && (
         <div className="space-y-3">
           <Divider
@@ -60,8 +60,10 @@ function NotificationContent({
             ({ title, description, notification_time, id }) => (
               <div key={id} className="flex justify-between gap-2">
                 <div className="basis-3/4 space-y-1">
-                  <h4 className="font-medium text-base">{title}</h4>
-                  <p className="text-sm text-ny-gray-400">{description}</p>
+                  <h4 className="font-medium text-base text-ny-gray-400">
+                    {title}
+                  </h4>
+                  <p className="text-sm text-ny-gray-300">{description}</p>
                 </div>
                 <div className="grow text-end text-ny-gray-400 text-caption-2 whitespace-nowrap">
                   {convertToRelativeTime(notification_time)}

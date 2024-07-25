@@ -8,7 +8,14 @@ const useMutateUpdateNotifications = (refetch: () => void) => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
+  const userType = JSON.parse(localStorage.getItem('admin')!).type;
+
   const updateNotificationsStatus = async () => {
+    if (userType === 'admin') {
+      const data = await DashboardNotificationAPI.readAllAdminNotifications();
+      return data;
+    }
+
     const data = await DashboardNotificationAPI.readAllNotifications();
     return data;
   };
@@ -28,7 +35,7 @@ const useMutateUpdateNotifications = (refetch: () => void) => {
       showSuccessMessage('All notifications has been read!');
     },
   });
-  return { mutate, error, isLoading };
+  return { mutate, error, isLoading, updateNotificationsStatus };
 };
 
 export default useMutateUpdateNotifications;
