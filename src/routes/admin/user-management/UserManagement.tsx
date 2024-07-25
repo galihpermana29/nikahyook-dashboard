@@ -45,6 +45,7 @@ export const UserManagementContainer = () => {
       <DashboardTable
         columns={columns}
         data={data?.data}
+        metadata={data?.meta_data}
         onPaginationChanges={setQueryClientUser}
         loading={loadingGetAll}
         filterComponents={
