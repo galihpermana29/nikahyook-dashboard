@@ -8,16 +8,25 @@ import {
   Filler,
   ChartOptions,
 } from 'chart.js';
+import { IDashboardTransaction } from '@/shared/models/dashboardStatisticsInterfaces';
 import { Line } from 'react-chartjs-2';
 import { useGenerateChartData } from '../../../usecase/useGenerateChartData';
-import ArrowUp from '@/assets/icon/arrow-green-icon.svg'
 import dayjs from 'dayjs';
+import LoadingHandler from '@/shared/view/container/loading/Loading';
+
+interface ILineChart {
+  dateRange: [dayjs.Dayjs, dayjs.Dayjs] | null;
+  total_transaction: number;
+  transactions: IDashboardTransaction[];
+  isLoading: boolean;
+}
 
 const LineChart = ({
   dateRange,
-}: {
-  dateRange: [dayjs.Dayjs, dayjs.Dayjs] | null;
-}) => {
+  total_transaction,
+  transactions,
+  isLoading,
+}: ILineChart) => {
   ChartJS.register(
     CategoryScale,
     LinearScale,
@@ -41,24 +50,22 @@ const LineChart = ({
     },
   };
 
-  const validDateRange =
-    dateRange && dateRange[0] && dateRange[1] ? dateRange : null;
-  const { data } = useGenerateChartData(validDateRange);
+  const { data: chartData } = useGenerateChartData(dateRange, transactions);
 
   return (
     <div>
-      <div className='flex items-center justify-between v gap-4 mb-5'>
-        <p className="text-body-2 sm:text-heading-6 font-medium text-ny-primary-500">
-          909 Transaction This Month
-        </p>
-        <div className='flex items-center gap-1'>
-          <img src={ArrowUp} alt="Arrow" />
-          <p className='text-heading-6 font-medium text-ny-success-500'>70</p>
-        </div>
-      </div>
-      <Line className="!max-h-[306px]" options={options} data={data} />
+      <p className="text-body-2 sm:text-heading-6 font-medium text-ny-primary-500 mb-4">
+        {total_transaction} Transaction This Month
+      </p>
+      <LoadingHandler
+        isLoading={isLoading}
+        fullscreen={false}
+        classname="h-[306px]"
+      >
+        <Line className="!max-h-[306px]" options={options} data={chartData} />
+      </LoadingHandler>
     </div>
-  )
+  );
 };
 
 export default LineChart;
