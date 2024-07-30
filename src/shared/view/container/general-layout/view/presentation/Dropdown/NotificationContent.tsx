@@ -29,31 +29,35 @@ function NotificationContent({
     );
 
   return (
-    <div className="overflow-y-auto -m-3 mb-1 p-3 max-h-60 w-[500px] space-y-16">
+    <div className="overflow-y-auto -m-3 mb-1 p-3 max-h-60 w-[500px]">
       {unreadNotifications?.length > 0 && (
-        <div className="space-y-3">
-          <Divider
-            orientation="center"
-            className="font-semibold !m-0 !text-sm pb-3">
-            New Notifications
-          </Divider>
-          {unreadNotifications.map(
-            ({ title, description, notification_time, id }) => (
-              <div key={id} className="space-y-2">
-                <div className="flex justify-between gap-2 items-center">
-                  <h4 className="font-medium text-base text-ny-primary-500">
-                    {title}
-                  </h4>
-                  <p className="text-end text-ny-gray-400 text-caption-2">
-                    {convertToRelativeTime(notification_time)}
-                  </p>
+        <>
+          <div className="space-y-3">
+            <Divider
+              orientation="center"
+              className="font-semibold !m-0 !text-sm pb-3">
+              New Notifications
+            </Divider>
+            {unreadNotifications.map(
+              ({ title, description, notification_time, id }) => (
+                <div key={id} className="space-y-2">
+                  <div className="flex justify-between gap-2 items-center">
+                    <h4 className="font-medium text-base text-ny-primary-500">
+                      {title}
+                    </h4>
+                    <p className="text-end text-ny-gray-400 text-caption-2">
+                      {convertToRelativeTime(notification_time)}
+                    </p>
+                  </div>
+                  <p className="text-sm">{description}</p>
                 </div>
-                <p className="text-sm">{description}</p>
-              </div>
-            )
-          )}
-        </div>
+              )
+            )}
+          </div>
+          <Divider />
+        </>
       )}
+
       {readNotifications?.length > 0 && (
         <div className="space-y-3">
           {readNotifications.map(

@@ -1,7 +1,6 @@
 import { Form, Modal } from 'antd';
 import LoadingHandler from '@/shared/view/container/loading/Loading';
 import useMutateEditVendorUser from '@/routes/admin/vendor-management/vendor-user-management/repositories/useUpdateVendorUser';
-import { useNavigate } from 'react-router-dom';
 import useQueryVendorUserDetail from '@/routes/admin/vendor-management/vendor-user-management/repositories/useGetDetailVendorUser';
 import useMutateEditPassword from '@/shared/repositories/useUpdatePassword';
 import FormChangePassword from '@/shared/view/presentations/modal/ChangePasswordModal';
@@ -30,8 +29,6 @@ export default function VendorProfileContainer() {
   const [locationState, setLocationState] =
     useState<IVendorLocation>(initialState);
 
-  const navigate = useNavigate();
-
   const userDetail = localStorage ? localStorage.getItem('admin') : null;
 
   const parsedUserDetail = userDetail
@@ -44,6 +41,7 @@ export default function VendorProfileContainer() {
     isLoading: loadingGetDetail,
     refetch,
     error,
+    initialDetailData,
   } = useQueryVendorUserDetail(userId as string, form, setLocationState);
 
   const { mutate: mutateEdit } = useMutateEditVendorUser(
@@ -118,9 +116,7 @@ export default function VendorProfileContainer() {
                 form={form}
                 onSave={mutateEdit}
                 onChangePasswordClick={() => openModal!('password', userId)}
-                onCancel={() => {
-                  navigate(-1);
-                }}
+                onCancel={() => form.setFieldsValue(initialDetailData)}
                 id={userId as string}
                 disabled={false}
               />

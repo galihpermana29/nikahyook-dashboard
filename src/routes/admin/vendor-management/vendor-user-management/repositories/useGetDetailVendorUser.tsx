@@ -3,12 +3,15 @@ import { DashboardUserAPI } from '@/shared/repositories/userServices';
 import { FormInstance } from 'antd';
 import { useQuery } from 'react-query';
 import { IVendorLocation } from '../view/container/Create/VendorUserCreate';
+import { useState } from 'react';
 
 const useQueryVendorUserDetail = (
   id: string,
   form: FormInstance,
   setLocationState: React.Dispatch<React.SetStateAction<IVendorLocation>>
 ) => {
+  const [initialDetailData, setInitialDetailData] = useState();
+
   const getDetail = async () => {
     const { data } = await DashboardUserAPI.getUserById<IDetailVendorUser>(
       id as string
@@ -21,10 +24,14 @@ const useQueryVendorUserDetail = (
           vendor_album: [],
         };
 
-    form!.setFieldsValue({
+    const detailData = {
       ...data,
       ...vendorDetailJSON,
-    });
+    };
+
+    form!.setFieldsValue(detailData);
+
+    setInitialDetailData(detailData);
 
     return data;
   };
@@ -36,7 +43,14 @@ const useQueryVendorUserDetail = (
     refetchOnWindowFocus: false,
   });
 
-  return { data, error, isLoading, refetch };
+  return {
+    data,
+    error,
+    isLoading,
+    refetch,
+    initialDetailData,
+    setInitialDetailData,
+  };
 };
 
 export default useQueryVendorUserDetail;
