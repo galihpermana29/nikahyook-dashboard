@@ -1,4 +1,7 @@
-import type { IUpdateCuratorialPayloadRoot } from '@/shared/models/curatorialInterfaces';
+import type {
+  ICuratorialInputRoot,
+  ICuratorialPayload,
+} from '@/shared/models/curatorialInterfaces';
 import { CuratorialsAPI } from '@/shared/repositories/curatorialServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
@@ -12,14 +15,15 @@ const useMutateUpdateCuratorial = (
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
-  const deleteCuratorial = async (
-    payload: IUpdateCuratorialPayloadRoot,
-    id: number
-  ) => {
+  const deleteCuratorial = async (payload: ICuratorialPayload, id: number) => {
     const newPayload = {
       ...payload,
       status: 'inactive',
-    };
+      products: payload.products.map((productId) => ({ id: productId })),
+      inspirations: payload.inspirations.map((inspirationId) => ({
+        id: inspirationId,
+      })),
+    } as ICuratorialInputRoot;
 
     const data = await CuratorialsAPI.editCuratorial(newPayload, id);
     return data;
@@ -34,7 +38,7 @@ const useMutateUpdateCuratorial = (
       payload,
       id,
     }: {
-      payload: IUpdateCuratorialPayloadRoot;
+      payload: ICuratorialPayload;
       id: number;
     }) => {
       return deleteCuratorial(payload, id);

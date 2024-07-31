@@ -1,7 +1,4 @@
-import type {
-  ICreateCuratorialPayloadRoot,
-  ICuratorialInputRoot,
-} from '@/shared/models/curatorialInterfaces';
+import type { ICuratorialPayload } from '@/shared/models/curatorialInterfaces';
 import { CuratorialsAPI } from '@/shared/repositories/curatorialServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
@@ -14,7 +11,7 @@ const useMutateCreateCuratorials = () => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
-  const createCuratorial = async (payload: ICuratorialInputRoot) => {
+  const createCuratorial = async (payload: ICuratorialPayload) => {
     const newPayload = {
       ...payload,
       status: 'active',
@@ -23,7 +20,7 @@ const useMutateCreateCuratorials = () => {
       inspirations: payload.inspirations.map((inspirationId) => ({
         id: inspirationId,
       })),
-    } as ICreateCuratorialPayloadRoot;
+    };
 
     const data = await CuratorialsAPI.createCuratorial(newPayload);
 
@@ -36,7 +33,7 @@ const useMutateCreateCuratorials = () => {
   };
 
   const { mutate, error, isLoading } = useMutation({
-    mutationFn: (payload: ICuratorialInputRoot) => createCuratorial(payload),
+    mutationFn: (payload: ICuratorialPayload) => createCuratorial(payload),
     onError: handleError,
     onSuccess: () => {
       showSuccessMessage('Curatorial successfully added!');

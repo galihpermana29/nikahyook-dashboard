@@ -66,7 +66,7 @@ const useQueryVendorContent = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryVendorContent((val) => ({ ...val, [x]: value[x] }));
+        setQueryVendorContent((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

@@ -1,5 +1,5 @@
 import type {
-  ICuratorialInputRoot,
+  ICuratorialPayload,
   IUpdateCuratorialResponseRoot,
 } from '@/shared/models/curatorialInterfaces';
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
@@ -23,7 +23,7 @@ interface IFormEdit {
   handleMutate: UseMutateFunction<
     IUpdateCuratorialResponseRoot,
     AxiosError<unknown, any>,
-    ICuratorialInputRoot,
+    ICuratorialPayload,
     unknown
   >;
   openModal?: (
@@ -32,7 +32,7 @@ interface IFormEdit {
   ) => void;
   showEditButton?: boolean;
   id: string;
-  initialValues: ICuratorialInputRoot | undefined;
+  initialValues: ICuratorialPayload | undefined;
 }
 
 const FormEdit = ({

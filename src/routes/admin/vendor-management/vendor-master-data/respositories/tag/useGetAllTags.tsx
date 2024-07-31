@@ -54,7 +54,7 @@ const useQueryProductTags = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryProductTags((val) => ({ ...val, [x]: value[x] }));
+        setQueryProductTags((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

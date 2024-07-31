@@ -51,7 +51,7 @@ const CuratorialEdit = () => {
       <div className="bg-white">
         <PageTitle title="Edit Curatorial" withArrow={true} />
         <div className="p-[20px]">
-          <LoadingHandler isLoading={isLoading} fullscreen={true}>
+          <LoadingHandler isLoading={isLoading}>
             <FormEdit
               initialValues={data}
               openModal={openModal}

@@ -76,7 +76,7 @@ const useQueryCuratorials = (form: FormInstance) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryOptions((val) => ({ ...val, [x]: value[x] }));
+        setQueryOptions((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

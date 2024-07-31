@@ -1,7 +1,4 @@
-import type {
-  ICuratorialInputRoot,
-  IUpdateCuratorialPayloadRoot,
-} from '@/shared/models/curatorialInterfaces';
+import type { ICuratorialPayload } from '@/shared/models/curatorialInterfaces';
 import { CuratorialsAPI } from '@/shared/repositories/curatorialServices';
 import useErrorAxios from '@/shared/usecase/useErrorAxios';
 import useSuccessAxios from '@/shared/usecase/useSuccessAxios';
@@ -14,17 +11,15 @@ const useMutateUpdateCuratorial = (refetch?: () => void) => {
   const { generateErrorMsg, showPopError } = useErrorAxios();
   const { showSuccessMessage } = useSuccessAxios();
 
-  const editCuratorial = async (payload: ICuratorialInputRoot, id: number) => {
+  const editCuratorial = async (payload: ICuratorialPayload, id: number) => {
     const newPayload = {
       id: id,
       ...payload,
-      status: 'active',
+      status: payload.status ?? 'active',
       images: payload.images?.length > 0 ? payload.images : [''],
-      products: payload.products.map((productId) => ({ id: productId })),
-      inspirations: payload.inspirations.map((inspirationId) => ({
-        id: inspirationId,
-      })),
-    } as IUpdateCuratorialPayloadRoot;
+      products: payload.products.map((id) => ({ id })),
+      inspirations: payload.inspirations.map((id) => ({ id })),
+    };
 
     const data = await CuratorialsAPI.editCuratorial(newPayload, id);
     return data;
@@ -40,7 +35,7 @@ const useMutateUpdateCuratorial = (refetch?: () => void) => {
       payload,
       id,
     }: {
-      payload: ICuratorialInputRoot;
+      payload: ICuratorialPayload;
       id: number;
     }) => {
       return editCuratorial(payload, id);

@@ -54,7 +54,7 @@ const useQueryClientUser = (form: FormInstance) => {
   const handleFilter = (value) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryClientUser((val) => ({ ...val, [x]: value[x] }));
+        setQueryClientUser((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

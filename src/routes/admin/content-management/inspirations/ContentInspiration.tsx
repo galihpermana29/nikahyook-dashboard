@@ -119,7 +119,7 @@ export default function ContentInspiration() {
         {modalType[modalState!.type]}
       </Modal>
 
-      <LoadingHandler fullscreen isLoading={isLoading}>
+      <LoadingHandler isLoading={isLoading}>
         <ContentInspirationHeader
           handleMutate={mutateCreate}
           clearFilter={clearFilter}

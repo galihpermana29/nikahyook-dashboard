@@ -56,7 +56,7 @@ const useQueryAdminTransaction = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryAdminTransaction((val) => ({ ...val, [x]: value[x] }));
+        setQueryAdminTransaction((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

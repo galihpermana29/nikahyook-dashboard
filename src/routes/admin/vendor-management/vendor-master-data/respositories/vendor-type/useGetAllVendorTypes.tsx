@@ -38,8 +38,9 @@ const useQueryVendorTypes = (form: FormInstance<any>) => {
     const queryParams = objectToQueryParams(queryVendorTypes);
     setSearchParams(queryParams);
 
-    const { data, meta_data } =
-      await DashboardVendorTypeAPI.getAllVendorTypes(queryParams);
+    const { data, meta_data } = await DashboardVendorTypeAPI.getAllVendorTypes(
+      queryParams
+    );
 
     return { data: addIndexToData(data), meta_data };
   };
@@ -57,7 +58,7 @@ const useQueryVendorTypes = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryVendorTypes((val) => ({ ...val, [x]: value[x] }));
+        setQueryVendorTypes((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

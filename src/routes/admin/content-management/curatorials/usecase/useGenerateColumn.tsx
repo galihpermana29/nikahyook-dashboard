@@ -3,7 +3,7 @@ import { Button, Dropdown, Row, Space, TableProps, Tag } from 'antd';
 import { UseMutateFunction } from 'react-query';
 import { AxiosError } from 'axios';
 import type {
-  ICuratorialInputRoot,
+  ICuratorialPayload,
   IDetailCuratorialData,
   IUpdateCuratorialResponseRoot,
 } from '@/shared/models/curatorialInterfaces';
@@ -18,7 +18,7 @@ const useGenerateColumnCuratorials = (
     IUpdateCuratorialResponseRoot,
     AxiosError,
     {
-      payload: ICuratorialInputRoot;
+      payload: ICuratorialPayload;
       id: number;
     },
     unknown
@@ -45,7 +45,7 @@ const useGenerateColumnCuratorials = (
       key: 'products',
       render: (products: IDetailCuratorialData['products']) =>
         products ? (
-          <div className="flex w-full items-center flex-wrap">
+          <div className="flex w-full items-center flex-wrap max-w-96 gap-y-2">
             {products.map((product) => (
               <Tag>{product.title}</Tag>
             ))}
@@ -60,7 +60,7 @@ const useGenerateColumnCuratorials = (
       key: 'vendor_name',
       render: (vendors: IDetailCuratorialData['vendor']) =>
         vendors ? (
-          <div className="flex w-full items-center flex-wrap">
+          <div className="flex w-full items-center flex-wrap max-w-96 gap-y-2">
             {vendors.map((vendor) => (
               <Tag>{vendor.name}</Tag>
             ))}
@@ -109,11 +109,19 @@ const useGenerateColumnCuratorials = (
                     onChangeStatus!({
                       payload: {
                         ...payload,
+                        products:
+                          payload.products && payload.products.length > 0
+                            ? payload.products.map(({ id }) => id)
+                            : [],
+                        inspirations:
+                          payload.inspirations &&
+                          payload.inspirations.length > 0
+                            ? payload.inspirations.map(({ id }) => id)
+                            : [],
                         status: status === 'active' ? 'inactive' : 'active',
                       },
                       id,
                     }),
-
                   disabled: !remove,
                 },
               ],

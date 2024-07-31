@@ -48,7 +48,7 @@ const CuratorialDetail = () => {
       <div className="bg-white">
         <PageTitle title="View Curatorial" withArrow={true} />
         <div className="p-[20px]">
-          <LoadingHandler isLoading={isLoading} fullscreen={true}>
+          <LoadingHandler isLoading={isLoading}>
             <FormEdit
               initialValues={data}
               id={id ?? ''}

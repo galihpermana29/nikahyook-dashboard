@@ -38,7 +38,7 @@ const CuratorialCreate = () => {
       <div className="bg-white">
         <PageTitle title="Create Curatorial" withArrow={true} />
         <div className="p-[20px]">
-          <LoadingHandler isLoading={isLoading} fullscreen={true}>
+          <LoadingHandler isLoading={isLoading}>
             <FormCreation
               disabled={!create}
               form={form}
