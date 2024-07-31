@@ -45,7 +45,7 @@ const useGenerateColumnCuratorials = (
       key: 'products',
       render: (products: IDetailCuratorialData['products']) =>
         products ? (
-          <div className="flex w-full items-center flex-wrap">
+          <div className="flex w-full items-center flex-wrap max-w-96 gap-y-2">
             {products.map((product) => (
               <Tag>{product.title}</Tag>
             ))}
@@ -60,7 +60,7 @@ const useGenerateColumnCuratorials = (
       key: 'vendor_name',
       render: (vendors: IDetailCuratorialData['vendor']) =>
         vendors ? (
-          <div className="flex w-full items-center flex-wrap">
+          <div className="flex w-full items-center flex-wrap max-w-96 gap-y-2">
             {vendors.map((vendor) => (
               <Tag>{vendor.name}</Tag>
             ))}
