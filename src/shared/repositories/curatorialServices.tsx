@@ -2,8 +2,8 @@ import type {
   IAllCuratorialResponseRoot,
   ICreateCuratorialPayloadRoot,
   ICreateCuratorialResponseRoot,
+  ICuratorialInputRoot,
   ICuratorialResponseRoot,
-  IUpdateCuratorialPayloadRoot,
   IUpdateCuratorialResponseRoot,
 } from '../models/curatorialInterfaces';
 import { ApiClass } from './generalApi';
@@ -56,7 +56,7 @@ class CuratorialServices extends ApiClass {
   }
 
   public async editCuratorial(
-    payload: IUpdateCuratorialPayloadRoot,
+    payload: ICuratorialInputRoot,
     id: number
   ): Promise<IUpdateCuratorialResponseRoot> {
     const token = JSON.parse(localStorage.getItem('token')!);

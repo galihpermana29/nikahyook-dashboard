@@ -1,5 +1,4 @@
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
-import type { IDetailProductData } from '@/shared/models/productServicesInterface';
 import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
@@ -13,8 +12,6 @@ import useToggleSelect from '../../../usecase/useToggleSelect';
 import useGetTotalSelectedPrice from '../../../repositories/useGetTotalSelectedPrice';
 import Pagination from '@/shared/view/presentations/pagination/Pagination';
 import useQueryCuratorialProducts from '../../../repositories/useQueryCuratorialProducts';
-import useSplitSelectedItems from '../../../usecase/useSplitSelectedItems';
-import { useDebounce } from '@uidotdev/usehooks';
 
 interface IFormProduct {
   filterForm: FormInstance;
@@ -48,13 +45,7 @@ export default function ProductModal({
     form?.getFieldValue(fieldName) ?? []
   );
 
-  const items = useDebounce(
-    useSplitSelectedItems({
-      data: result?.data as IDetailProductData[],
-      selectedId: selected,
-    }),
-    165
-  );
+  const items = result && result.data ? result.data : [];
 
   const totalPrice = useGetTotalSelectedPrice(selected);
   const handleChangePrice = (form: FormInstance) => {
@@ -93,9 +84,9 @@ export default function ProductModal({
 
         <div className="grid grid-cols-4 gap-2 mt-5 min-h-96">
           {/* make sure selected items are always shown first in the list */}
-          {[...items.selected, ...items.not_selected].map((product) => (
+          {items.map((product) => (
             <button
-              className='col-span-4 sm:col-span-2 md:col-span-1'
+              className="col-span-4 sm:col-span-2 md:col-span-1"
               key={product.id}
               onClick={() =>
                 useToggleSelect({
@@ -114,10 +105,12 @@ export default function ProductModal({
           ))}
         </div>
 
-        <Pagination
-          onPaginationChanges={setQueryVendorContent}
-          metadata={result?.meta_data}
-        />
+        <div className="mt-4">
+          <Pagination
+            onPaginationChanges={setQueryVendorContent}
+            metadata={result?.meta_data}
+          />
+        </div>
 
         <div className="flex flex-col gap-5">
           <Divider className="mt-5 mb-0" />

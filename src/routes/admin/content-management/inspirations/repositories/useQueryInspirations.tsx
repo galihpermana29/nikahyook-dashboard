@@ -43,7 +43,7 @@ export default function useQueryInspirations(form: FormInstance<any>) {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQuery((val) => ({ ...val, [x]: value[x] }));
+        setQuery((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

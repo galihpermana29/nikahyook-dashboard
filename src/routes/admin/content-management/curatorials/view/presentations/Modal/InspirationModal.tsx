@@ -1,5 +1,4 @@
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
-import type { IDetailInspirationData } from '@/shared/models/inspirationInterfaces';
 import useFilterSelectOptions from '@/shared/repositories/useFilterSelectOptions';
 import useSortSelectOptions from '@/shared/repositories/useSortSelectOptions';
 import ErrorBoundary from '@/shared/view/container/error-boundary/ErrorBoundary';
@@ -12,8 +11,6 @@ import { useState } from 'react';
 import useToggleSelect from '../../../usecase/useToggleSelect';
 import Pagination from '@/shared/view/presentations/pagination/Pagination';
 import useQueryCuratorialInspirations from '../../../repositories/useQueryCuratorialInspirations';
-import useSplitSelectedItems from '../../../usecase/useSplitSelectedItems';
-import { useDebounce } from '@uidotdev/usehooks';
 
 interface IFormInspiration {
   filterForm: FormInstance;
@@ -45,13 +42,7 @@ export default function InspirationModal({
     form?.getFieldValue(fieldName) ?? []
   );
 
-  const items = useDebounce(
-    useSplitSelectedItems({
-      data: result?.data as IDetailInspirationData[],
-      selectedId: selected,
-    }),
-    165
-  );
+  const items = result && result.data ? result.data : [];
 
   const handleSubmit = (selected: number[], form: FormInstance) => {
     return form.setFieldValue(fieldName, selected);
@@ -82,9 +73,9 @@ export default function InspirationModal({
         />
         <div className="grid grid-cols-4 gap-2 mt-5 min-h-96">
           {/* make sure selected items are always shown first in the list */}
-          {[...items.selected, ...items.not_selected].map((inspiration) => (
+          {items.map((inspiration) => (
             <button
-              className='col-span-4 sm:col-span-2 md:col-span-1'
+              className="col-span-4 sm:col-span-2 md:col-span-1"
               key={inspiration.id}
               onClick={() =>
                 useToggleSelect({
@@ -103,10 +94,12 @@ export default function InspirationModal({
           ))}
         </div>
 
-        <Pagination
-          onPaginationChanges={setQuery}
-          metadata={result?.meta_data}
-        />
+        <div className="mt-4">
+          <Pagination
+            onPaginationChanges={setQuery}
+            metadata={result?.meta_data}
+          />
+        </div>
 
         <div className="flex flex-col gap-5">
           <Divider className="mt-5 mb-0" />

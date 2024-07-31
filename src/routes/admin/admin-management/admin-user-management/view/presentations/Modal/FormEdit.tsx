@@ -6,7 +6,15 @@ import {
 
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { DownOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Form, FormInstance, Input, InputNumber, Select, Space } from 'antd';
+import {
+  Button,
+  Dropdown,
+  Form,
+  FormInstance,
+  Input,
+  Select,
+  Space,
+} from 'antd';
 import { AxiosError } from 'axios';
 import { UseMutateFunction } from 'react-query';
 
@@ -37,7 +45,7 @@ const FormEdit = ({
   disable,
   id,
   onChangePasswordClick,
-  onResetPasswordClick
+  onResetPasswordClick,
 }: IFormEdit) => {
   return (
     <div>
@@ -75,6 +83,7 @@ const FormEdit = ({
                 },
               ]}>
               <Input
+                disabled
                 placeholder="Enter your detail here"
                 className="h-[40px] rounded-[8px] text-caption-1 font-[400]"
               />
@@ -104,7 +113,7 @@ const FormEdit = ({
                   message: 'Please input your phone number!',
                 },
               ]}>
-              <InputNumber
+              <Input
                 placeholder="Enter your detail here"
                 className="w-full h-[40px] rounded-[8px] text-caption-1 font-[400] custom-input"
               />
@@ -129,20 +138,23 @@ const FormEdit = ({
                 menu={{
                   items: [
                     {
-                      label: "Change Password",
+                      label: 'Change Password',
                       key: '1',
-                      onClick: onChangePasswordClick
+                      onClick: onChangePasswordClick,
                     },
                     {
-                      label: "Reset Password",
+                      label: 'Reset Password',
                       key: '2',
-                      onClick: onResetPasswordClick
-                    }
-                  ]
+                      onClick: onResetPasswordClick,
+                    },
+                  ],
                 }}
-                disabled={disable}
-              >
-                <Button type='text' className={`${disable ? '' : 'hover:!bg-white hover:!text-ny-primary-500'} text-ny-primary-500`}>
+                disabled={disable}>
+                <Button
+                  type="text"
+                  className={`${
+                    disable ? '' : 'hover:!bg-white hover:!text-ny-primary-500'
+                  } text-ny-primary-500`}>
                   <Space>
                     Actions
                     <DownOutlined />

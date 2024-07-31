@@ -25,7 +25,9 @@ const PageFilter = ({
     <div className="flex justify-between items-center gap-[10px]">
       <Input
         value={query.keyword}
-        onChange={(e) => onSearch((dx) => ({ ...dx, keyword: e.target.value }))}
+        onChange={(e) =>
+          onSearch((dx) => ({ ...dx, keyword: e.target.value, page: 1 }))
+        }
         prefix={<img src={searchIcon} alt="seearch" />}
         className="h-[40px] w-full max-w-[300px] rounded-[8px] [&>input]:!text-caption-1 [&>input]:!font-[400]"
         placeholder="Search data.."

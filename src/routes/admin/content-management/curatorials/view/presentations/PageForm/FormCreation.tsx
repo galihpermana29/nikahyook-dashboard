@@ -1,6 +1,6 @@
 import type {
   ICreateCuratorialResponseRoot,
-  ICuratorialInputRoot,
+  ICuratorialPayload,
 } from '@/shared/models/curatorialInterfaces';
 import DraggerUpload from '@/shared/view/presentations/dragger-upload/DraggerUpload';
 import { FormRow } from '@/shared/view/presentations/form-row/FormRow';
@@ -20,7 +20,7 @@ interface IFormCreation {
   handleMutate: UseMutateFunction<
     ICreateCuratorialResponseRoot,
     AxiosError<unknown, any>,
-    ICuratorialInputRoot,
+    ICuratorialPayload,
     unknown
   >;
   onCancel: () => void;

@@ -49,18 +49,20 @@ export const useGenerateColumn = (
       key: 'location',
       render: ({ location }) => {
         return (
-          <span className="capitalize">{location ? location.label : '-'}</span>
+          <span className="capitalize">
+            {location && location.label ? location.label : '-'}
+          </span>
         );
       },
     },
     {
-      title: 'Wedding Date',
+      title: 'Date of Birth',
       dataIndex: 'detail',
-      key: 'wedding_date',
-      render: ({ wedding_date }) => {
+      key: 'date_of_birth',
+      render: ({ date_of_birth }) => {
         return (
           <span className="capitalize">
-            {wedding_date ? wedding_date : '-'}
+            {date_of_birth ? date_of_birth : '-'}
           </span>
         );
       },

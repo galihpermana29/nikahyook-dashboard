@@ -71,7 +71,7 @@ const useQueryAdmins = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryAdmins((val) => ({ ...val, [x]: value[x] }));
+        setQueryAdmins((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

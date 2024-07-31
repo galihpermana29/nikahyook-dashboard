@@ -53,7 +53,7 @@ const useQueryProductTypes = (form: FormInstance<any>) => {
     const handleFilter = (value: any) => {
         for (const x in value) {
             if (value[x]) {
-                setQueryProductTypes((val) => ({ ...val, [x]: value[x] }));
+                setQueryProductTypes((val) => ({ ...val, page: 1, [x]: value[x] }));
             }
         }
     };

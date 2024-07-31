@@ -58,7 +58,7 @@ const useQueryVendorUser = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryVendorUser((val) => ({ ...val, [x]: value[x] }));
+        setQueryVendorUser((val) => ({ ...val, page: 1, [x]: value[x] }));
       }
     }
   };

@@ -55,7 +55,7 @@ const useQueryAdminRoles = (form: FormInstance<any>) => {
   const handleFilter = (value: any) => {
     for (const x in value) {
       if (value[x]) {
-        setQueryAdminRoles((val) => ({ ...val, [x]: value[x] }));
+        setQueryAdminRoles((val) => ({ ...val, [x]: value[x], page: 1 }));
       }
     }
   };
