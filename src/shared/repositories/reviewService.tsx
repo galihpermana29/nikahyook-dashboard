@@ -11,7 +11,7 @@ class DashboardReviewService extends ApiClass {
     const id = JSON.parse(localStorage.getItem('admin')!);
 
     const { data } = await this.axiosInstance.get<IAllReviewResponseRoot>(
-      `/reviews${query ? `?vendor_id${id.user_id}&${query}` : ''}`,
+      `/reviews${query ? `?vendor_id=${id.user_id}&${query}` : `?vendor_id=${id.user_id}`}`,
       { headers: { Authorization: `Bearer ${token}` } }
     );
 
