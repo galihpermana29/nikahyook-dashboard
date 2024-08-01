@@ -90,7 +90,7 @@ export const TagDataContainer = () => {
                 onClick: () => closeModal!(),
               }}
               primaryText="Edit"
-              primaryProps={{ htmlType: 'submit', disabled: edit }}
+              primaryProps={{ htmlType: 'submit', disabled: !edit }}
             />
           }
         />

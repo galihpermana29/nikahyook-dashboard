@@ -11,7 +11,7 @@ const useGenerateModalProps = () => {
 
 		const permissionMap = new Map();
 
-		input[permissionsKey].forEach((permission) => {
+		input[permissionsKey].forEach((permission: string[]) => {
 			const feature = permission[0];
 			const access = permission[1] || 'all';
 
