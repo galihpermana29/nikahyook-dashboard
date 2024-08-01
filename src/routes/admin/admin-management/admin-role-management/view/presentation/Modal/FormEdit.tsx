@@ -25,26 +25,27 @@ interface IFormEdit {
   id?: string;
   detail: IAllRolesData | undefined;
 }
+
 const FormEdit = ({ form, handleMutate, footer, id, detail }: IFormEdit) => {
-  const { transformToPayload, transformToCascaderData } =
-    useGenerateModalProps();
-
+  const { transformToPayload, transformToCascaderData } = useGenerateModalProps();
   const { options } = useGenerateCascaderOptions();
-
-  const defaultValue = transformToCascaderData(detail);
+  
+  const defaultValue = detail ? transformToCascaderData(detail) : { name: '', permissions_edit: [] };
 
   return (
     <div>
       <Form
         form={form}
         layout="vertical"
+        initialValues={defaultValue}
         onFinish={(value) => {
           handleMutate!({
             payload: transformToPayload(value),
             id: id!,
             type: 'update',
           });
-        }}>
+        }}
+      >
         <div className="flex gap-[20px]">
           <div className="flex-1">
             <Form.Item
@@ -62,7 +63,6 @@ const FormEdit = ({ form, handleMutate, footer, id, detail }: IFormEdit) => {
                 className="h-[40px] rounded-[8px] text-caption-1 font-[400]"
               />
             </Form.Item>
-
             <Form.Item
               name={'permissions_edit'}
               label={
@@ -84,7 +84,6 @@ const FormEdit = ({ form, handleMutate, footer, id, detail }: IFormEdit) => {
                 options={options}
                 multiple
                 maxTagCount="responsive"
-                defaultValue={defaultValue.permissions_edit}
               />
             </Form.Item>
           </div>
