@@ -1,7 +1,7 @@
 import './style.scss';
 import { AxiosError } from 'axios';
 import { ILoginData } from '@/shared/models/userServicesInterface';
-import { ConfigProvider, Layout, Menu, theme } from 'antd';
+import { Alert, ConfigProvider, Layout, Menu, theme } from 'antd';
 import { Outlet } from 'react-router-dom';
 import CustomHeader from './presentation/CustomHeader/CustomHeader';
 import CustomLogoSidebar from './presentation/CustomLogoSidebar/CustomLogoSidebar';
@@ -23,6 +23,7 @@ const RootLayout: React.FC = () => {
   const { data, error, refetch, isLoading } = useQueryDetailUser(
     admin?.user_id
   );
+  const isVendorPending = admin.type === 'vendor' && admin.status === 'pending';
   const { items, handleClickMenu } = UseGenerateItems(data?.type as actionType);
 
   return (
@@ -35,14 +36,12 @@ const RootLayout: React.FC = () => {
               token: {
                 colorPrimary: '#E60B6A',
               },
-            }}
-          >
+            }}>
             <Layout style={{ height: '100vh', overflow: 'hidden' }}>
               <Sider
                 theme="light"
                 className="border-r-[1px] border-ny-gray-200 h-screen hidden lg:block overflow-auto"
-                collapsed={false}
-              >
+                collapsed={false}>
                 {/*
 					    INFO: this is logo sidebar
           */}
@@ -65,6 +64,19 @@ const RootLayout: React.FC = () => {
                   item={items}
                   handleClickMenu={handleClickMenu}
                 />
+                {isVendorPending && (
+                  <Alert
+                    type="error"
+                    closable
+                    banner
+                    message={
+                      <h1 className="text-[15px] font-[500]">
+                        Your account is a pending account
+                      </h1>
+                    }
+                    description="To create a product please contact the administrator to accept your account"
+                  />
+                )}
                 <Content style={{ margin: '0 16px', overflow: 'auto' }}>
                   <div
                     className="p-[15px] lg:[30px]"
@@ -72,14 +84,12 @@ const RootLayout: React.FC = () => {
                       minHeight: '100vh',
                       borderRadius: borderRadiusLG,
                       backgroundColor: 'white',
-                    }}
-                  >
+                    }}>
                     <Outlet />
                   </div>
                 </Content>
                 <Footer
-                  style={{ textAlign: 'center', background: colorBgContainer }}
-                >
+                  style={{ textAlign: 'center', background: colorBgContainer }}>
                   Nikahyook Dashboard
                 </Footer>
               </Layout>

@@ -1,4 +1,4 @@
-import './style.scss'
+import './style.scss';
 import type { FormInstance, UploadProps } from 'antd';
 import { Upload, message } from 'antd';
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ interface DraggerUploadI {
   formItemName: string;
   form: FormInstance<any>;
   limit?: number;
+  multiple?: boolean;
 }
 
 const DraggerUpload = ({
@@ -20,6 +21,7 @@ const DraggerUpload = ({
   form,
   formItemName,
   limit = 1,
+  multiple = false,
 }: DraggerUploadI) => {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const { generateErrorMsg, showPopError } = useErrorAxios();
@@ -89,9 +91,10 @@ const DraggerUpload = ({
   }, [profileImageURL, limit]);
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       <LoadingHandler isLoading={loadingUpload} classname="h-[169px]">
         <Upload
+          multiple={multiple}
           accept="image/*"
           onRemove={async (file) => {
             const val = await form.getFieldsValue();

@@ -14,10 +14,10 @@ const ErrorBoundary = ({ error, children, refetch }: ErrorBoundaryI) => {
   if (error) {
     const { generateErrorMsg } = useErrorAxios();
     const msg = generateErrorMsg(error as AxiosError);
-
     if (error.response?.status === 401) {
       navigate('/login');
       localStorage.clear();
+      setTimeout(() => window.location.reload(), 1500);
     }
     return (
       <div className="h-[100vh] justify-center items-center bg-red-100  flex">

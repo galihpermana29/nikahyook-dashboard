@@ -13,7 +13,6 @@ import useMutateEditVendorContent from '@/routes/admin/vendor-management/vendor-
 import useQueryTags from '@/routes/admin/vendor-management/vendor-content/repositories/useGetAllTags';
 import useQueryVendorContent from './repositories/useGetAllContent';
 import { ILoaderData } from '@/routes/root';
-import { allDummyData } from './model/allProductDummy';
 
 export const VendorProductContainer = () => {
   const [form] = useForm();
@@ -47,7 +46,7 @@ export const VendorProductContainer = () => {
         columns={columns}
         onPaginationChanges={setQueryVendorContent}
         loading={isLoading}
-        data={isOnlyRead ? allDummyData.data : result?.data ?? []}
+        data={isOnlyRead ? [] : result?.data ?? []}
         metadata={result ? result.meta_data : undefined}
         filterComponents={
           !isOnlyRead && (
