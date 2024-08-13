@@ -63,6 +63,7 @@ const PageFormCreate = ({
           <div>
             <Form.Item noStyle name={'images'}>
               <DraggerUpload
+                multiple
                 limit={3}
                 profileImageURL={form.getFieldValue('images')}
                 form={form}

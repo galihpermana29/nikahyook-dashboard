@@ -83,6 +83,7 @@ export const VendorUserManagementContainer = () => {
                     { value: 'default', label: 'All' },
                     { value: 'active', label: 'Active' },
                     { value: 'inactive', label: 'Inactive' },
+                    { value: 'pending', label: 'Pending' },
                   ]}
                 />
               </Form.Item>

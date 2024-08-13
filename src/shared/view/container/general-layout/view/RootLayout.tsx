@@ -23,7 +23,9 @@ const RootLayout: React.FC = () => {
   const { data, error, refetch, isLoading } = useQueryDetailUser(
     admin?.user_id
   );
-  const isVendorPending = admin.type === 'vendor' && admin.status === 'pending';
+  const isVendorPending = admin
+    ? admin.type === 'vendor' && admin.status === 'pending'
+    : false;
   const { items, handleClickMenu } = UseGenerateItems(data?.type as actionType);
 
   return (

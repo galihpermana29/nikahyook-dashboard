@@ -30,7 +30,6 @@ const DashboardTable = <T extends object>({
   loading,
   filterComponents,
 }: DashboardTableProps<T>) => {
-
   const customPaginationProps = {
     total: metadata?.total_items ?? 0,
     pageSize: metadata?.limit ?? 10,
@@ -38,7 +37,8 @@ const DashboardTable = <T extends object>({
       onPaginationChanges?.((state) => ({ ...state, page }));
     },
     current: metadata?.current_page ?? 1,
-  }
+    showSizeChanger: false,
+  };
 
   return (
     <div>
@@ -53,11 +53,11 @@ const DashboardTable = <T extends object>({
           footer={
             onPaginationChanges
               ? () => (
-                <DashboardTableFooter
-                  paginationProps={customPaginationProps!}
-                  metadata={metadata}
-                />
-              )
+                  <DashboardTableFooter
+                    paginationProps={customPaginationProps!}
+                    metadata={metadata}
+                  />
+                )
               : undefined
           }
         />
