@@ -31,7 +31,6 @@ const VendorProductEditContainer = () => {
     province: [],
     city: [],
   });
-
   const [coverageState, setCoverageState] = useState<any[]>([]);
 
   const {
@@ -56,10 +55,9 @@ const VendorProductEditContainer = () => {
 
   const { result: provinceTypes, error: errorEmsifa } = useQueryProvince();
   const { result: cityTypes } = useQueryCity(locationState.province?.value);
-  const { result: cityCoverageTypes } = useQueryCity(
-    activeCoverage.province.length > 0
-      ? activeCoverage.province?.[activeCoverage.province.length - 1].value
-      : null
+  const { listAllCoverageCities: cityCoverageTypes } = useQueryCity(
+    activeCoverage.province.length > 0 ? activeCoverage.province : null,
+    true
   );
   const { result: districtTypes } = useQueryDistrict(locationState.city?.value);
   const { result: villageId } = useQueryVillage(locationState.district?.value);

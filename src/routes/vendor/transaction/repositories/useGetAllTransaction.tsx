@@ -72,6 +72,7 @@ const useQueryVendorTransaction = (form: FormInstance<any>) => {
       ...initialFilterState,
       limit: queries.limit,
       page: queries.page,
+      vendor_id: JSON.parse(localStorage.getItem('admin')!).user_id,
     };
     form.setFieldsValue(clearFilterQuery);
 
