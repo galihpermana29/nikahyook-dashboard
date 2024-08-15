@@ -10,10 +10,9 @@ dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
 
 export default (dateString: string) => {
-  const hasTime = dateString.split(' ').length > 1;
-  const format = hasTime ? 'DD-MM-YYYY hh:mm:ss' : 'DD-MM-YYYY';
-  const parsedDate = dayjs(dateString, format).utc();
-  const relativeTimeString = parsedDate.fromNow();
+  const parsedDate = dayjs.utc(dateString, 'DD-MM-YYYY HH:mm:ss');
+
+  const relativeTimeString = dayjs(parsedDate).fromNow();
 
   return relativeTimeString;
 };
