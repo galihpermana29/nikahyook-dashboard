@@ -24,6 +24,8 @@ const useMutateEditVendorContent = (
       },
       coverage_area: coverageLocation,
     };
+
+    if (coverageLocation.length === 0) delete newPayload.coverage_area;
     const data = await DashboardProductAPI.editProduct(newPayload, id);
     return data;
   };
